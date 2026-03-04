@@ -1,111 +1,95 @@
 # Requirements Engineering Standard
 
-Standard for requirements engineering at GlowPowerRental, aligned with ISO/IEC/IEEE 29148.
+| Field | Value |
+|-------|-------|
+| **Standard ID** | STD-P2-002 |
+| **Compliance Level** | Mandatory |
+| **Enforced By** | Business Analyst / Tech Lead |
+| **Verification Method** | Requirements baseline review, RTM audit, attribute completeness check |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Requirements Hierarchy
+## SCALING GATE
 
-Requirements are decomposed through four levels. Each level refines the one above it.
-
-```
-Business Requirements (BR)
-   |
-   v
-Stakeholder Requirements (STK)
-   |
-   v
-System Requirements (SYS)
-   |
-   v
-Software Requirements (SWR)
-```
-
-### Level Definitions
-
-| Level | ID Format | Purpose | Owner | Approval Authority |
-|-------|-----------|---------|-------|--------------------|
-| Business Requirement | BR-XXX | Define what the business needs to achieve | Product Owner | Project Sponsor |
-| Stakeholder Requirement | STK-XXX | Define what stakeholders need the system to do for them | Business Analyst | Product Owner |
-| System Requirement | SYS-XXX | Define what the system must do to satisfy stakeholder needs | Business Analyst / Tech Lead | Tech Lead |
-| Software Requirement | SWR-XXX | Define specific software behavior, constraints, and interfaces | Tech Lead / Developer | Tech Lead |
+> **IF** small project (1-2 devs) **THEN** User stories with acceptance criteria acceptable in lieu of formal BRD; SRS equivalent required; RTM may be Jira epic-to-story links
+> **IF** medium project (3-5 devs) **THEN** BRD, SRS, and RTM required; validation may be single review session
+> **IF** large project (6+ devs) **THEN** Full compliance required
 
 ---
 
-## Mandatory Requirement Attributes
+## COMPLIANCE REQUIREMENTS
 
-Every requirement at every level must have the following attributes:
+### Requirements Hierarchy
 
-| Attribute | Description | Example |
-|-----------|-------------|---------|
-| ID | Unique identifier using level prefix | SWR-042 |
-| Title | Short descriptive name | Late Fee Calculation |
-| Description | Clear statement of the requirement | The system shall calculate late fees at 2% of daily rental rate per day overdue |
-| Priority | MoSCoW classification | Must Have |
-| Source | Origin of the requirement (stakeholder, regulation, etc.) | Operations Manager |
-| Rationale | Why this requirement exists | Late returns cause revenue loss; automated calculation reduces manual errors |
-| Acceptance Criteria | Measurable conditions for verification | Given a rental 3 days overdue at 100 SAR/day, the calculated fee is 6 SAR |
-| Status | Current lifecycle state | Approved |
-| Parent | ID of the parent requirement (except BR level) | SYS-018 |
-| Version | Current version number | 1.2 |
+| # | Rule | Applies To | Verification | Violation Response |
+|---|------|-----------|-------------|-------------------|
+| 1 | Requirements decompose through four levels: BR --> STK --> SYS --> SWR | All projects | [ ] Verify each requirement has correct level prefix and parent link | Requirement rejected at baseline review |
+| 2 | Business Requirements use format BR-XXX | All projects | [ ] Audit requirement IDs against naming convention | Requirement IDs corrected before baseline |
+| 3 | Stakeholder Requirements use format STK-XXX | All projects | [ ] Audit requirement IDs against naming convention | Requirement IDs corrected before baseline |
+| 4 | System Requirements use format SYS-XXX | All projects | [ ] Audit requirement IDs against naming convention | Requirement IDs corrected before baseline |
+| 5 | Software Requirements use format SWR-XXX | All projects | [ ] Audit requirement IDs against naming convention | Requirement IDs corrected before baseline |
+| 6 | Numbers assigned sequentially, never reused | All projects | [ ] Check for gaps or duplicates in ID sequence | IDs reassigned; retired IDs documented |
+| 7 | Cross-project requirements use prefix: PROJECT-LEVEL-NUMBER | Multi-project | [ ] Verify project prefix present on shared requirements | Prefix added before cross-project reference |
+
+### Level Ownership and Approval
+
+| # | Rule | Applies To | Verification | Violation Response |
+|---|------|-----------|-------------|-------------------|
+| 8 | BR owned by Product Owner, approved by Project Sponsor | All projects | [ ] Check approval signatures on BR-level requirements | Requirement cannot enter Approved state |
+| 9 | STK owned by Business Analyst, approved by Product Owner | All projects | [ ] Check approval signatures on STK-level requirements | Requirement cannot enter Approved state |
+| 10 | SYS owned by Business Analyst / Tech Lead, approved by Tech Lead | All projects | [ ] Check approval signatures on SYS-level requirements | Requirement cannot enter Approved state |
+| 11 | SWR owned by Tech Lead / Developer, approved by Tech Lead | All projects | [ ] Check approval signatures on SWR-level requirements | Requirement cannot enter Approved state |
+
+### Mandatory Requirement Attributes
+
+| # | Rule | Applies To | Verification | Violation Response |
+|---|------|-----------|-------------|-------------------|
+| 12 | Every requirement has a unique ID using level prefix | All requirements | [ ] Audit for missing or duplicate IDs | Requirement blocked from review |
+| 13 | Every requirement has a Title | All requirements | [ ] Audit for missing titles | Requirement blocked from review |
+| 14 | Every requirement has a Description (clear statement) | All requirements | [ ] Audit for missing descriptions | Requirement blocked from review |
+| 15 | Every requirement has MoSCoW Priority | All requirements | [ ] Audit for missing priority | Requirement blocked from review |
+| 16 | Every requirement has a Source | All requirements | [ ] Audit for missing source | Requirement blocked from review |
+| 17 | Every requirement has a Rationale | All requirements | [ ] Audit for missing rationale | Requirement blocked from review |
+| 18 | Every requirement has Acceptance Criteria | All requirements | [ ] Audit for missing acceptance criteria | Requirement blocked from review |
+| 19 | Every requirement has a Status (lifecycle state) | All requirements | [ ] Audit for missing status | Requirement blocked from review |
+| 20 | Every requirement (except BR) has a Parent ID | STK, SYS, SWR | [ ] Audit for missing parent links | Requirement blocked from review |
+| 21 | Every requirement has a Version number | All requirements | [ ] Audit for missing version | Requirement blocked from review |
+
+### Requirement Quality Criteria
+
+| # | Rule | Applies To | Verification | Violation Response |
+|---|------|-----------|-------------|-------------------|
+| 22 | Requirement is Unambiguous (one interpretation) | All approved requirements | [ ] Two independent readers reach same understanding | Rework before Approved status |
+| 23 | Requirement is Testable (pass/fail test possible) | All approved requirements | [ ] Confirm a pass/fail test can be written | Rework before Approved status |
+| 24 | Requirement is Traceable (source and forward links) | All approved requirements | [ ] Verify parent link exists and implementation can link | Rework before Approved status |
+| 25 | Requirement is Feasible (implementable within constraints) | All approved requirements | [ ] Tech lead confirms achievability | Rework before Approved status |
+| 26 | Requirement is Necessary (traces to business need) | All approved requirements | [ ] Verify trace to a business requirement | Rework before Approved status |
+| 27 | Requirement is Consistent (no contradictions) | All approved requirements | [ ] Cross-check against all related requirements | Rework before Approved status |
+
+### Lifecycle State Transitions
+
+| # | Rule | Applies To | Verification | Violation Response |
+|---|------|-----------|-------------|-------------------|
+| 28 | Valid states: Draft, Under Review, Approved, Rejected, Implemented, Verified, Deferred, Retired | All requirements | [ ] Audit for invalid states | State corrected |
+| 29 | Only Business Analyst transitions to Draft and Under Review | All requirements | [ ] Check transition author | Unauthorized transition reverted |
+| 30 | Only approval authority per level transitions to Approved or Rejected | All requirements | [ ] Check approval authority | Unauthorized approval reverted |
+| 31 | Only Developer transitions to Implemented | All requirements | [ ] Check transition author | Unauthorized transition reverted |
+| 32 | Only QA Lead transitions to Verified | All requirements | [ ] Check transition author | Unauthorized transition reverted |
+| 33 | Only Product Owner transitions to Deferred or Retired | All requirements | [ ] Check transition author | Unauthorized transition reverted |
 
 ---
 
-## Requirement Lifecycle States
+## COMPLIANCE CHECKLIST
 
-```
-Draft --> Under Review --> Approved --> Implemented --> Verified --> Retired
-                |                          |
-                v                          v
-            Rejected                   Deferred
-```
-
-| State | Definition | Who Transitions |
-|-------|-----------|-----------------|
-| Draft | Initial capture, not yet reviewed | Business Analyst |
-| Under Review | Submitted for stakeholder review | Business Analyst |
-| Approved | Accepted and baselined | Approval authority per level |
-| Rejected | Determined to be invalid or unnecessary | Approval authority per level |
-| Implemented | Code written to fulfill the requirement | Developer |
-| Verified | Tested and confirmed to meet acceptance criteria | QA Lead |
-| Deferred | Accepted but postponed to a future release | Product Owner |
-| Retired | No longer applicable | Product Owner |
-
----
-
-## Requirement ID Naming Convention
-
-Format: `<LEVEL>-<NUMBER>`
-
-| Level | Prefix | Range | Example |
-|-------|--------|-------|---------|
-| Business Requirement | BR | BR-001 to BR-999 | BR-042 |
-| Stakeholder Requirement | STK | STK-001 to STK-999 | STK-087 |
-| System Requirement | SYS | SYS-001 to SYS-999 | SYS-134 |
-| Software Requirement | SWR | SWR-001 to SWR-999 | SWR-201 |
-
-Rules:
-
-- Numbers are assigned sequentially within each level.
-- Numbers are never reused, even if a requirement is retired.
-- Cross-project requirements use a project prefix: `<PROJECT>-<LEVEL>-<NUMBER>` (e.g., `FLEET-BR-001`).
-
----
-
-## Requirement Quality Criteria
-
-Every approved requirement must satisfy all six quality criteria:
-
-| Criterion | Definition | Test |
-|-----------|-----------|------|
-| Unambiguous | Has exactly one interpretation | Can two readers independently reach the same understanding? |
-| Testable | Can be verified through testing or inspection | Can you write a pass/fail test for it? |
-| Traceable | Can be traced to its source and forward to design/test | Does it have a parent and can it link to implementation? |
-| Feasible | Can be implemented within known constraints | Has the tech lead confirmed it is achievable? |
-| Necessary | Removal would create a gap in meeting business objectives | Does it trace to a business requirement? |
-| Consistent | Does not contradict any other requirement | Has it been checked against all related requirements? |
-
-A requirement that fails any criterion must be reworked before it can move to **Approved** status.
+- [ ] Requirements hierarchy follows four-level decomposition (BR --> STK --> SYS --> SWR)
+- [ ] All requirement IDs follow naming convention (LEVEL-NUMBER)
+- [ ] All ten mandatory attributes populated for every requirement
+- [ ] Every non-BR requirement has a valid parent link
+- [ ] All approved requirements pass six quality criteria (unambiguous, testable, traceable, feasible, necessary, consistent)
+- [ ] Lifecycle state transitions performed only by authorized roles
+- [ ] Requirements baseline review conducted with stakeholder sign-off
+- [ ] ISO 29148 clause mapping satisfied (Clauses 5-8)
 
 ---
 
@@ -117,3 +101,17 @@ A requirement that fails any criterion must be reworked before it can move to **
 | Clause 6: System requirements analysis | System Requirements section of SRS |
 | Clause 7: Software requirements specification | SRS |
 | Clause 8: Information items | BRD, SRS, RTM |
+
+---
+
+## CROSS-REFERENCES
+
+| Document | Type | Link |
+|----------|------|------|
+| SDLC Framework Standard | Standard | ../standards/sdlc-framework.md |
+| Requirements Classification Standard | Standard | ../standards/requirements-classification.md |
+| Requirements Traceability Standard | Standard | ../standards/requirements-traceability.md |
+| Extract Business Requirements | Runbook | ../runbooks/extract-business-requirements.md |
+| Derive Software Requirements | Runbook | ../runbooks/derive-software-requirements.md |
+| Validate Requirements | Runbook | ../runbooks/validate-requirements.md |
+| Manage Requirements Changes | Runbook | ../runbooks/manage-requirements-changes.md |

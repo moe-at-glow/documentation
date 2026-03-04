@@ -1,10 +1,26 @@
 # Change Request Form
 
-**Template -- Copy and fill in for each change request.**
+| Field | Value |
+|-------|-------|
+| **Template ID** | TPL-P2-CRF |
+| **When to Use** | Propose a change to baselined requirements, scope, or design |
+| **Owner** | Requestor (any role) |
+| **Reviewer** | Change Control Board (Product Owner + Tech Lead) |
+| **SLA** | 3 business days for initial review; 5 business days for impact analysis |
+| **Runbook** | [Manage Requirements Changes](../runbooks/manage-requirements-changes.md) |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Change Request
+## SCALING GATE
+
+> **IF** small project (1-2 devs) **THEN** Cost Impact and Technical Impact sections are optional. Impact Analysis may be a single summary paragraph.
+> **IF** medium project (3-5 devs) **THEN** All sections required; Cost Impact may omit line-item breakdown.
+> **IF** large project (6+ devs) **THEN** Full template required.
+
+---
+
+## [ ] Change Request
 
 | Field | Value |
 |-------|-------|
@@ -17,7 +33,7 @@
 
 ---
 
-## Affected Requirements
+## [ ] Affected Requirements
 
 | Requirement ID | Current Description | Proposed Change |
 |---------------|-------------------|-----------------|
@@ -26,21 +42,25 @@
 
 ---
 
-## Change Description
+## [ ] Change Description
 
-[Describe what is being requested. Be specific about what should be added, modified, or removed.]
+<!-- Be specific: what is added, modified, or removed -->
 
----
-
-## Justification / Business Reason
-
-[Explain why this change is needed. Reference business objectives, stakeholder feedback, regulatory changes, or defects.]
+[Change description here]
 
 ---
 
-## Impact Analysis
+## [ ] Justification / Business Reason
 
-### Scope Impact
+<!-- Reference business objectives, stakeholder feedback, regulatory changes, or defects -->
+
+[Justification here]
+
+---
+
+## [ ] Impact Analysis
+
+### [ ] Scope Impact
 
 | Aspect | Impact | Details |
 |--------|--------|---------|
@@ -50,7 +70,7 @@
 | New features | [Yes/No] | [Description] |
 | Overall scope | Increase / Decrease / Neutral | [Summary] |
 
-### Schedule Impact
+### [ ] Schedule Impact
 
 | Aspect | Impact | Details |
 |--------|--------|---------|
@@ -58,7 +78,7 @@
 | Affected sprints | [Sprint numbers] | |
 | Delivery date impact | No change / Delayed by [duration] | |
 
-### Cost Impact
+### [ ] Cost Impact
 
 | Aspect | Impact | Details |
 |--------|--------|---------|
@@ -67,14 +87,14 @@
 | Licensing cost | [Amount] | |
 | Total estimated cost | [Amount] | |
 
-### Risk Impact
+### [ ] Risk Impact
 
 | Risk | Likelihood | Impact | Mitigation |
 |------|-----------|--------|------------|
 | [Risk description] | High/Med/Low | High/Med/Low | [Mitigation plan] |
 | | | | |
 
-### Technical Impact
+### [ ] Technical Impact
 
 | Aspect | Impact | Details |
 |--------|--------|---------|
@@ -85,7 +105,7 @@
 
 ---
 
-## Affected Artifacts
+## [ ] Affected Artifacts
 
 | Artifact | Change Required |
 |----------|----------------|
@@ -98,7 +118,7 @@
 
 ---
 
-## Decision
+## [ ] Decision
 
 | Field | Value |
 |-------|-------|
@@ -106,17 +126,17 @@
 | Decision Date | YYYY-MM-DD |
 | Decision Authority | [Name(s) and role(s)] |
 
-### Rationale
+### [ ] Rationale
 
-[Explain why this decision was made.]
+[Explain why this decision was made]
 
-### Conditions (if applicable)
+### [ ] Conditions (if applicable)
 
-[Any conditions attached to the approval, e.g., "Approved for Phase 2 only" or "Approved with reduced scope."]
+[Any conditions attached to the approval, e.g., "Approved for Phase 2 only"]
 
 ---
 
-## Implementation Notes
+## [ ] Implementation Notes
 
 | Field | Value |
 |-------|-------|
@@ -128,7 +148,7 @@
 
 ---
 
-## Sign-Off
+## [ ] Sign-Off
 
 | Name | Role | Decision | Date |
 |------|------|----------|------|
@@ -136,3 +156,25 @@
 | [Name] | Tech Lead | | |
 | [Name] | QA Lead | | |
 | [Name] | Project Sponsor (if high impact) | | |
+
+---
+
+## COMPLETION CHECKLIST
+
+- [ ] All required sections filled
+- [ ] Impact analysis completed
+- [ ] Reviewed by Change Control Board (Product Owner + Tech Lead)
+- [ ] Approved by Decision Authority
+- [ ] Stored in project SharePoint / repository
+- [ ] Cross-referenced in RTM (if applicable)
+
+---
+
+## CROSS-REFERENCES
+
+| Artifact | Link |
+|----------|------|
+| Producing Runbook | [Manage Requirements Changes](../runbooks/manage-requirements-changes.md) |
+| Business Requirements Document | [BRD Template](business-requirements-document.md) |
+| Software Requirements Specification | [SRS Template](software-requirements-specification.md) |
+| Requirements Traceability Matrix | [RTM Template](requirements-traceability-matrix.md) |

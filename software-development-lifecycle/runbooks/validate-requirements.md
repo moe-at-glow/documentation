@@ -1,87 +1,111 @@
 # Validate Requirements
 
-Step-by-step procedure for validating requirements before establishing the baseline.
+| Field | Value |
+|-------|-------|
+| **Procedure ID** | RB-P2-004 |
+| **Owner** | Business Analyst + Tech Lead + QA Lead |
+| **Accountable** | Product Owner |
+| **SLA** | 10 business days |
+| **Escalation** | Product Owner |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Prerequisites
+## ENTRY CRITERIA -- DO NOT PROCEED WITHOUT
 
-- Draft SRS with all software requirements documented.
-- Requirements Traceability Matrix populated.
-- All requirement authors and key stakeholders available for review.
+- [ ] Draft SRS with all software requirements documented (RB-P2-003 exit criteria met)
+- [ ] Requirements Traceability Matrix populated
+- [ ] All requirement authors available for review
+- [ ] Key stakeholders available for review meeting
+- [ ] QA Lead assigned and available
 
 ---
 
-## Procedure
+## ABORT CONDITIONS
+
+| Condition | Action | Escalate To |
+|-----------|--------|-------------|
+| Draft SRS not complete | STOP. Complete RB-P2-003 first. | Tech Lead |
+| RTM not populated | STOP. Complete traceability links first. | Business Analyst |
+| More than 50% of requirements fail validation checks | STOP. Return to RB-P2-003 for major rework. | Tech Lead |
+| Key review attendees unavailable for 10+ business days | STOP. Request schedule intervention. | Product Owner |
+
+---
+
+## PROCEDURE
 
 ### Step 1: Check Completeness
 
-Verify that all business needs are covered:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Review each BR in the BRD and confirm downstream traceability exists | Business Analyst | 1 day |
+| Check RTM for gaps | Business Analyst | 0.5 day |
+| Document all gaps found | Business Analyst | 0.5 day |
 
-1. Review each business requirement in the BRD.
-2. Confirm it has at least one stakeholder requirement, one system requirement, and one software requirement tracing to it.
-3. Check the RTM for gaps (business requirements with no downstream trace).
-4. Document any gaps found.
+- [ ] Every BR has at least one SWR (no orphan business requirements)
+- [ ] All non-functional categories addressed (Performance, Security, Usability, Reliability, Scalability)
+- [ ] All system interfaces documented (every external system has interface requirements)
+- [ ] All user roles have requirements (every actor has at least one use case or user story)
 
-| Check | Pass Criteria |
-|-------|--------------|
-| Every BR has at least one SWR | No orphan business requirements |
-| All non-functional categories addressed | Performance, Security, Usability, Reliability, Scalability covered |
-| All system interfaces documented | Every external system has interface requirements |
-| All user roles have requirements | Every actor has at least one use case or user story |
+> **IF** gaps found **THEN** log gap details; continue to Step 2 (resolve in Step 6)
+> **ELSE** proceed to Step 2
 
 ### Step 2: Check Consistency
 
-Verify that no requirements contradict each other:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Group requirements by feature area | Business Analyst | 0.5 day |
+| Review each group for conflicting statements | Business Analyst + Tech Lead | 1 day |
+| Cross-check NFRs for compatibility | Tech Lead | 0.5 day |
+| Flag all conflicts | Business Analyst | 0.5 day |
 
-1. Group requirements by feature area.
-2. Review each group for conflicting statements.
-3. Cross-check non-functional requirements (e.g., a performance requirement vs. a security requirement that adds latency).
-4. Flag all conflicts.
+- [ ] No contradictory functional requirements (no two requirements define conflicting behavior for same scenario)
+- [ ] Non-functional requirements are compatible (security controls do not make performance targets impossible)
+- [ ] Priority assignments are consistent (no Should Have depending on a Could Have)
 
-| Check | Pass Criteria |
-|-------|--------------|
-| No contradictory functional requirements | No two requirements define conflicting behavior for the same scenario |
-| Non-functional requirements are compatible | Security controls do not make performance targets impossible |
-| Priority assignments are consistent | A Should Have requirement does not depend on a Could Have requirement |
+> **IF** conflicts found **THEN** log conflict details; continue to Step 3 (resolve in Step 6)
+> **ELSE** proceed to Step 3
 
 ### Step 3: Check Feasibility
 
-Verify that each requirement can be implemented:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Review all Must Have and Should Have requirements for implementability | Tech Lead | 1 day |
 
-1. Tech Lead reviews all Must Have and Should Have requirements.
-2. For each requirement, confirm:
-   - Technology exists to implement it.
-   - It can be delivered within the project timeline.
-   - It does not exceed known infrastructure constraints.
-3. Flag infeasible requirements for renegotiation with Product Owner.
+- [ ] Technology exists to implement each requirement
+- [ ] Each requirement deliverable within project timeline
+- [ ] No requirement exceeds known infrastructure constraints
+
+> **IF** infeasible requirements found **THEN** flag for renegotiation with Product Owner; continue to Step 4
+> **ELSE** proceed to Step 4
 
 ### Step 4: Check Testability
 
-Verify that each requirement can be tested:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Review every SWR for testability | QA Lead | 1 day |
 
-1. QA Lead reviews every software requirement.
-2. For each requirement, confirm:
-   - Acceptance criteria exist and are measurable.
-   - A pass/fail test can be written.
-   - Test data and test environments can be provisioned.
-3. Flag untestable requirements for rework.
+- [ ] Every SWR has at least one acceptance criterion
+- [ ] No subjective terms without quantification ("fast", "easy", "user-friendly")
+- [ ] Test approach identified for each SWR (manual test, automated test, or inspection)
+- [ ] Test data and test environments can be provisioned
 
-| Check | Pass Criteria |
-|-------|--------------|
-| Acceptance criteria present | Every SWR has at least one acceptance criterion |
-| Criteria are measurable | No subjective terms ("fast", "easy", "user-friendly") without quantification |
-| Test approach identified | Manual test, automated test, or inspection method defined |
+> **IF** untestable requirements found **THEN** flag for rework; continue to Step 5
+> **ELSE** proceed to Step 5
 
 ### Step 5: Conduct Requirements Review Meeting
 
-**Attendees:** Project Sponsor, Product Owner, Business Analyst, Tech Lead, QA Lead, Domain Expert(s).
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Schedule and facilitate review meeting | Business Analyst | 1 day |
 
-**Agenda:**
+**Attendees:** Project Sponsor, Product Owner, Business Analyst, Tech Lead, QA Lead, Domain Expert(s)
+
+- [ ] Meeting agenda followed:
 
 | Time | Activity |
 |------|----------|
-| 0:00 | Review objectives and ground rules |
+| 0:00 | State review objectives and ground rules |
 | 0:10 | Present validation findings (Steps 1-4) |
 | 0:30 | Walk through each flagged issue |
 | 1:00 | Break |
@@ -90,53 +114,87 @@ Verify that each requirement can be tested:
 | 1:50 | Confirm requirements ready for baseline (or identify rework needed) |
 | 2:00 | Close |
 
+- [ ] All flagged issues presented
+- [ ] Meeting minutes recorded
+- [ ] Action items assigned with owners and deadlines
+
+> **IF** rework needed **THEN** proceed to Step 6
+> **ELSE IF** requirements ready for baseline **THEN** skip to Step 8
+> **ELSE** proceed to Step 6
+
 ### Step 6: Resolve Conflicts and Ambiguities
 
-For each issue identified:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Document each conflict or ambiguity | Business Analyst | 0.5 day |
+| Identify affected stakeholders per issue | Business Analyst | 0.5 day |
+| Facilitate discussion to reach agreement | Business Analyst | 1 day |
+| Record resolution and rationale | Business Analyst | 0.5 day |
 
-1. Document the conflict or ambiguity.
-2. Identify affected stakeholders.
-3. Facilitate discussion to reach agreement.
-4. If no agreement, escalate to Product Owner for decision.
-5. Record the resolution and rationale.
+- [ ] Each issue documented
+- [ ] Affected stakeholders identified
+- [ ] Agreement reached for each issue
+- [ ] Resolution and rationale recorded
+
+> **IF** no agreement reached **THEN** escalate to Product Owner for final decision
+> **ELSE** proceed to Step 7
 
 ### Step 7: Update Requirements
 
-1. Apply all resolutions from Step 6.
-2. Rework any requirements flagged as untestable, infeasible, or ambiguous.
-3. Update the RTM to reflect changes.
-4. Re-run checks from Steps 1-4 on modified requirements.
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Apply all resolutions from Step 6 | Business Analyst | 1 day |
+| Rework requirements flagged as untestable, infeasible, or ambiguous | Business Analyst + Tech Lead | 1 day |
+| Update RTM to reflect changes | Business Analyst | 0.5 day |
+| Re-run checks from Steps 1-4 on modified requirements | Business Analyst + Tech Lead + QA Lead | 1 day |
+
+- [ ] All resolutions applied
+- [ ] Flagged requirements reworked
+- [ ] RTM updated
+- [ ] Validation checks re-run on modified requirements
+- [ ] All re-run checks pass
+
+> **IF** re-run checks fail **THEN** return to Step 6 for affected requirements
+> **ELSE** proceed to Step 8
 
 ### Step 8: Obtain Baseline Approval
 
-1. Present the validated SRS to the approval authority.
-2. Confirm all validation checks pass.
-3. Obtain written sign-off from:
-   - Product Owner (business validity)
-   - Tech Lead (technical feasibility)
-   - QA Lead (testability)
-4. Record the baseline version number and date.
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Present validated SRS to approval authority | Business Analyst | 0.5 day |
+| Confirm all validation checks pass | Business Analyst | During presentation |
+| Obtain written sign-off from Product Owner (business validity) | Product Owner | 1 day |
+| Obtain written sign-off from Tech Lead (technical feasibility) | Tech Lead | 1 day |
+| Obtain written sign-off from QA Lead (testability) | QA Lead | 1 day |
+| Record baseline version number and date | Business Analyst | 0.5 day |
+
+- [ ] Validated SRS presented
+- [ ] All validation checks confirmed passing
+- [ ] Product Owner sign-off obtained
+- [ ] Tech Lead sign-off obtained
+- [ ] QA Lead sign-off obtained
+- [ ] Baseline version number and date recorded
+
+> **IF** approver requests changes during sign-off **THEN** return to Step 7
+> **ELSE** proceed to Step 9
 
 ### Step 9: Establish Requirements Baseline
 
-1. Mark the SRS version as the official baseline.
-2. Mark all approved requirements as status: **Approved**.
-3. Lock the baseline. All future changes follow the [change management process](manage-requirements-changes.md).
-4. Distribute the baselined SRS to all project team members.
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Mark SRS version as official baseline | Business Analyst | 0.5 day |
+| Set all approved requirements to status: Approved | Business Analyst | 0.5 day |
+| Lock the baseline | Business Analyst | 0.5 day |
+| Distribute baselined SRS to all project team members | Business Analyst | 0.5 day |
+
+- [ ] SRS version marked as official baseline
+- [ ] All requirements set to Approved status
+- [ ] Baseline locked (all future changes follow [change management process](manage-requirements-changes.md))
+- [ ] Baselined SRS distributed to project team
 
 ---
 
-## Output Artifacts
-
-- Requirements Validation Report
-- Updated SRS (baselined version)
-- Updated RTM
-- Review meeting minutes
-- Baseline sign-off record
-
----
-
-## Validation Checklist
+## EXIT CRITERIA
 
 - [ ] Completeness check passed (all BRs traced to SWRs)
 - [ ] Consistency check passed (no contradictions)
@@ -148,3 +206,28 @@ For each issue identified:
 - [ ] Validation checks re-run on modified requirements
 - [ ] Baseline approval obtained (Product Owner, Tech Lead, QA Lead)
 - [ ] Baseline established and distributed
+
+---
+
+## OUTPUT ARTIFACTS
+
+| Artifact | Template | Storage |
+|----------|----------|---------|
+| Requirements Validation Report | -- | Project documentation repository |
+| Updated SRS (baselined version) | [software-requirements-specification.md](../templates/software-requirements-specification.md) | Project documentation repository |
+| Updated RTM | [requirements-traceability-matrix.md](../templates/requirements-traceability-matrix.md) | Project documentation repository |
+| Review Meeting Minutes | -- | Project documentation repository |
+| Baseline Sign-Off Record | -- | Project documentation repository |
+
+---
+
+## CROSS-REFERENCES
+
+| Document | Type | Link |
+|----------|------|------|
+| SRS Template | Template | [../templates/software-requirements-specification.md](../templates/software-requirements-specification.md) |
+| RTM Template | Template | [../templates/requirements-traceability-matrix.md](../templates/requirements-traceability-matrix.md) |
+| Requirements Engineering Standard | Standard | [../standards/requirements-engineering-standard.md](../standards/requirements-engineering-standard.md) |
+| Requirements Traceability Standard | Standard | [../standards/requirements-traceability.md](../standards/requirements-traceability.md) |
+| Derive Software Requirements | Runbook | [derive-software-requirements.md](derive-software-requirements.md) |
+| Manage Requirements Changes | Runbook | [manage-requirements-changes.md](manage-requirements-changes.md) |

@@ -1,14 +1,14 @@
 # ISO Standards Quick Reference
 
-Quick reference for the three ISO standards underlying GlowPowerRental's SDLC framework.
+| Field | Value |
+|-------|-------|
+| **Reference ID** | REF-P2-003 |
+| **Use When** | Identifying which ISO standard, clause, or process applies to a given SDLC activity or artifact |
+| **Last Updated** | 2026-03-04 |
 
 ---
 
 ## ISO/IEC/IEEE 12207 -- Software Life Cycle Processes
-
-Defines the processes for software lifecycle management.
-
-**Key processes relevant to requirements:**
 
 | Process | Description | GlowPowerRental Phase |
 |---------|-------------|----------------------|
@@ -24,9 +24,7 @@ Defines the processes for software lifecycle management.
 
 ## ISO/IEC/IEEE 29148 -- Requirements Engineering
 
-Defines processes and artifacts for requirements engineering.
-
-**Key clauses:**
+### Key Clauses
 
 | Clause | Title | What It Mandates | GlowPowerRental Artifact |
 |--------|-------|-----------------|--------------------------|
@@ -36,7 +34,7 @@ Defines processes and artifacts for requirements engineering.
 | Clause 7 | Software Requirements Specification | Structure and content of an SRS document | SRS |
 | Clause 8 | Information Items | Required documentation artifacts | BRD, SRS, RTM |
 
-**Key concepts from 29148:**
+### Key Concepts
 
 | Concept | Definition |
 |---------|-----------|
@@ -50,9 +48,7 @@ Defines processes and artifacts for requirements engineering.
 
 ## ISO/IEC/IEEE 42010 -- Architecture Description
 
-Defines how to document system architecture.
-
-**Relevance to requirements:**
+### Relevance to Requirements
 
 | Concept | How It Relates to Requirements |
 |---------|-------------------------------|
@@ -61,7 +57,7 @@ Defines how to document system architecture.
 | Architecture decisions | Architecture decisions may create new technical requirements |
 | System context | System boundary definition informs requirement scope |
 
-**Key elements:**
+### Key Elements
 
 | Element | Description | GlowPowerRental Artifact |
 |---------|-------------|--------------------------|
@@ -104,3 +100,77 @@ Defines how to document system architecture.
 | 6. Testing | Verification, Validation | -- | -- |
 | 7. Deployment | Transition | -- | -- |
 | 8. Operations | Operation, Maintenance | -- | -- |
+
+---
+
+## DECISION TREE
+
+### Which Standard Applies?
+
+```
+IF activity involves identifying stakeholders or eliciting needs
+    THEN ISO 12207 (Stakeholder Needs Definition) + ISO 29148 Clause 5
+
+ELSE IF activity involves writing or reviewing requirements documents
+    IF document is BRD or Stakeholder Requirements
+        THEN ISO 29148 Clause 5
+    ELSE IF document is SRS (system-level requirements)
+        THEN ISO 29148 Clause 6
+    ELSE IF document is SRS (software-level requirements)
+        THEN ISO 29148 Clause 7
+    ELSE IF document is RTM or other information item
+        THEN ISO 29148 Clause 8
+
+ELSE IF activity involves architecture definition or decisions
+    THEN ISO 42010
+    IF architecture decisions create new requirements
+        THEN also ISO 29148 Clause 6 or 7
+
+ELSE IF activity involves phase gate review or approval
+    THEN ISO 12207 (Decision Management)
+
+ELSE IF activity involves version control of work products
+    THEN ISO 12207 (Configuration Management)
+
+ELSE IF activity involves testing or verification
+    THEN ISO 12207 (Verification + Validation)
+```
+
+### Which Artifact Satisfies This Clause?
+
+```
+IF clause is ISO 29148 Clause 5
+    THEN produce: Stakeholder Register + BRD
+
+ELSE IF clause is ISO 29148 Clause 6
+    THEN produce: SRS (system requirements section)
+
+ELSE IF clause is ISO 29148 Clause 7
+    THEN produce: SRS (software requirements section)
+
+ELSE IF clause is ISO 29148 Clause 8
+    THEN produce: BRD + SRS + RTM
+
+ELSE IF clause is ISO 12207 Decision Management
+    THEN produce: Phase gate review records + Baseline Sign-off
+
+ELSE IF clause is ISO 42010 Architecture Decisions
+    THEN produce: ADRs
+```
+
+---
+
+## CROSS-REFERENCES
+
+| Document | Type | Link |
+|----------|------|------|
+| Requirements Engineering Standard | Standard | ../standards/requirements-engineering-standard.md |
+| Requirements Classification Standard | Standard | ../standards/requirements-classification.md |
+| Requirements Traceability Standard | Standard | ../standards/requirements-traceability.md |
+| SDLC Framework | Standard | ../standards/sdlc-framework.md |
+| Architecture Description Standard | Standard | ../phase-3-system-architecture/standards/architecture-description-standard.md |
+| Architecture Decision Records Standard | Standard | ../phase-3-system-architecture/standards/architecture-decision-records-standard.md |
+| Requirements Artifacts Checklist | Reference | ./requirements-artifacts-checklist.md |
+| Glossary | Reference | ./glossary.md |
+| RACI Matrix | Reference | ./raci-matrix.md |
+| Validate Requirements | Runbook | ../runbooks/validate-requirements.md |

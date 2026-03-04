@@ -1,10 +1,26 @@
 # Business Requirements Document (BRD)
 
-**Template -- Copy and fill in for each project.**
+| Field | Value |
+|-------|-------|
+| **Template ID** | TPL-P2-BRD |
+| **When to Use** | Capture and formalize business needs before deriving software requirements |
+| **Owner** | Business Analyst |
+| **Reviewer** | Product Owner |
+| **SLA** | 5 business days from stakeholder interviews complete |
+| **Runbook** | [Extract Business Requirements](../runbooks/extract-business-requirements.md) |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Document Control
+## SCALING GATE
+
+> **IF** small project (1-2 devs) **THEN** Sections 6 (Business Rules), 8 (Dependencies), and 9 (Glossary) are optional. Stakeholder Summary may be inline (skip separate Stakeholder Analysis).
+> **IF** medium project (3-5 devs) **THEN** All sections required; Glossary optional if domain is well-understood.
+> **IF** large project (6+ devs) **THEN** Full template required.
+
+---
+
+## [ ] Document Control
 
 | Field | Value |
 |-------|-------|
@@ -15,14 +31,14 @@
 | Date Created | YYYY-MM-DD |
 | Last Updated | YYYY-MM-DD |
 
-### Revision History
+### [ ] Revision History
 
 | Version | Date | Author | Description |
 |---------|------|--------|-------------|
 | 0.1 | YYYY-MM-DD | [Name] | Initial draft |
 | | | | |
 
-### Approvers
+### [ ] Approvers
 
 | Name | Role | Signature | Date |
 |------|------|-----------|------|
@@ -32,13 +48,15 @@
 
 ---
 
-## 1. Executive Summary
+## [ ] 1. Executive Summary
 
-[2-3 paragraph summary of the business need, proposed solution, and expected outcomes.]
+<!-- 2-3 paragraphs: business need, proposed solution, expected outcomes -->
+
+[Executive summary here]
 
 ---
 
-## 2. Business Objectives
+## [ ] 2. Business Objectives
 
 | ID | Objective | Success Metric | Target |
 |----|-----------|---------------|--------|
@@ -48,16 +66,16 @@
 
 ---
 
-## 3. Project Scope
+## [ ] 3. Project Scope
 
-### In Scope
+### [ ] In Scope
 
 | Item | Description |
 |------|-------------|
 | [Feature/capability] | [Brief description] |
 | | |
 
-### Out of Scope
+### [ ] Out of Scope
 
 | Item | Reason |
 |------|--------|
@@ -66,7 +84,9 @@
 
 ---
 
-## 4. Stakeholder Summary
+## [ ] 4. Stakeholder Summary
+
+<!-- Brief summary here; link to full Stakeholder Analysis for details -->
 
 | ID | Name | Role | Interest Level | Influence Level | Key Concerns |
 |----|------|------|---------------|-----------------|-------------|
@@ -77,7 +97,9 @@ Full stakeholder analysis: [Link to Stakeholder Analysis document]
 
 ---
 
-## 5. Business Requirements
+## [ ] 5. Business Requirements
+
+<!-- Use MoSCoW priority: M=Must, S=Should, C=Could, W=Won't -->
 
 | ID | Title | Description | Priority | Source | Rationale | Acceptance Criteria | Status |
 |----|-------|-------------|----------|--------|-----------|-------------------|--------|
@@ -87,7 +109,7 @@ Full stakeholder analysis: [Link to Stakeholder Analysis document]
 
 ---
 
-## 6. Business Rules
+## [ ] 6. Business Rules
 
 | Rule ID | Description | Source | Affected Requirements |
 |---------|-------------|--------|----------------------|
@@ -96,16 +118,16 @@ Full stakeholder analysis: [Link to Stakeholder Analysis document]
 
 ---
 
-## 7. Assumptions and Constraints
+## [ ] 7. Assumptions and Constraints
 
-### Assumptions
+### [ ] Assumptions
 
 | ID | Assumption | Impact if Wrong |
 |----|-----------|-----------------|
 | ASM-001 | [Assumption statement] | [What happens if this assumption is invalid] |
 | | | |
 
-### Constraints
+### [ ] Constraints
 
 | ID | Constraint | Type | Impact |
 |----|-----------|------|--------|
@@ -114,7 +136,7 @@ Full stakeholder analysis: [Link to Stakeholder Analysis document]
 
 ---
 
-## 8. Dependencies
+## [ ] 8. Dependencies
 
 | ID | Dependency | Type | Owner | Status |
 |----|-----------|------|-------|--------|
@@ -123,7 +145,7 @@ Full stakeholder analysis: [Link to Stakeholder Analysis document]
 
 ---
 
-## 9. Glossary
+## [ ] 9. Glossary
 
 | Term | Definition |
 |------|-----------|
@@ -132,16 +154,31 @@ Full stakeholder analysis: [Link to Stakeholder Analysis document]
 
 ---
 
-## 10. Approval Sign-Off
-
-By signing below, the approver confirms that:
-- All business requirements have been reviewed and are accurate.
-- The scope boundaries are agreed upon.
-- The priorities reflect business value.
-- This document may be baselined for the project.
+## [ ] 10. Approval Sign-Off
 
 | Name | Role | Decision (Approve/Reject) | Comments | Date |
 |------|------|--------------------------|----------|------|
 | | Project Sponsor | | | |
 | | Product Owner | | | |
 | | Tech Lead | | | |
+
+---
+
+## COMPLETION CHECKLIST
+
+- [ ] All required sections filled
+- [ ] Reviewed by Product Owner
+- [ ] Approved by Project Sponsor
+- [ ] Stored in project SharePoint / repository
+- [ ] Cross-referenced in RTM (if applicable)
+
+---
+
+## CROSS-REFERENCES
+
+| Artifact | Link |
+|----------|------|
+| Producing Runbook | [Extract Business Requirements](../runbooks/extract-business-requirements.md) |
+| Stakeholder Analysis | [Stakeholder Analysis Template](stakeholder-analysis-template.md) |
+| Software Requirements Specification | [SRS Template](software-requirements-specification.md) |
+| Requirements Traceability Matrix | [RTM Template](requirements-traceability-matrix.md) |

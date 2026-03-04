@@ -1,6 +1,10 @@
 # Requirements Artifacts Checklist
 
-All required artifacts for the Requirements Engineering phase.
+| Field | Value |
+|-------|-------|
+| **Reference ID** | REF-P2-002 |
+| **Use When** | Verifying all required artifacts are produced during requirements engineering |
+| **Last Updated** | 2026-03-04 |
 
 ---
 
@@ -39,14 +43,86 @@ All required artifacts for the Requirements Engineering phase.
 
 ## Completion Checklist
 
-| Artifact | Status |
-|----------|--------|
-| [ ] Project Charter | |
-| [ ] Stakeholder Register | |
-| [ ] Communication Plan | |
-| [ ] BRD with all mandatory attributes per requirement | |
-| [ ] SRS with functional and non-functional requirements | |
-| [ ] Use Cases (if applicable) | |
-| [ ] RTM with BR-to-SWR traceability | |
-| [ ] Validation Report | |
-| [ ] Baseline Sign-off | |
+- [ ] Project Charter
+- [ ] Stakeholder Register
+- [ ] Communication Plan
+- [ ] BRD with all mandatory attributes per requirement
+- [ ] SRS with functional and non-functional requirements
+- [ ] Use Cases (if applicable)
+- [ ] RTM with BR-to-SWR traceability
+- [ ] Validation Report
+- [ ] Baseline Sign-off
+
+---
+
+## DECISION TREE
+
+### Is This Artifact Required?
+
+```
+IF artifact is Project Charter, Stakeholder Register, Communication Plan,
+   BRD, SRS, RTM, Validation Report, or Baseline Sign-off
+    THEN required = YES -- produce before phase gate
+
+ELSE IF artifact is Use Case Document
+    THEN check project type:
+        IF system has user-facing interactions
+            THEN required = YES
+        ELSE
+            THEN required = NO -- document rationale for exclusion
+
+ELSE IF artifact is Stakeholder Requirements Specification
+    THEN included as section within BRD -- not a separate deliverable
+```
+
+### Who Approves This Artifact?
+
+```
+IF artifact is Project Charter OR BRD OR Baseline Sign-off
+    THEN approver = Project Sponsor
+
+ELSE IF artifact is Stakeholder Register OR Communication Plan
+    THEN approver = Product Owner
+
+ELSE IF artifact is SRS
+    THEN approver = Tech Lead
+
+ELSE IF artifact is Use Case Document OR RTM OR Validation Report
+    THEN approver = Business Analyst
+```
+
+### When to Update an Artifact After Baseline
+
+```
+IF a Change Request (CR) is approved by CCB
+    THEN identify affected artifacts:
+        IF CR changes business requirements
+            THEN update BRD, RTM, and request new Baseline Sign-off
+        IF CR changes software requirements
+            THEN update SRS, RTM, and request new Baseline Sign-off
+        IF CR introduces new stakeholders
+            THEN update Stakeholder Register and Communication Plan
+    THEN re-run validation on affected requirements
+    THEN update Validation Report
+```
+
+---
+
+## CROSS-REFERENCES
+
+| Document | Type | Link |
+|----------|------|------|
+| Requirements Engineering Standard | Standard | ../standards/requirements-engineering-standard.md |
+| Requirements Traceability Standard | Standard | ../standards/requirements-traceability.md |
+| Business Requirements Document | Template | ../templates/business-requirements-document.md |
+| Software Requirements Specification | Template | ../templates/software-requirements-specification.md |
+| Stakeholder Analysis Template | Template | ../templates/stakeholder-analysis-template.md |
+| Use Case Template | Template | ../templates/use-case-template.md |
+| Requirements Traceability Matrix | Template | ../templates/requirements-traceability-matrix.md |
+| Change Request Form | Template | ../templates/change-request-form.md |
+| Extract Business Requirements | Runbook | ../runbooks/extract-business-requirements.md |
+| Derive Software Requirements | Runbook | ../runbooks/derive-software-requirements.md |
+| Validate Requirements | Runbook | ../runbooks/validate-requirements.md |
+| Manage Requirements Changes | Runbook | ../runbooks/manage-requirements-changes.md |
+| RACI Matrix | Reference | ./raci-matrix.md |
+| ISO Standards Quick Reference | Reference | ./iso-standards-quick-reference.md |

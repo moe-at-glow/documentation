@@ -1,10 +1,26 @@
 # Requirements Traceability Matrix (RTM)
 
-**Template -- Copy and fill in for each project.**
+| Field | Value |
+|-------|-------|
+| **Template ID** | TPL-P2-RTM |
+| **When to Use** | Track every requirement from origin through design, code, and test |
+| **Owner** | Business Analyst |
+| **Reviewer** | QA Lead |
+| **SLA** | Maintained continuously; reviewed at each phase gate |
+| **Runbook** | [Derive Software Requirements](../runbooks/derive-software-requirements.md) |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Document Control
+## SCALING GATE
+
+> **IF** small project (1-2 devs) **THEN** Coverage Metrics section is optional. Traceability Matrix columns may omit SYS and STK if not applicable.
+> **IF** medium project (3-5 devs) **THEN** All sections required; Coverage Metrics updated at milestones only.
+> **IF** large project (6+ devs) **THEN** Full template required. Coverage Metrics updated every sprint.
+
+---
+
+## [ ] Document Control
 
 | Field | Value |
 |-------|-------|
@@ -15,7 +31,7 @@
 
 ---
 
-## Traceability Matrix
+## [ ] Traceability Matrix
 
 | Req ID | Req Description | Source (BR) | Stakeholder (STK) | System (SYS) | Design Reference | Code Reference | Test Case ID | Test Result | Status |
 |--------|----------------|-------------|-------------------|-------------|-----------------|---------------|-------------|-------------|--------|
@@ -25,22 +41,22 @@
 
 ---
 
-## How to Maintain This Matrix
+## [ ] Maintenance Guide
 
-### When to Update
+<!-- When to update each column -->
 
 | Event | Action |
 |-------|--------|
-| New requirement added | Add a new row. Fill in Req ID, Description, Source, and Status. |
-| Requirement modified | Update the affected row. Verify all links remain valid. |
-| Requirement retired | Set Status to "Retired". Do not delete the row. |
-| Design completed | Fill in Design Reference column for affected requirements. |
-| Code implemented | Fill in Code Reference column for affected requirements. |
-| Test case written | Fill in Test Case ID column for affected requirements. |
-| Test executed | Fill in Test Result column (Pass/Fail). |
-| Change request approved | Update affected rows. Add new rows for new requirements. |
+| New requirement added | Add row; fill Req ID, Description, Source, Status |
+| Requirement modified | Update row; verify all links remain valid |
+| Requirement retired | Set Status to "Retired"; do not delete the row |
+| Design completed | Fill Design Reference column |
+| Code implemented | Fill Code Reference column |
+| Test case written | Fill Test Case ID column |
+| Test executed | Fill Test Result column (Pass/Fail) |
+| Change request approved | Update affected rows; add new rows as needed |
 
-### Naming Conventions
+### [ ] Naming Conventions
 
 | Column | Format | Example |
 |--------|--------|---------|
@@ -50,7 +66,7 @@
 | System | SYS-XXX | SYS-134 |
 | Test Case ID | TC-XXX | TC-201 |
 
-### Review Checkpoints
+### [ ] Review Checkpoints
 
 | Checkpoint | Reviewer | What to Check |
 |-----------|----------|--------------|
@@ -62,7 +78,7 @@
 
 ---
 
-## Coverage Metrics
+## [ ] Coverage Metrics
 
 | Metric | Formula | Current Value | Target |
 |--------|---------|---------------|--------|
@@ -74,7 +90,7 @@
 
 ---
 
-## Summary
+## [ ] Summary
 
 | Status | Count |
 |--------|-------|
@@ -85,3 +101,25 @@
 | Passing | __ |
 | Deferred | __ |
 | Retired | __ |
+
+---
+
+## COMPLETION CHECKLIST
+
+- [ ] All required sections filled
+- [ ] Every SWR traces to at least one BR
+- [ ] Reviewed by QA Lead
+- [ ] Approved by Tech Lead
+- [ ] Stored in project SharePoint / repository
+- [ ] Coverage Metrics up to date
+
+---
+
+## CROSS-REFERENCES
+
+| Artifact | Link |
+|----------|------|
+| Producing Runbook | [Derive Software Requirements](../runbooks/derive-software-requirements.md) |
+| Business Requirements Document | [BRD Template](business-requirements-document.md) |
+| Software Requirements Specification | [SRS Template](software-requirements-specification.md) |
+| Change Request Form | [Change Request Form](change-request-form.md) |

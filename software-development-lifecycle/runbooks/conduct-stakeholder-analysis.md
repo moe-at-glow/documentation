@@ -1,24 +1,44 @@
 # Conduct Stakeholder Analysis
 
-Step-by-step procedure to identify, classify, and document project stakeholders.
+| Field | Value |
+|-------|-------|
+| **Procedure ID** | RB-P2-001 |
+| **Owner** | Business Analyst |
+| **Accountable** | Product Owner |
+| **SLA** | 5 business days |
+| **Escalation** | Product Owner |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Prerequisites
+## ENTRY CRITERIA -- DO NOT PROCEED WITHOUT
 
-- Approved business case or project charter.
-- Access to organizational chart.
-- Scheduled time with project sponsor.
+- [ ] Approved business case or project charter available
+- [ ] Access to organizational chart confirmed
+- [ ] Scheduled time with project sponsor secured
+- [ ] Business Analyst and Product Owner assigned
 
 ---
 
-## Procedure
+## ABORT CONDITIONS
+
+| Condition | Action | Escalate To |
+|-----------|--------|-------------|
+| No approved business case or project charter exists | STOP. Obtain approval before proceeding. | Product Owner |
+| Project sponsor unavailable for sign-off within SLA | STOP. Reschedule or request delegate authority. | Product Owner |
+| Organizational chart is outdated or unavailable | STOP. Request updated org chart from HR. | Product Owner |
+
+---
+
+## PROCEDURE
 
 ### Step 1: Identify All Stakeholders
 
-List every person or group who has influence over or is affected by the project.
+| Action | Owner | SLA |
+|--------|-------|-----|
+| List every person or group with influence over or affected by the project | Business Analyst | 1 day |
 
-**Internal stakeholders:**
+- [ ] All internal stakeholder categories reviewed:
 
 | Category | Examples |
 |----------|---------|
@@ -27,7 +47,7 @@ List every person or group who has influence over or is affected by the project.
 | End Users | Rental desk staff, warehouse operators, field technicians |
 | Support | IT operations, customer support |
 
-**External stakeholders:**
+- [ ] All external stakeholder categories reviewed:
 
 | Category | Examples |
 |----------|---------|
@@ -36,36 +56,38 @@ List every person or group who has influence over or is affected by the project.
 | Partners | Equipment suppliers, logistics providers |
 | Third Parties | Payment gateway providers, insurance companies |
 
+> **IF** stakeholder group is unclear **THEN** consult Domain Expert for classification
+> **ELSE IF** stakeholder spans multiple categories **THEN** list under primary category and cross-reference
+> **ELSE** proceed to Step 2
+
 ### Step 2: Classify Stakeholders Using Power/Interest Grid
 
-Place each stakeholder on the grid:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Place each stakeholder on the Power/Interest grid | Business Analyst | 0.5 day |
 
-```
-              High Power
-                 |
-    Manage       |      Manage
-    Closely      |      Closely
-                 |
- Low --------- --|-- --------- High
- Interest        |           Interest
-                 |
-    Monitor      |      Keep
-    (Minimum     |      Informed
-     Effort)     |
-                 |
-              Low Power
-```
+- [ ] Each stakeholder assigned a Power level (High/Medium/Low)
+- [ ] Each stakeholder assigned an Interest level (High/Medium/Low)
+- [ ] Each stakeholder mapped to a quadrant strategy:
 
 | Quadrant | Power | Interest | Strategy |
 |----------|-------|----------|----------|
 | Manage Closely | High | High | Engage actively, consult on decisions |
-| Keep Satisfied | High | Low | Keep informed of major decisions, do not overwhelm |
+| Keep Satisfied | High | Low | Inform of major decisions only |
 | Keep Informed | Low | High | Provide regular updates, address concerns |
-| Monitor | Low | Low | Minimal communication, notify of major milestones only |
+| Monitor | Low | Low | Minimal communication, major milestones only |
+
+> **IF** stakeholder has High Power and High Interest **THEN** schedule 1:1 interview in Phase 2
+> **ELSE IF** stakeholder has High Power and Low Interest **THEN** include in executive summary distribution
+> **ELSE** add to general communications list
 
 ### Step 3: Document Stakeholder Profiles
 
-Record the following for each stakeholder:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Record all required fields for each stakeholder | Business Analyst | 1 day |
+
+- [ ] Each profile contains all mandatory fields:
 
 | Field | Description |
 |-------|-------------|
@@ -82,11 +104,21 @@ Record the following for each stakeholder:
 
 ### Step 4: Create Stakeholder Register
 
-Compile all stakeholder profiles into a single register document. Use the [Stakeholder Analysis Template](../templates/stakeholder-analysis-template.md).
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Compile all profiles into register using template | Business Analyst | 0.5 day |
+
+- [ ] [Stakeholder Analysis Template](../templates/stakeholder-analysis-template.md) used
+- [ ] All stakeholder profiles entered
+- [ ] No duplicate entries
 
 ### Step 5: Define Communication Plan
 
-For each stakeholder group, define:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Define communication method, frequency, content, and owner for each stakeholder group | Business Analyst | 0.5 day |
+
+- [ ] Communication plan covers all stakeholder groups:
 
 | Stakeholder Group | Method | Frequency | Content | Owner |
 |--------------------|--------|-----------|---------|-------|
@@ -95,24 +127,30 @@ For each stakeholder group, define:
 | End Users | Workshop / Demo | Per sprint | Feature walkthrough, feedback collection | Business Analyst |
 | Regulators | Formal Report | As required | Compliance documentation | Compliance Officer |
 
+> **IF** stakeholder has no defined communication channel **THEN** assign default channel based on classification quadrant
+> **ELSE** proceed to Step 6
+
 ### Step 6: Obtain Sign-Off
 
-1. Present the stakeholder register and communication plan to the project sponsor.
-2. Review completeness: confirm no stakeholder groups are missing.
-3. Obtain written approval.
-4. Distribute the approved register to the project team.
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Present stakeholder register and communication plan to project sponsor | Business Analyst | 0.5 day |
+| Review completeness and confirm no groups are missing | Product Owner | 0.5 day |
+| Obtain written approval | Product Owner | 1 day |
+| Distribute approved register to project team | Business Analyst | 0.5 day |
+
+- [ ] Register presented to project sponsor
+- [ ] Completeness confirmed -- no missing stakeholder groups
+- [ ] Written approval obtained
+- [ ] Approved register distributed to project team
+
+> **IF** sponsor identifies missing stakeholders **THEN** return to Step 1 and add them
+> **ELSE IF** sponsor requests classification changes **THEN** return to Step 2 and reclassify
+> **ELSE** proceed to EXIT CRITERIA
 
 ---
 
-## Output Artifacts
-
-- Stakeholder Register (completed template)
-- Communication Plan
-- Sponsor sign-off record
-
----
-
-## Checklist
+## EXIT CRITERIA
 
 - [ ] All internal stakeholder groups identified
 - [ ] All external stakeholder groups identified
@@ -121,3 +159,24 @@ For each stakeholder group, define:
 - [ ] Communication plan defined for each group
 - [ ] Stakeholder register reviewed by project sponsor
 - [ ] Sign-off obtained and recorded
+
+---
+
+## OUTPUT ARTIFACTS
+
+| Artifact | Template | Storage |
+|----------|----------|---------|
+| Stakeholder Register | [stakeholder-analysis-template.md](../templates/stakeholder-analysis-template.md) | Project documentation repository |
+| Communication Plan | -- | Project documentation repository |
+| Sponsor Sign-Off Record | -- | Project documentation repository |
+
+---
+
+## CROSS-REFERENCES
+
+| Document | Type | Link |
+|----------|------|------|
+| Stakeholder Analysis Template | Template | [../templates/stakeholder-analysis-template.md](../templates/stakeholder-analysis-template.md) |
+| Requirements Engineering Standard | Standard | [../standards/requirements-engineering-standard.md](../standards/requirements-engineering-standard.md) |
+| SDLC Framework | Reference | [../standards/sdlc-framework.md](../standards/sdlc-framework.md) |
+| Extract Business Requirements | Runbook | [extract-business-requirements.md](extract-business-requirements.md) |

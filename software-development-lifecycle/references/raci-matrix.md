@@ -1,6 +1,10 @@
 # RACI Matrix -- Requirements Engineering
 
-Responsibility assignment for requirements engineering activities.
+| Field | Value |
+|-------|-------|
+| **Reference ID** | REF-P2-001 |
+| **Use When** | Determining who is responsible, accountable, consulted, or informed for a requirements engineering activity |
+| **Last Updated** | 2026-03-04 |
 
 ---
 
@@ -12,8 +16,6 @@ Responsibility assignment for requirements engineering activities.
 | A | **Accountable** -- Owns the outcome, has final authority |
 | C | **Consulted** -- Provides input before the work is done |
 | I | **Informed** -- Notified after the work is done |
-
-Each activity has exactly one **A** (Accountable). Multiple roles may be **R**, **C**, or **I**.
 
 ---
 
@@ -35,7 +37,7 @@ Each activity has exactly one **A** (Accountable). Multiple roles may be **R**, 
 
 ---
 
-## Role Definitions (in Requirements Engineering Context)
+## Role Definitions
 
 | Role | Focus Area |
 |------|-----------|
@@ -46,3 +48,66 @@ Each activity has exactly one **A** (Accountable). Multiple roles may be **R**, 
 | Developer | Provides implementation perspective during decomposition and review. |
 | QA Lead | Reviews testability. Defines test approach. Participates in validation. |
 | Domain Expert | Provides subject matter knowledge during elicitation, workshops, and reviews. |
+
+---
+
+## DECISION TREE
+
+### Who Owns This Activity?
+
+```
+IF activity involves stakeholder identification or elicitation
+    THEN Business Analyst is R, Product Owner is A
+    IF domain knowledge is needed
+        THEN Domain Expert is also R
+
+ELSE IF activity involves document authoring (BRD)
+    THEN Business Analyst is R, Product Owner is A
+
+ELSE IF activity involves technical decomposition or SRS authoring
+    THEN Tech Lead is A
+    IF implementation detail is needed
+        THEN Developer is C
+
+ELSE IF activity involves review or validation
+    THEN multiple roles are R
+    IF gate approval is required
+        THEN Project Sponsor is A
+
+ELSE IF activity involves change requests
+    THEN Business Analyst is R, Product Owner is A
+    IF baseline re-approval is needed
+        THEN Project Sponsor is A
+
+ELSE IF activity involves baseline approval
+    THEN Project Sponsor is A, Product Owner is R
+```
+
+### Escalation Path
+
+```
+IF disagreement on requirement priority
+    THEN escalate to Product Owner (A for elicitation/change requests)
+
+IF disagreement on technical feasibility
+    THEN escalate to Tech Lead (A for decomposition/SRS)
+
+IF disagreement on scope or budget impact
+    THEN escalate to Project Sponsor (A for baseline approval)
+```
+
+---
+
+## CROSS-REFERENCES
+
+| Document | Type | Link |
+|----------|------|------|
+| Requirements Engineering Standard | Standard | ../standards/requirements-engineering-standard.md |
+| Conduct Stakeholder Analysis | Runbook | ../runbooks/conduct-stakeholder-analysis.md |
+| Extract Business Requirements | Runbook | ../runbooks/extract-business-requirements.md |
+| Derive Software Requirements | Runbook | ../runbooks/derive-software-requirements.md |
+| Validate Requirements | Runbook | ../runbooks/validate-requirements.md |
+| Manage Requirements Changes | Runbook | ../runbooks/manage-requirements-changes.md |
+| Change Request Form | Template | ../templates/change-request-form.md |
+| Requirements Artifacts Checklist | Reference | ./requirements-artifacts-checklist.md |
+| Glossary | Reference | ./glossary.md |

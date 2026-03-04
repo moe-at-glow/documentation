@@ -1,10 +1,26 @@
 # Use Case Template
 
-**Template -- Copy and fill in for each use case.**
+| Field | Value |
+|-------|-------|
+| **Template ID** | TPL-P2-UCT |
+| **When to Use** | Document a specific user interaction flow derived from business requirements |
+| **Owner** | Business Analyst |
+| **Reviewer** | Tech Lead |
+| **SLA** | 2 business days per use case |
+| **Runbook** | [Extract Business Requirements](../runbooks/extract-business-requirements.md) |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Use Case Summary
+## SCALING GATE
+
+> **IF** small project (1-2 devs) **THEN** Sections Alternative Flows, Exception Flows, Non-Functional Requirements, and Assumptions are optional. Main Flow is sufficient.
+> **IF** medium project (3-5 devs) **THEN** All sections required; Open Issues optional if tracked in a backlog tool.
+> **IF** large project (6+ devs) **THEN** Full template required.
+
+---
+
+## [ ] Use Case Summary
 
 | Field | Value |
 |-------|-------|
@@ -17,7 +33,7 @@
 
 ---
 
-## Actor(s)
+## [ ] Actor(s)
 
 | Actor | Type | Description |
 |-------|------|-------------|
@@ -26,33 +42,35 @@
 
 ---
 
-## Description
+## [ ] Description
 
-[1-2 sentence summary of what this use case accomplishes.]
+<!-- 1-2 sentence summary of what this use case accomplishes -->
+
+[Description here]
 
 ---
 
-## Preconditions
+## [ ] Preconditions
 
 1. [Condition that must be true before this use case starts]
 2. [Another precondition]
 
 ---
 
-## Postconditions
+## [ ] Postconditions
 
-### Success
+### [ ] Success
 
 1. [State of the system after successful completion]
 2. [Another postcondition]
 
-### Failure
+### [ ] Failure
 
 1. [State of the system if the use case fails]
 
 ---
 
-## Main Flow
+## [ ] Main Flow
 
 | Step | Actor | System |
 |------|-------|--------|
@@ -64,9 +82,9 @@
 
 ---
 
-## Alternative Flows
+## [ ] Alternative Flows
 
-### AF-1: [Alternative scenario name]
+### [ ] AF-1: [Alternative scenario name]
 
 **Trigger:** [When this alternative occurs, e.g., "At Step 3, if [condition]"]
 
@@ -79,9 +97,9 @@
 
 ---
 
-## Exception Flows
+## [ ] Exception Flows
 
-### EF-1: [Exception scenario name]
+### [ ] EF-1: [Exception scenario name]
 
 **Trigger:** [When this exception occurs, e.g., "At Step 2, if [error condition]"]
 
@@ -94,7 +112,7 @@
 
 ---
 
-## Business Rules
+## [ ] Business Rules
 
 | Rule ID | Description |
 |---------|-------------|
@@ -103,7 +121,7 @@
 
 ---
 
-## Related Requirements
+## [ ] Related Requirements
 
 | Requirement ID | Description |
 |---------------|-------------|
@@ -113,7 +131,7 @@
 
 ---
 
-## Non-Functional Requirements
+## [ ] Non-Functional Requirements
 
 | Category | Requirement |
 |----------|------------|
@@ -123,15 +141,36 @@
 
 ---
 
-## Assumptions
+## [ ] Assumptions
 
 1. [Assumption relevant to this use case]
 2. [Another assumption]
 
 ---
 
-## Open Issues
+## [ ] Open Issues
 
 | ID | Issue | Owner | Status |
 |----|-------|-------|--------|
 | [1] | [Open question or unresolved decision] | [Name] | Open/Resolved |
+
+---
+
+## COMPLETION CHECKLIST
+
+- [ ] All required sections filled
+- [ ] Reviewed by Tech Lead
+- [ ] Approved by Product Owner
+- [ ] Stored in project SharePoint / repository
+- [ ] Cross-referenced in RTM (if applicable)
+
+---
+
+## CROSS-REFERENCES
+
+| Artifact | Link |
+|----------|------|
+| Producing Runbook | [Extract Business Requirements](../runbooks/extract-business-requirements.md) |
+| Business Requirements Document | [BRD Template](business-requirements-document.md) |
+| Software Requirements Specification | [SRS Template](software-requirements-specification.md) |
+| Requirements Traceability Matrix | [RTM Template](requirements-traceability-matrix.md) |

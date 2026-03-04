@@ -1,8 +1,14 @@
 # Glossary
 
-Requirements engineering terminology used at GlowPowerRental.
+| Field | Value |
+|-------|-------|
+| **Reference ID** | REF-P2-004 |
+| **Use When** | Looking up requirements engineering terminology used at GlowPowerRental |
+| **Last Updated** | 2026-03-04 |
 
 ---
+
+## Terms
 
 | Term | Definition | ISO Reference |
 |------|-----------|---------------|
@@ -31,3 +37,73 @@ Requirements engineering terminology used at GlowPowerRental.
 | User Story | An informal requirement format: "As a [role], I want [capability], so that [business value]." Used in Agile execution. | -- |
 | Validation | Confirmation that the system meets stakeholder needs and intended use (building the right product). | ISO 12207 |
 | Verification | Confirmation that a work product meets its specified requirements (building the product right). | ISO 12207 |
+
+---
+
+## DECISION TREE
+
+### What Type of Requirement Is This?
+
+```
+IF requirement describes a business objective or need
+    THEN type = Business Requirement (BR-XXX)
+    THEN document in BRD
+
+ELSE IF requirement describes what a stakeholder group needs
+    THEN type = Stakeholder Requirement (STK-XXX)
+    THEN document in BRD (stakeholder requirements section)
+
+ELSE IF requirement describes what the system must do at system level
+    THEN type = System Requirement (SYS-XXX)
+    THEN document in SRS (system requirements section)
+
+ELSE IF requirement describes specific software behavior or constraints
+    THEN type = Software Requirement (SWR-XXX)
+    IF it specifies behavior, features, or operations
+        THEN subtype = Functional Requirement
+    ELSE IF it specifies quality attributes (performance, security, etc.)
+        THEN subtype = Non-Functional Requirement
+    THEN document in SRS (software requirements section)
+```
+
+### Requirement Change: Process or Scope Creep?
+
+```
+IF requirement is baselined
+    IF change goes through formal Change Request (CR-XXX)
+        AND impact analysis is performed
+        AND CCB approves
+        THEN legitimate change -- update artifacts
+    ELSE
+        THEN scope creep -- reject and route to Change Request process
+
+ELSE IF requirement is not yet baselined
+    THEN change can be incorporated directly by the artifact owner
+```
+
+### Verification vs. Validation?
+
+```
+IF checking that a work product conforms to its specification
+    THEN activity = Verification ("building the product right")
+
+ELSE IF checking that the system meets stakeholder needs and intended use
+    THEN activity = Validation ("building the right product")
+```
+
+---
+
+## CROSS-REFERENCES
+
+| Document | Type | Link |
+|----------|------|------|
+| Requirements Engineering Standard | Standard | ../standards/requirements-engineering-standard.md |
+| Requirements Classification Standard | Standard | ../standards/requirements-classification.md |
+| Requirements Traceability Standard | Standard | ../standards/requirements-traceability.md |
+| From Business Need to Software Requirement | Guide | ../guides/from-business-need-to-software-requirement.md |
+| Extract Business Requirements | Runbook | ../runbooks/extract-business-requirements.md |
+| Derive Software Requirements | Runbook | ../runbooks/derive-software-requirements.md |
+| Manage Requirements Changes | Runbook | ../runbooks/manage-requirements-changes.md |
+| RACI Matrix | Reference | ./raci-matrix.md |
+| Requirements Artifacts Checklist | Reference | ./requirements-artifacts-checklist.md |
+| ISO Standards Quick Reference | Reference | ./iso-standards-quick-reference.md |

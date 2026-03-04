@@ -1,10 +1,26 @@
 # Stakeholder Analysis
 
-**Template -- Copy and fill in for each project.**
+| Field | Value |
+|-------|-------|
+| **Template ID** | TPL-P2-SHA |
+| **When to Use** | Identify, classify, and plan engagement for all project stakeholders |
+| **Owner** | Business Analyst |
+| **Reviewer** | Product Owner |
+| **SLA** | 3 business days from project kickoff |
+| **Runbook** | [Conduct Stakeholder Analysis](../runbooks/conduct-stakeholder-analysis.md) |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Document Control
+## SCALING GATE
+
+> **IF** small project (1-2 devs) **THEN** Sections 2 (Power/Interest Grid) and 3 (Communication Plan) are optional; inline stakeholder notes in the BRD may suffice.
+> **IF** medium project (3-5 devs) **THEN** All sections required; Communication Plan may be simplified to key stakeholders only.
+> **IF** large project (6+ devs) **THEN** Full template required.
+
+---
+
+## [ ] Document Control
 
 | Field | Value |
 |-------|-------|
@@ -15,7 +31,7 @@
 
 ---
 
-## 1. Stakeholder Register
+## [ ] 1. Stakeholder Register
 
 | ID | Name | Role / Title | Organization / Department | Contact | Influence | Interest | Classification |
 |----|------|-------------|--------------------------|---------|-----------|----------|----------------|
@@ -27,7 +43,7 @@
 
 ---
 
-## 2. Power/Interest Grid
+## [ ] 2. Power/Interest Grid
 
 ```
                         INTEREST
@@ -36,20 +52,14 @@
          |                    |                    |
    High  |   KEEP SATISFIED   |  MANAGE CLOSELY   |
          |                    |                    |
-         |   Monitor for      |   Engage actively  |
-P        |   changing interest |   Consult on       |
-O        |                    |   all decisions    |
-W        +--------------------+--------------------+
+P        +--------------------+--------------------+
+O        |                    |                    |
+W  Low   |   MONITOR          |  KEEP INFORMED    |
 E        |                    |                    |
-R  Low   |   MONITOR          |  KEEP INFORMED    |
-         |                    |                    |
-         |   Minimum effort   |   Regular updates  |
-         |   Major milestones |   Address concerns |
-         |   only             |                    |
-         +--------------------+--------------------+
+R        +--------------------+--------------------+
 ```
 
-### Stakeholder Placement
+### [ ] Stakeholder Placement
 
 | Classification | Stakeholders |
 |---------------|-------------|
@@ -60,7 +70,7 @@ R  Low   |   MONITOR          |  KEEP INFORMED    |
 
 ---
 
-## 3. Communication Plan
+## [ ] 3. Communication Plan
 
 | Stakeholder Group | Communication Method | Frequency | Content | Owner | Notes |
 |-------------------|---------------------|-----------|---------|-------|-------|
@@ -71,7 +81,7 @@ R  Low   |   MONITOR          |  KEEP INFORMED    |
 
 ---
 
-## 4. Stakeholder Concerns and Expectations
+## [ ] 4. Stakeholder Concerns and Expectations
 
 | ID | Stakeholder | Key Concerns | Expectations | Potential Risks | Mitigation |
 |----|-------------|-------------|-------------|----------------|------------|
@@ -81,9 +91,29 @@ R  Low   |   MONITOR          |  KEEP INFORMED    |
 
 ---
 
-## 5. Sign-Off
+## [ ] 5. Sign-Off
 
 | Name | Role | Date |
 |------|------|------|
 | [Name] | Product Owner | |
 | [Name] | Project Sponsor | |
+
+---
+
+## COMPLETION CHECKLIST
+
+- [ ] All required sections filled
+- [ ] Reviewed by Product Owner
+- [ ] Approved by Project Sponsor
+- [ ] Stored in project SharePoint / repository
+- [ ] Cross-referenced in RTM (if applicable)
+
+---
+
+## CROSS-REFERENCES
+
+| Artifact | Link |
+|----------|------|
+| Producing Runbook | [Conduct Stakeholder Analysis](../runbooks/conduct-stakeholder-analysis.md) |
+| Business Requirements Document | [BRD Template](business-requirements-document.md) |
+| Change Request Form | [Change Request Form](change-request-form.md) |

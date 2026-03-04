@@ -1,28 +1,61 @@
 # Derive Software Requirements
 
-Step-by-step procedure to decompose business requirements into software requirements.
+| Field | Value |
+|-------|-------|
+| **Procedure ID** | RB-P2-003 |
+| **Owner** | Business Analyst + Tech Lead |
+| **Accountable** | Tech Lead |
+| **SLA** | 10 business days |
+| **Escalation** | Tech Lead |
+| **Last Verified** | 2026-03-04 |
 
 ---
 
-## Prerequisites
+## ENTRY CRITERIA -- DO NOT PROCEED WITHOUT
 
-- Approved and baselined BRD.
-- Completed stakeholder analysis.
-- Tech lead and business analyst available.
+- [ ] Approved and baselined BRD (RB-P2-002 exit criteria met)
+- [ ] Completed stakeholder analysis (RB-P2-001 exit criteria met)
+- [ ] Tech Lead assigned and available
+- [ ] Business Analyst assigned and available
 
 ---
 
-## Procedure
+## ABORT CONDITIONS
+
+| Condition | Action | Escalate To |
+|-----------|--------|-------------|
+| BRD not approved or baselined | STOP. Complete RB-P2-002 first. | Product Owner |
+| Tech Lead unavailable for 5+ business days | STOP. Request substitute or reschedule. | Tech Lead |
+| More than 30% of BRs require clarification | STOP. Return to RB-P2-002 for BRD rework. | Product Owner |
+| Architecture constraints undefined | STOP. Obtain architecture guidance before decomposition. | Tech Lead |
+
+---
+
+## PROCEDURE
 
 ### Step 1: Review Approved Business Requirements
 
-1. Read the baselined BRD.
-2. List all Must Have and Should Have business requirements.
-3. Identify any requirements that need clarification. Resolve with the Product Owner before proceeding.
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Read the baselined BRD | Business Analyst + Tech Lead | 0.5 day |
+| List all Must Have and Should Have business requirements | Business Analyst | 0.5 day |
+| Identify requirements needing clarification | Business Analyst | 0.5 day |
+
+- [ ] Baselined BRD reviewed
+- [ ] Must Have and Should Have requirements listed
+- [ ] Ambiguous requirements identified and flagged
+
+> **IF** requirements need clarification **THEN** resolve with Product Owner before proceeding
+> **ELSE** proceed to Step 2
 
 ### Step 2: Identify System Boundaries and Interfaces
 
-Define what is inside and outside the system:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Define system scope and all boundary elements | Tech Lead | 1 day |
+
+- [ ] System scope defined
+- [ ] All boundary elements documented:
 
 | Boundary Element | Description |
 |-----------------|-------------|
@@ -32,46 +65,56 @@ Define what is inside and outside the system:
 | Data Interfaces | Data flowing in and out (API calls, file imports, sensor data) |
 | Infrastructure | Servers, databases, message brokers the system depends on |
 
+> **IF** boundary is unclear **THEN** consult Domain Expert and Product Owner for clarification
+> **ELSE** proceed to Step 3
+
 ### Step 3: Decompose Business Requirements into Stakeholder Requirements
 
-For each business requirement, identify what each stakeholder group needs:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| For each BR, identify what each stakeholder group needs (STK-XXX) | Business Analyst | 2 days |
 
-**Example:**
+- [ ] Each BR decomposed into one or more stakeholder requirements
+- [ ] Each STK requirement attributed to a specific stakeholder group
+- [ ] STK IDs assigned (STK-XXX format)
 
-| Business Requirement | Stakeholder | Stakeholder Requirement |
-|---------------------|-------------|------------------------|
-| BR-042: Track equipment returns and calculate late fees | Operations Staff | STK-087: View overdue rentals on dashboard with calculated fees |
-| BR-042: Track equipment returns and calculate late fees | Finance Team | STK-088: Generate late fee invoices automatically |
-| BR-042: Track equipment returns and calculate late fees | Customers | STK-089: Receive notification of overdue status and fees |
+> **IF** a BR cannot be decomposed into stakeholder requirements **THEN** flag and clarify with Product Owner
+> **ELSE** proceed to Step 4
 
 ### Step 4: Decompose Stakeholder Requirements into System Requirements
 
-For each stakeholder requirement, define what the system must do:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| For each STK requirement, define what the system must do (SYS-XXX) | Business Analyst + Tech Lead | 2 days |
 
-**Example:**
+- [ ] Each STK requirement decomposed into one or more system requirements
+- [ ] SYS IDs assigned (SYS-XXX format)
+- [ ] System requirements are implementation-neutral
 
-| Stakeholder Requirement | System Requirement |
-|------------------------|-------------------|
-| STK-087: View overdue rentals on dashboard | SYS-134: Compare return dates against rental agreements and flag overdue items |
-| STK-087: View overdue rentals on dashboard | SYS-135: Calculate late fee as [rate] x [days overdue] |
-| STK-088: Generate late fee invoices | SYS-136: Generate invoice document with line items for late fees |
+> **IF** a system requirement spans multiple subsystems **THEN** split into subsystem-specific requirements
+> **ELSE** proceed to Step 5
 
 ### Step 5: Decompose System Requirements into Software Requirements
 
-For each system requirement, define specific software behavior:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| For each SYS requirement, define specific software behavior (SWR-XXX) | Tech Lead | 2 days |
 
-**Example:**
+- [ ] Each SYS requirement decomposed into one or more software requirements
+- [ ] SWR IDs assigned (SWR-XXX format)
+- [ ] Each SWR specifies concrete, implementable behavior
 
-| System Requirement | Software Requirement |
-|-------------------|---------------------|
-| SYS-134: Flag overdue items | SWR-201: API endpoint GET /rentals/overdue returns items past due date |
-| SYS-134: Flag overdue items | SWR-202: Scheduled job runs daily at 06:00 to update overdue status |
-| SYS-135: Calculate late fee | SWR-203: Late fee = daily_rate * 0.02 * days_overdue |
-| SYS-135: Calculate late fee | SWR-204: Fees calculated in SAR, rounded to 2 decimal places |
+> **IF** a SWR requires architecture decisions not yet made **THEN** escalate to Tech Lead for architecture review
+> **ELSE IF** a SWR is too large for a single sprint **THEN** decompose further
+> **ELSE** proceed to Step 6
 
 ### Step 6: Classify Each Requirement
 
-For every SWR, assign:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Assign classification attributes to every SWR | Business Analyst + Tech Lead | 1 day |
+
+- [ ] Each SWR classified per:
 
 | Attribute | Options |
 |-----------|---------|
@@ -81,79 +124,61 @@ For every SWR, assign:
 | Risk | High / Medium / Low |
 | Source | Stakeholder / Regulatory / Technical / Business |
 
-Refer to [Requirements Classification Standard](../standards/requirements-classification.md).
+- [ ] [Requirements Classification Standard](../standards/requirements-classification.md) followed
+
+> **IF** classification is disputed between BA and Tech Lead **THEN** Product Owner makes final priority call; Tech Lead makes final type/risk call
+> **ELSE** proceed to Step 7
 
 ### Step 7: Define Acceptance Criteria
 
-Write acceptance criteria for each software requirement using Given/When/Then format:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Write acceptance criteria for each SWR in Given/When/Then format | Business Analyst | 2 days |
 
-```
-Given: A rental agreement with return date 2026-03-01
-  And: The equipment is not returned by 2026-03-04
-  And: The daily rental rate is 100 SAR
-When:  The overdue check job runs on 2026-03-04
-Then:  The rental is flagged as overdue
-  And: The late fee is calculated as 100 * 0.02 * 3 = 6.00 SAR
-```
+- [ ] Every SWR has at least one acceptance criterion
+- [ ] Given/When/Then format used
+- [ ] Criteria are measurable (no subjective terms without quantification)
+
+> **IF** acceptance criteria cannot be defined **THEN** flag SWR as untestable; rework the requirement
+> **ELSE** proceed to Step 8
 
 ### Step 8: Establish Traceability Links
 
-Update the Requirements Traceability Matrix:
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Update Requirements Traceability Matrix with all links | Business Analyst | 1 day |
 
-| SWR ID | SYS ID | STK ID | BR ID |
-|--------|--------|--------|-------|
-| SWR-201 | SYS-134 | STK-087 | BR-042 |
-| SWR-202 | SYS-134 | STK-087 | BR-042 |
-| SWR-203 | SYS-135 | STK-087 | BR-042 |
-| SWR-204 | SYS-135 | STK-087 | BR-042 |
+- [ ] RTM updated: SWR -> SYS -> STK -> BR links established
+- [ ] Every SWR traces back to at least one BR
+- [ ] No orphan SWRs (requirements without BR trace)
+- [ ] [Requirements Traceability Matrix Template](../templates/requirements-traceability-matrix.md) used
 
-Every SWR must trace back to at least one BR. Software requirements without a business requirement trace are candidates for removal.
+> **IF** an SWR has no BR trace **THEN** flag as candidate for removal; confirm with Tech Lead
+> **ELSE** proceed to Step 9
 
-### Step 9: Peer Review and Tech Lead Approval
+### Step 9: Obtain Peer Review and Tech Lead Approval
 
-1. Business Analyst reviews all requirements for completeness and consistency.
-2. Tech Lead reviews for technical feasibility.
-3. Resolve any issues identified.
-4. Tech Lead approves and signs off.
-5. Update all requirement statuses from Draft to Approved.
+| Action | Owner | SLA |
+|--------|-------|-----|
+| Review all requirements for completeness and consistency | Business Analyst | 1 day |
+| Review all requirements for technical feasibility | Tech Lead | 1 day |
+| Resolve any issues identified | Business Analyst + Tech Lead | 1 day |
+| Approve and sign off | Tech Lead | 0.5 day |
+| Update all requirement statuses from Draft to Approved | Business Analyst | 0.5 day |
 
----
+- [ ] BA completeness and consistency review done
+- [ ] Tech Lead feasibility review done
+- [ ] All issues resolved
+- [ ] Tech Lead sign-off obtained
+- [ ] All statuses updated to Approved
 
-## Output Artifacts
-
-- Software Requirements Specification (SRS) -- use [SRS Template](../templates/software-requirements-specification.md)
-- Updated Requirements Traceability Matrix
-- Peer review record
-
----
-
-## Decomposition Example
-
-```
-BR-042: Track equipment returns and calculate late fees
-  |
-  +-- STK-087: Operations staff view overdue rentals on dashboard
-  |     +-- SYS-134: Compare return dates and flag overdue items
-  |     |     +-- SWR-201: GET /rentals/overdue API endpoint
-  |     |     +-- SWR-202: Daily overdue check scheduled job
-  |     +-- SYS-135: Calculate late fee
-  |           +-- SWR-203: Fee calculation formula
-  |           +-- SWR-204: Currency and rounding rules
-  |
-  +-- STK-088: Finance team gets auto-generated invoices
-  |     +-- SYS-136: Generate invoice document
-  |           +-- SWR-205: Invoice PDF generation service
-  |           +-- SWR-206: Invoice data model and storage
-  |
-  +-- STK-089: Customers receive overdue notifications
-        +-- SYS-137: Send notification to customer
-              +-- SWR-207: Email notification with fee breakdown
-              +-- SWR-208: SMS notification for overdue status
-```
+> **IF** Tech Lead identifies infeasible requirements **THEN** rework with BA; return to Step 5 for affected requirements
+> **ELSE IF** BA identifies incomplete traceability **THEN** return to Step 8
+> **ELSE** proceed to EXIT CRITERIA
 
 ---
 
-## Checklist
+## EXIT CRITERIA
 
 - [ ] All approved business requirements reviewed
 - [ ] System boundaries and interfaces defined
@@ -163,5 +188,30 @@ BR-042: Track equipment returns and calculate late fees
 - [ ] Each requirement classified (type, priority, risk, source)
 - [ ] Acceptance criteria defined for all software requirements
 - [ ] Traceability matrix updated with all links
-- [ ] Peer review completed by business analyst
-- [ ] Tech lead review and sign-off obtained
+- [ ] Peer review completed by Business Analyst
+- [ ] Tech Lead review and sign-off obtained
+
+---
+
+## OUTPUT ARTIFACTS
+
+| Artifact | Template | Storage |
+|----------|----------|---------|
+| Software Requirements Specification (SRS) | [software-requirements-specification.md](../templates/software-requirements-specification.md) | Project documentation repository |
+| Requirements Traceability Matrix (updated) | [requirements-traceability-matrix.md](../templates/requirements-traceability-matrix.md) | Project documentation repository |
+| Peer Review Record | -- | Project documentation repository |
+
+---
+
+## CROSS-REFERENCES
+
+| Document | Type | Link |
+|----------|------|------|
+| SRS Template | Template | [../templates/software-requirements-specification.md](../templates/software-requirements-specification.md) |
+| RTM Template | Template | [../templates/requirements-traceability-matrix.md](../templates/requirements-traceability-matrix.md) |
+| Requirements Classification Standard | Standard | [../standards/requirements-classification.md](../standards/requirements-classification.md) |
+| Requirements Engineering Standard | Standard | [../standards/requirements-engineering-standard.md](../standards/requirements-engineering-standard.md) |
+| Requirements Traceability Standard | Standard | [../standards/requirements-traceability.md](../standards/requirements-traceability.md) |
+| BRD Template | Template | [../templates/business-requirements-document.md](../templates/business-requirements-document.md) |
+| Extract Business Requirements | Runbook | [extract-business-requirements.md](extract-business-requirements.md) |
+| Validate Requirements | Runbook | [validate-requirements.md](validate-requirements.md) |

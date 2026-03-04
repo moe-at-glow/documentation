@@ -16,6 +16,7 @@
 | | Topic | Description |
 |---|-------|-------------|
 | :server: | [**Server Administration**](server-administration/) | Directory layout, users & groups, security, deployment standards, runbooks |
+| :clipboard: | [**Software Development Lifecycle**](software-development-lifecycle/) | SDLC framework, requirements engineering, ISO 12207/29148/42010 alignment |
 
 <!--
 Upcoming topics — uncomment and link when created:

@@ -92,14 +92,19 @@
 
 ### Step 4: Create System Context Diagram
 
+**Tool:** PlantUML. Start from template: `diagrams/system-context-diagram.puml`
+
 | Action | Owner | SLA |
 |--------|-------|-----|
+| Copy `diagrams/system-context-diagram.puml` template to project `diagrams/` directory | Tech Lead | 10 min |
 | Draw the system as a single box in the center | Tech Lead | 30 min |
 | Identify every external entity (users, external systems, data sources) | Tech Lead | 1 hour |
 | Draw each external entity around the system | Tech Lead | 1 hour |
 | Draw and label lines with protocol, data direction, and data description | Tech Lead | 2 hours |
 | Validate against SRS external interfaces | Tech Lead | 1 hour |
+| Commit `diagrams/system-context-diagram.puml` to repository | Tech Lead | 10 min |
 
+- [ ] PlantUML `.puml` file committed to `diagrams/` directory
 - [ ] System boundary drawn
 - [ ] All user types shown (customers, staff, managers)
 - [ ] All external systems shown (ERP, payment gateway, notification provider)
@@ -112,15 +117,20 @@
 
 ### Step 5: Create Logical/Functional View
 
+**Tool:** PlantUML. Start from template: `diagrams/component-diagram.puml`
+
 | Action | Owner | SLA |
 |--------|-------|-----|
+| Copy `diagrams/component-diagram.puml` template to project `diagrams/` directory | Tech Lead | 10 min |
 | Group related ASRs | Tech Lead | 1 hour |
 | Identify components based on business capabilities per System Decomposition Standard | Tech Lead | 4 hours |
 | Define name, responsibility, owned data, exposed interface, and dependencies for each component | Tech Lead | 4 hours |
-| Draw component diagram with relationships | Tech Lead | 2 hours |
+| Draw component diagram with relationships in PlantUML | Tech Lead | 2 hours |
 | Label each relationship with integration pattern (sync REST, async event, etc.) | Tech Lead | 1 hour |
 | Validate every functional requirement maps to at least one component | Tech Lead | 2 hours |
+| Commit `diagrams/component-diagram.puml` to repository | Tech Lead | 10 min |
 
+- [ ] PlantUML `.puml` file committed to `diagrams/` directory
 - [ ] Components named (kebab-case)
 - [ ] Each component has one-sentence responsibility
 - [ ] Owned data defined per component
@@ -134,12 +144,16 @@
 
 ### Step 6: Create Process/Runtime View
 
+**Tool:** PlantUML. Start from template: `diagrams/sequence-diagram.puml`
+
 | Action | Owner | SLA |
 |--------|-------|-----|
 | Identify top 5 critical runtime scenarios | Tech Lead | 1 hour |
-| Draw sequence or data flow diagram for each scenario | Tech Lead | 4 hours |
+| Create PlantUML sequence diagram for each scenario (e.g., `diagrams/sequence-create-order.puml`) | Tech Lead | 4 hours |
 | Document all scheduled jobs | Tech Lead | 1 hour |
+| Commit all `diagrams/sequence-*.puml` files to repository | Tech Lead | 10 min |
 
+- [ ] PlantUML `.puml` files committed for each scenario
 - [ ] 3 most common user workflows diagrammed
 - [ ] Most complex async flow diagrammed
 - [ ] Most critical batch process diagrammed
@@ -148,14 +162,19 @@
 
 ### Step 7: Create Deployment View
 
+**Tool:** PlantUML. Start from template: `diagrams/deployment-diagram.puml`
+
 | Action | Owner | SLA |
 |--------|-------|-----|
+| Copy `diagrams/deployment-diagram.puml` template to project `diagrams/` directory | Tech Lead | 10 min |
 | List all infrastructure components (servers, databases, brokers, caches, load balancers) | Tech Lead | 1 hour |
 | Define network topology (public vs. internal, segments, firewall rules) | Tech Lead | 2 hours |
 | Map each software component to deployment target | Tech Lead | 2 hours |
 | Document server specs, DB config, broker config, SSL/TLS termination, backup infrastructure | Tech Lead | 2 hours |
-| Draw deployment diagram | Tech Lead | 2 hours |
+| Draw deployment diagram in PlantUML | Tech Lead | 2 hours |
+| Commit `diagrams/deployment-diagram.puml` to repository | Tech Lead | 10 min |
 
+- [ ] PlantUML `.puml` file committed to `diagrams/` directory
 - [ ] All infrastructure components listed
 - [ ] Network topology defined
 - [ ] Software-to-infrastructure mapping complete
@@ -248,6 +267,13 @@ Minimum ADRs required:
 ## EXIT CRITERIA
 
 - [ ] ADD complete with all five viewpoints (Context, Logical, Process, Deployment, Development)
+- [ ] All PlantUML diagrams committed to `diagrams/` directory:
+  - [ ] `system-context-diagram.puml`
+  - [ ] `component-diagram.puml`
+  - [ ] `sequence-*.puml` (one per critical workflow)
+  - [ ] `deployment-diagram.puml`
+  - [ ] `erd-diagram.puml`
+  - [ ] `state-*.puml` (one per key entity)
 - [ ] All ASRs addressed in architecture
 - [ ] All stakeholder concerns mapped and covered
 - [ ] All ADRs written and approved
@@ -263,10 +289,12 @@ Minimum ADRs required:
 |----------|----------|---------|
 | Architecture Description Document (ADD) | [ADD Template](../templates/architecture-description-document.md) | `architecture/` |
 | Architecture Decision Records (ADRs) | [ADR Template](../templates/architecture-decision-record.md) | `architecture/decisions/` |
-| System Context Diagram | [System Context Diagram Template](../templates/system-context-diagram.md) | `architecture/diagrams/` |
-| Component Diagram | [Component Diagram Template](../templates/component-diagram.md) | `architecture/diagrams/` |
-| Deployment Diagram | -- | `architecture/diagrams/` |
-| Sequence Diagrams (top 5 scenarios) | -- | `architecture/diagrams/` |
+| System Context Diagram (.puml) | [system-context-diagram.puml](../diagrams/system-context-diagram.puml) | `diagrams/` |
+| Component Diagram (.puml) | [component-diagram.puml](../diagrams/component-diagram.puml) | `diagrams/` |
+| Deployment Diagram (.puml) | [deployment-diagram.puml](../diagrams/deployment-diagram.puml) | `diagrams/` |
+| Sequence Diagrams (.puml) | [sequence-diagram.puml](../diagrams/sequence-diagram.puml) | `diagrams/` |
+| ERD (.puml) | [erd-diagram.puml](../diagrams/erd-diagram.puml) | `diagrams/` |
+| State Diagrams (.puml) | [state-diagram.puml](../diagrams/state-diagram.puml) | `diagrams/` |
 | Technology Stack Document | -- | `architecture/` |
 
 ---

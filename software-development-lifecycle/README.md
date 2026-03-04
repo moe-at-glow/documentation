@@ -4,6 +4,8 @@ Central framework for GlowPowerRental software project delivery.
 
 All documents follow the **QRH (Quick Reference Handbook)** format with metadata headers, actionable checklists, and cross-references. Background and educational content lives in `guides/training/` subdirectories.
 
+**Diagramming Standard:** All architecture and design diagrams must be created as **PlantUML** (`.puml`) files. Templates are available in `phase-3-system-architecture/diagrams/` and `phase-4-design/diagrams/`.
+
 ---
 
 ## Framework Alignment
@@ -20,8 +22,8 @@ All documents follow the **QRH (Quick Reference Handbook)** format with metadata
 
 | Phase | Description | Status | Documentation |
 |-------|-------------|--------|---------------|
-| 1. Business Analysis | Identify business needs and opportunities | Covered | -- |
-| 2. Requirements Engineering | Elicit, analyze, specify, and validate requirements | **Fully documented** | [Standards](standards/), [Runbooks](runbooks/), [Guides](guides/), [References](references/), [Templates](templates/) |
+| 1. Business Analysis | Identify business needs and opportunities | **Fully documented** | [Phase 1](phase-1-business-analysis/) |
+| 2. Requirements Engineering | Elicit, analyze, specify, and validate requirements | **Fully documented** | [Phase 2](phase-2-requirements-engineering/) |
 | 3. System Architecture | Define system structure, components, and interfaces | **Fully documented** | [Phase 3](phase-3-system-architecture/) |
 | 4. Design | Detail component design and data models | **Fully documented** | [Phase 4](phase-4-design/) |
 | 5. Development | Implement software components | **Fully documented** | [Phase 5](phase-5-development/) |
@@ -49,44 +51,36 @@ All documents use the QRH format. Document types serve different operational pur
 
 ---
 
+## Phase 1: Business Analysis
+
+Full documentation: [Phase 1 README](phase-1-business-analysis/)
+
+Key documents:
+- [Business Case Standard](phase-1-business-analysis/standards/business-case-standard.md)
+- [Project Charter Standard](phase-1-business-analysis/standards/project-charter-standard.md)
+- [Stakeholder Management Standard](phase-1-business-analysis/standards/stakeholder-management-standard.md)
+- [Develop Business Case Runbook](phase-1-business-analysis/runbooks/develop-business-case.md)
+- [Create Project Charter Runbook](phase-1-business-analysis/runbooks/create-project-charter.md)
+- [Business Value Assessment Reference](phase-1-business-analysis/references/business-value-assessment-reference.md)
+- Training: [Business Analysis Overview](phase-1-business-analysis/guides/training/business-analysis-overview.md)
+
+---
+
 ## Phase 2: Requirements Engineering
 
-Phase 2 documents live at the root level (not in a phase-2 directory).
+Full documentation: [Phase 2 README](phase-2-requirements-engineering/)
 
-**Standards** (compliance checklists)
+Key documents:
 - [SDLC Framework](standards/sdlc-framework.md)
-- [Requirements Engineering Standard](standards/requirements-engineering-standard.md)
-- [Requirements Classification](standards/requirements-classification.md)
-- [Requirements Traceability](standards/requirements-traceability.md)
-
-**Runbooks** (QRH procedures)
-- [Conduct Stakeholder Analysis](runbooks/conduct-stakeholder-analysis.md)
-- [Extract Business Requirements](runbooks/extract-business-requirements.md)
-- [Derive Software Requirements](runbooks/derive-software-requirements.md)
-- [Validate Requirements](runbooks/validate-requirements.md)
-- [Manage Requirements Changes](runbooks/manage-requirements-changes.md)
-
-**Guides** (quick references)
-- [Elicitation Techniques](guides/elicitation-techniques.md)
-- [From Business Need to Software Requirement](guides/from-business-need-to-software-requirement.md)
-- [Common Requirements Pitfalls](guides/common-requirements-pitfalls.md)
-
-**Training Materials**
-- [Requirements Engineering Overview](guides/training/requirements-engineering-overview.md)
-
-**References** (decision aids)
-- [Requirements Artifacts Checklist](references/requirements-artifacts-checklist.md)
-- [ISO Standards Quick Reference](references/iso-standards-quick-reference.md)
-- [RACI Matrix](references/raci-matrix.md)
-- [Glossary](references/glossary.md)
-
-**Templates**
-- [Business Requirements Document](templates/business-requirements-document.md)
-- [Software Requirements Specification](templates/software-requirements-specification.md)
-- [Stakeholder Analysis](templates/stakeholder-analysis-template.md)
-- [Use Case](templates/use-case-template.md)
-- [Requirements Traceability Matrix](templates/requirements-traceability-matrix.md)
-- [Change Request Form](templates/change-request-form.md)
+- [Requirements Engineering Standard](phase-2-requirements-engineering/standards/requirements-engineering-standard.md)
+- [Requirements Classification](phase-2-requirements-engineering/standards/requirements-classification.md)
+- [Requirements Traceability](phase-2-requirements-engineering/standards/requirements-traceability.md)
+- [Conduct Stakeholder Analysis](phase-2-requirements-engineering/runbooks/conduct-stakeholder-analysis.md)
+- [Extract Business Requirements](phase-2-requirements-engineering/runbooks/extract-business-requirements.md)
+- [Derive Software Requirements](phase-2-requirements-engineering/runbooks/derive-software-requirements.md)
+- [Validate Requirements](phase-2-requirements-engineering/runbooks/validate-requirements.md)
+- [Manage Requirements Changes](phase-2-requirements-engineering/runbooks/manage-requirements-changes.md)
+- Training: [Requirements Engineering Overview](phase-2-requirements-engineering/guides/training/requirements-engineering-overview.md)
 
 ---
 
@@ -143,3 +137,11 @@ Key documents:
 - [Security Testing Standard](phase-6-testing/standards/security-testing-standard.md)
 - [Execute Test Cycle Runbook](phase-6-testing/runbooks/execute-test-cycle.md)
 - Training: [Testing Phase Overview](phase-6-testing/guides/training/testing-phase-overview.md)
+
+---
+
+## Example Project
+
+A complete worked example using **Power Atlas** (GlowPowerRental's power calculation tool) with filled-in artifacts for every phase. Use as a reference when creating your own project artifacts.
+
+**[View Example Project](example-project/)**

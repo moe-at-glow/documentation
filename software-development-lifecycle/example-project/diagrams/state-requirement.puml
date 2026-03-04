@@ -1,0 +1,92 @@
+@startuml state-requirement
+!theme plain
+
+title Power Atlas -- Requirement Pipeline State Machine
+caption Lifecycle states for client requirement submissions through admin review
+
+skinparam stateBorderColor #555555
+skinparam stateBackgroundColor #E8F4FD
+skinparam stateArrowColor #444444
+skinparam noteBorderColor #888888
+
+[*] --> new_submission : "Client submits\nrequirement via\npublic form"
+
+state new_submission : Requirement just received.
+state new_submission : Confirmation email sent to client.
+state new_submission : Notification created for admins.
+state new_submission : Requirement code assigned (REQ-YYYY-NNNNN).
+
+state admin_review : Admin is reviewing the requirement.
+state admin_review : Admin can view all details.
+state admin_review : Admin decides next action.
+
+state approved : Requirement has been approved.
+state approved : Client notified via email.
+state approved : Ready for engineering team.
+
+state rejected : Requirement has been rejected.
+state rejected : Client notified with reason.
+state rejected : No further action needed.
+
+state client_edit : Changes requested by admin.
+state client_edit : Client notified to revise.
+state client_edit : Client can update and resubmit.
+
+state implemented : Linked to an active project.
+state implemented : Engineering work in progress.
+state implemented : Terminal state.
+
+new_submission --> admin_review : "Auto-routed to\nadmin queue"
+
+admin_review --> approved : "Admin approves\nrequirement"
+admin_review --> rejected : "Admin rejects\nrequirement\n(with reason)"
+admin_review --> client_edit : "Admin requests\nchanges from client"
+
+client_edit --> admin_review : "Client resubmits\nupdated requirement"
+
+approved --> implemented : "Requirement linked\nto a project by\nengineer"
+
+rejected --> [*] : "Terminal state\n(no further action)"
+implemented --> [*] : "Terminal state\n(project handles\nfrom here)"
+
+note right of new_submission
+  **Entry point:** Public form at
+  /requirements/submit
+  No authentication required.
+  Requirement code generated
+  automatically.
+end note
+
+note right of admin_review
+  **Decision point:** Admin can take
+  one of three actions:
+  1. Approve (move forward)
+  2. Reject (close with reason)
+  3. Request edits (send back to client)
+
+  All transitions are logged in
+  **requirement_changes** table.
+end note
+
+note left of client_edit
+  Client receives email with
+  admin's feedback. Can edit
+  and resubmit, which returns
+  the requirement to admin_review.
+end note
+
+note bottom of approved
+  Email notification sent to client.
+  Notifications created for engineers.
+  requirement_changes entry logged
+  with old/new values.
+end note
+
+note bottom of implemented
+  The requirement is now tracked
+  as part of a project. Further
+  status is managed via the
+  **project** lifecycle.
+end note
+
+@enduml

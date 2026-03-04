@@ -26,8 +26,8 @@
 |---|------|-----------|-------------|-------------------|
 | 1 | DDD must include Component Overview (name, responsibility, architectural context) | All components | [ ] Section present and complete | Block design approval |
 | 2 | DDD must include Public Interface (all methods/endpoints exposed) | All components | [ ] All public methods documented | Block design approval |
-| 3 | DDD must include Internal Structure (classes, modules, functions, relationships) | All components | [ ] Structure diagram or description present | Block design approval |
-| 4 | DDD must include Data Model (tables, entities, relationships owned) | All components | [ ] ER diagram or table definitions present | Block design approval |
+| 3 | DDD must include Internal Structure (classes, modules, functions, relationships). **Deliver class diagram as PlantUML `.puml` file.** | All components | [ ] `diagrams/class-diagram.puml` committed and valid | Block design approval |
+| 4 | DDD must include Data Model (tables, entities, relationships owned). **Deliver data flow diagram as PlantUML `.puml` file.** | All components | [ ] `diagrams/data-flow-diagram.puml` committed and valid | Block design approval |
 | 5 | DDD must include Business Logic (algorithms, state machines, decision rules) | All components | [ ] Logic documented for each requirement | Block design approval |
 | 6 | DDD must include Error Handling (detection, reporting, recovery) | All components | [ ] Error scenarios enumerated | Block design approval |
 | 7 | DDD must include Logging and Observability (log levels, metrics) | All components | [ ] Logging strategy documented | Block design approval |
@@ -86,6 +86,10 @@
 ## COMPLIANCE CHECKLIST
 
 - [ ] DDD contains all 10 required sections
+- [ ] All diagrams created as PlantUML `.puml` files in `diagrams/` directory
+- [ ] `diagrams/class-diagram.puml` -- component internal structure (classes, modules, relationships)
+- [ ] `diagrams/api-flow-diagram.puml` -- API request/response sequence flows
+- [ ] `diagrams/data-flow-diagram.puml` -- data transformation and flow paths
 - [ ] SOLID principles applied and documented
 - [ ] DRY/KISS/YAGNI/Fail Fast principles followed
 - [ ] All code elements follow naming conventions
@@ -110,3 +114,6 @@
 | Design Review Checklist | Template | ../templates/design-review-checklist.md |
 | Database Design Standard | Standard | database-design-standard.md |
 | API Design Standard | Standard | api-design-standard.md |
+| Class Diagram (PlantUML) | Diagram Template | ../diagrams/class-diagram.puml |
+| API Flow Diagram (PlantUML) | Diagram Template | ../diagrams/api-flow-diagram.puml |
+| Data Flow Diagram (PlantUML) | Diagram Template | ../diagrams/data-flow-diagram.puml |

@@ -1,0 +1,112 @@
+@startuml sequence-create-project
+!theme plain
+
+title Power Atlas -- Sequence: Engineer Creates Project and Calculates Power
+caption Shows the flow from project creation through load entry to viewing calculated totals
+
+skinparam sequenceArrowColor #444444
+skinparam sequenceLifeLineBorderColor #555555
+skinparam participantBackgroundColor #E8F4FD
+skinparam databaseBackgroundColor #FFF3E0
+skinparam noteBorderColor #888888
+
+actor "Power Engineer" as eng
+participant "Frontend\n(Vite + JS)" as fe
+participant "Nginx\n(443)" as nginx
+participant "Flask API\n(8000)" as api
+participant "Auth Module" as auth
+participant "Project Engine" as proj
+participant "Calculation Engine" as calc
+database "SQLite DB" as db
+
+== Authentication (prerequisite) ==
+
+eng -> fe : Navigate to login page
+fe -> nginx : POST /api/auth/login\n{username, password}
+nginx -> api : Proxy to 8000
+api -> auth : Validate credentials
+auth -> db : SELECT * FROM users\nWHERE username = ?
+db --> auth : User record
+auth -> auth : bcrypt.verify(password, hash)\nCheck lockout (< 5 attempts)
+auth -> db : INSERT INTO sessions\n(user_id, session_token, expires_at)
+db --> auth : Session created
+auth --> api : JWT token + session_token
+api --> nginx : 200 OK\n{token, user: {role: "engineer"}}
+nginx --> fe : Response
+fe -> fe : Store JWT in localStorage\nStore session cookie
+fe --> eng : Redirect to dashboard
+
+== Step 1: Create New Project ==
+
+eng -> fe : Click "New Project"\nFill form: name, voltage, frequency, PF, DF
+fe -> nginx : POST /api/projects\nAuthorization: Bearer <JWT>\n{\n  "project_name": "Al-Riyadh Office Tower",\n  "voltage_level": "380V",\n  "frequency": "60Hz",\n  "power_factor": 0.85,\n  "demand_factor": 0.80,\n  "diversity_factor": 0.70,\n  "client_id": 3\n}
+nginx -> api : Proxy to 8000
+api -> auth : Verify JWT token\nCheck role = engineer
+auth --> api : Authorized (user_id: 12)
+api -> proj : Create project
+proj -> proj : Generate PRN\n(e.g., "PRN-2026-00047")
+proj -> db : INSERT INTO projects\n(user_id, project_name, prn,\nclient_id, voltage_level, frequency,\npower_factor, demand_factor,\ndiversity_factor, status='draft')
+db --> proj : project_id: 47
+proj -> db : INSERT INTO project_activity\n(project_id: 47, user_id: 12,\naction_type: 'created',\ndescription: 'Project created')
+db --> proj : Activity logged
+proj --> api : Project object
+api --> nginx : 201 Created\n{project_id: 47, prn: "PRN-2026-00047", status: "draft"}
+nginx --> fe : Response
+fe --> eng : Show project workspace
+
+== Step 2: Add Electrical Loads ==
+
+eng -> fe : Click "Add Load"\nFill: name, type, quantity, power, voltage, PF
+
+loop For each load entry (e.g., 3 loads)
+
+    fe -> nginx : POST /api/loads\nAuthorization: Bearer <JWT>\n{\n  "project_id": 47,\n  "load_name": "HVAC Chiller Unit",\n  "load_type": "motor",\n  "quantity": 4,\n  "power_kw": 150,\n  "voltage_v": 380,\n  "power_factor": 0.85,\n  "is_critical": true\n}
+    nginx -> api : Proxy to 8000
+    api -> auth : Verify JWT
+    auth --> api : Authorized
+    api -> calc : Calculate derived values
+
+    calc -> calc : **Power Calculations:**\npower_kva = power_kw / power_factor\n= 150 / 0.85 = 176.47 kVA\n\ncurrent_a = (power_kva * 1000) / (sqrt(3) * voltage_v)\n= (176470) / (1.732 * 380)\n= 268.1 A\n\ntotal_kw = power_kw * quantity\n= 150 * 4 = 600 kW
+
+    calc --> api : {power_kva: 176.47, current_a: 268.1}
+
+    api -> db : INSERT INTO loads\n(project_id, load_name, load_type,\nquantity, power_kw, power_kva,\ncurrent_a, voltage_v, power_factor,\nis_critical)
+    db --> api : load_id created
+    api --> nginx : 201 Created\n{load_id, power_kw: 150, power_kva: 176.47, current_a: 268.1}
+    nginx --> fe : Response
+    fe --> eng : Load added to table
+
+end
+
+note over fe, calc
+  Example loads added:
+  1. HVAC Chiller Unit -- 4x 150 kW (motor, critical)
+  2. Lighting Panel LP-01 -- 1x 45 kW (lighting)
+  3. UPS System -- 2x 80 kW (UPS, critical)
+end note
+
+== Step 3: View Project with Calculated Totals ==
+
+eng -> fe : Navigate to project summary
+fe -> nginx : GET /api/projects/47\nAuthorization: Bearer <JWT>
+nginx -> api : Proxy to 8000
+api -> auth : Verify JWT
+auth --> api : Authorized
+api -> proj : Get project with calculations
+proj -> db : SELECT * FROM projects\nWHERE project_id = 47
+db --> proj : Project record
+proj -> db : SELECT * FROM loads\nWHERE project_id = 47
+db --> proj : 3 load records
+proj -> calc : Calculate project totals
+
+calc -> calc : **Aggregate Calculations:**\n\nTotal Connected Load:\n= (4*150) + (1*45) + (2*80)\n= 600 + 45 + 160 = 805 kW\n\nTotal Connected kVA:\n= 805 / 0.85 = 947.06 kVA\n\nDemand Load (DF=0.80):\n= 805 * 0.80 = 644 kW\n\nDiversified Load (DvF=0.70):\n= 644 * 0.70 = 450.8 kW\n\nTotal Current:\n= (450800) / (1.732 * 380)\n= 684.8 A
+
+calc --> proj : Aggregated totals
+
+proj --> api : Project + loads + totals
+api --> nginx : 200 OK\n{\n  project_id: 47,\n  prn: "PRN-2026-00047",\n  project_name: "Al-Riyadh Office Tower",\n  totals: {\n    connected_kw: 805,\n    connected_kva: 947.06,\n    demand_kw: 644,\n    diversified_kw: 450.8,\n    total_current_a: 684.8\n  },\n  loads: [...3 items...]\n}
+nginx --> fe : Response
+fe -> fe : Render project summary\nwith load table and\ncalculated totals
+fe --> eng : Display project dashboard\nwith power summary
+
+@enduml

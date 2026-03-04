@@ -1,0 +1,20 @@
+@startuml component-diagram
+!theme plain
+title Component Diagram -- [Project Name]
+
+package "System Name" {
+  [Component 1] as c1
+  [Component 2] as c2
+  [Component 3] as c3
+  database "Database" as db
+}
+
+c1 --> c2 : "Protocol"
+c2 --> db : "SQL"
+c3 --> c2 : "Internal API"
+
+note right
+  Add all components, their
+  responsibilities, and connections
+end note
+@enduml

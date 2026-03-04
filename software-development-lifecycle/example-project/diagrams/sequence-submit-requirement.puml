@@ -1,0 +1,119 @@
+@startuml sequence-submit-requirement
+!theme plain
+
+title Power Atlas -- Sequence: Client Submits Requirement, Admin Reviews
+caption Full lifecycle from public form submission through admin approval with email notifications
+
+skinparam sequenceArrowColor #444444
+skinparam sequenceLifeLineBorderColor #555555
+skinparam participantBackgroundColor #E8F4FD
+skinparam databaseBackgroundColor #FFF3E0
+skinparam noteBorderColor #888888
+
+actor "Client User" as client
+actor "Admin User" as admin
+participant "Public Form\n(Frontend)" as pub_form
+participant "Admin Dashboard\n(Frontend)" as admin_fe
+participant "Nginx\n(443)" as nginx
+participant "Flask API\n(8000)" as api
+participant "Auth Module" as auth
+participant "Requirements\nPipeline" as req
+database "SQLite DB" as db
+participant "Email SMTP\nService" as smtp
+
+== Phase 1: Client Submits Requirement ==
+
+client -> pub_form : Navigate to public\nrequirement form\n(no login required)
+pub_form --> client : Display requirement\nsubmission form
+
+client -> pub_form : Fill and submit form
+pub_form -> nginx : POST /api/requirements/submit\n{\n  "client_name": "Nasser Al-Dosari",\n  "client_email": "nasser@example.sa",\n  "phone": "+966-50-123-4567",\n  "project_name": "Jeddah Industrial Complex",\n  "project_type": "industrial",\n  "estimated_load_kw": 2500,\n  "voltage_level": "380V",\n  "location": "Jeddah, KSA",\n  "description": "New industrial facility\n    requiring full power design",\n  "timeline": "Q3 2026",\n  "attachments": ["site_plan.pdf"]\n}
+nginx -> api : Proxy to 8000
+
+api -> req : Process submission
+req -> req : Validate required fields\nSanitize input data
+req -> req : Generate requirement code\n"REQ-2026-00128"
+
+req -> db : INSERT INTO client_requirements\n(client_name, client_email,\nproject_name, status='pending',\nstage='new_submission',\nrequirement_code='REQ-2026-00128')
+db --> req : requirement_id: 128
+
+req -> db : INSERT INTO notifications\n(user_id: [all admin users],\ntype: 'new_requirement',\ntitle: 'New Requirement Submitted',\nmessage: 'Jeddah Industrial Complex\nby Nasser Al-Dosari',\nrequirement_id: 128,\nis_read: false)
+db --> req : Notifications created
+
+req -> smtp : Send email notification\nTo: admin@poweratlas.sa\nSubject: "New Requirement: REQ-2026-00128"\nBody: "A new power requirement has been\nsubmitted by Nasser Al-Dosari for\nJeddah Industrial Complex."
+smtp --> req : 250 OK (email sent)
+
+req -> smtp : Send confirmation email\nTo: nasser@example.sa\nSubject: "Requirement Received: REQ-2026-00128"\nBody: "Your requirement has been received.\nReference code: REQ-2026-00128.\nWe will review and respond shortly."
+smtp --> req : 250 OK (email sent)
+
+req --> api : Requirement created
+api --> nginx : 201 Created\n{requirement_id: 128,\nrequirement_code: "REQ-2026-00128",\nstatus: "pending",\nstage: "new_submission"}
+nginx --> pub_form : Response
+pub_form --> client : "Thank you! Your requirement\nhas been submitted.\nReference: REQ-2026-00128"
+
+== Phase 2: Auto-Route to Admin Review ==
+
+note over req, db
+  The system automatically transitions
+  new_submission -> admin_review
+  when an admin is available to receive it
+end note
+
+req -> db : UPDATE client_requirements\nSET stage = 'admin_review'\nWHERE requirement_id = 128
+db --> req : Updated
+
+== Phase 3: Admin Reviews Requirement ==
+
+admin -> admin_fe : Log in to admin dashboard
+admin_fe -> nginx : GET /api/requirements\nAuthorization: Bearer <JWT>
+nginx -> api : Proxy to 8000
+api -> auth : Verify JWT\nCheck role = admin
+auth --> api : Authorized (user_id: 2)
+
+api -> req : Fetch pending requirements
+req -> db : SELECT * FROM client_requirements\nWHERE stage = 'admin_review'\nORDER BY created_at DESC
+db --> req : [requirement_id: 128, ...]
+req --> api : Requirements list
+api --> nginx : 200 OK\n[{requirement_id: 128,\nclient_name: "Nasser Al-Dosari",\nproject_name: "Jeddah Industrial Complex",\nstage: "admin_review", ...}]
+nginx --> admin_fe : Response
+admin_fe --> admin : Display requirements\nlist with details
+
+admin -> admin_fe : Click requirement #128\nto review details
+admin_fe -> nginx : GET /api/requirements/128\nAuthorization: Bearer <JWT>
+nginx -> api : Proxy to 8000
+api -> req : Fetch requirement details
+req -> db : SELECT * FROM client_requirements\nWHERE requirement_id = 128
+db --> req : Full requirement record
+req --> api : Requirement details
+api --> nginx : 200 OK (full details)
+nginx --> admin_fe : Response
+admin_fe --> admin : Display full requirement\ndetails for review
+
+== Phase 4: Admin Approves Requirement ==
+
+admin -> admin_fe : Click "Approve"\nAdd note: "Approved. Assigning\nto Eng. Khalid for design."
+
+admin_fe -> nginx : PUT /api/requirements/128/approve\nAuthorization: Bearer <JWT>\n{\n  "admin_notes": "Approved. Assigning\n    to Eng. Khalid for design.",\n  "priority": "high"\n}
+nginx -> api : Proxy to 8000
+api -> auth : Verify JWT\nCheck role = admin
+auth --> api : Authorized (user_id: 2)
+
+api -> req : Approve requirement
+req -> db : UPDATE client_requirements\nSET stage = 'approved',\nstatus = 'approved',\nreviewed_by = 2\nWHERE requirement_id = 128
+db --> req : Updated
+
+req -> db : INSERT INTO requirement_changes\n(requirement_id: 128,\nold_values: '{"stage":"admin_review"}',\nnew_values: '{"stage":"approved",\n  "admin_notes":"Approved..."}',\nstatus: 'approved',\nchanged_by: 2)
+db --> req : Change logged
+
+req -> db : INSERT INTO notifications\n(user_id: [engineers],\ntype: 'requirement_approved',\ntitle: 'Requirement Approved',\nmessage: 'REQ-2026-00128 approved\nfor Jeddah Industrial Complex',\nrequirement_id: 128)
+db --> req : Notifications created
+
+req -> smtp : Send email to client\nTo: nasser@example.sa\nSubject: "Requirement Approved: REQ-2026-00128"\nBody: "Your power requirement for\nJeddah Industrial Complex has been\napproved. Our engineering team will\nbegin working on your project shortly."
+smtp --> req : 250 OK (email sent)
+
+req --> api : Approval processed
+api --> nginx : 200 OK\n{requirement_id: 128,\nstage: "approved",\nstatus: "approved",\nreviewed_by: "admin"}
+nginx --> admin_fe : Response
+admin_fe --> admin : Requirement marked\nas approved in dashboard
+
+@enduml

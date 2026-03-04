@@ -1,0 +1,20 @@
+@startuml erd
+!theme plain
+title Entity Relationship Diagram -- [Project Name]
+
+entity "Table1" as t1 {
+  * id : INTEGER <<PK>>
+  --
+  * name : TEXT
+  created_at : DATETIME
+}
+
+entity "Table2" as t2 {
+  * id : INTEGER <<PK>>
+  --
+  * table1_id : INTEGER <<FK>>
+  * field : TEXT
+}
+
+t1 ||--o{ t2 : "has many"
+@enduml

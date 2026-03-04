@@ -1,0 +1,43 @@
+' =============================================================================
+' CLASS DIAGRAM TEMPLATE
+' =============================================================================
+' Purpose:  Define the internal structure of a component, showing classes,
+'           their attributes, methods, and relationships.
+'
+' Usage:
+'   1. Replace [Component Name] in the title with your component name.
+'   2. Define each class with its fields and methods.
+'   3. Use visibility markers:  - private, + public, # protected, ~ package
+'   4. Add relationships:  -->  association
+'                           --|>  inheritance
+'                           ..|>  implementation
+'                           --*   composition
+'                           --o   aggregation
+'   5. Add notes where design decisions need explanation.
+' =============================================================================
+
+@startuml class-diagram
+!theme plain
+title Class Diagram -- [Component Name]
+
+class ClassName {
+  - privateField : Type
+  + publicField : Type
+  --
+  + publicMethod(param: Type) : ReturnType
+  - privateMethod() : void
+}
+
+class AnotherClass {
+  + field : Type
+  --
+  + method() : Type
+}
+
+ClassName --> AnotherClass : "uses"
+
+note right of ClassName
+  Replace with your component's
+  classes and relationships
+end note
+@enduml

@@ -1,0 +1,32 @@
+' =============================================================================
+' DATA FLOW DIAGRAM TEMPLATE
+' =============================================================================
+' Purpose:  Map how data moves through a system -- from input sources,
+'           through processing stages, into data stores, and out to consumers.
+'
+' Usage:
+'   1. Replace [Process Name] in the title with the workflow or feature name.
+'   2. Define rectangles for processes, databases for stores, and actors
+'      for external entities.
+'   3. Label every arrow with the data being passed (e.g., "user record",
+'      "aggregated metrics").
+'   4. Add notes to explain any transformations or business rules applied
+'      at each processing stage.
+' =============================================================================
+
+@startuml data-flow
+!theme plain
+title Data Flow Diagram -- [Process Name]
+
+rectangle "Input Source" as input
+rectangle "Process 1" as p1
+rectangle "Process 2" as p2
+database "Data Store" as ds
+rectangle "Output" as output
+
+input --> p1 : "raw data"
+p1 --> ds : "store"
+p1 --> p2 : "transformed data"
+p2 --> output : "result"
+ds --> p2 : "lookup"
+@enduml

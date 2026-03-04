@@ -178,4 +178,4 @@
 | Data Model Document | Data model under review | ./data-model-document.md |
 | Conduct Design Review Runbook | Step-by-step procedure | ../runbooks/conduct-design-review.md |
 | Architecture Description Document | Reference architecture for adherence checks | ../architecture-description-document.md |
-| Software Requirements Specification | Source requirements for traceability checks | ../../phase-3-requirements/templates/software-requirements-specification.md |
+| Software Requirements Specification | Source requirements for traceability checks | ../../phase-2-requirements-engineering/templates/software-requirements-specification.md |

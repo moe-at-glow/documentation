@@ -1,0 +1,10 @@
+@startuml state
+!theme plain
+title State Diagram -- [Entity Name]
+
+[*] --> State1
+State1 --> State2 : trigger
+State2 --> State3 : trigger
+State3 --> [*]
+State2 --> State1 : rollback trigger
+@enduml

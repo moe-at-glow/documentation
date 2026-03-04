@@ -1,0 +1,51 @@
+@startuml state-project
+!theme plain
+
+title Power Atlas -- Project Status State Machine
+caption Lifecycle states for a power calculation project
+
+skinparam stateBorderColor #555555
+skinparam stateBackgroundColor #E8F4FD
+skinparam stateArrowColor #444444
+skinparam noteBorderColor #888888
+
+[*] --> draft : "Engineer creates\nnew project"
+
+state draft : Project is newly created.
+state draft : Loads can be added/edited.
+state draft : Layout can be designed.
+state draft : No reports generated yet.
+
+state active : Project is in active use.
+state active : Calculations are finalized.
+state active : Reports can be generated.
+state active : Activity is logged.
+
+state archived : Project is stored for reference.
+state archived : Read-only access.
+state archived : No new loads or edits.
+state archived : Reports still downloadable.
+
+draft --> active : "Engineer activates project\n[at least 1 load exists]"
+active --> archived : "Engineer archives project\n(completed or inactive)"
+archived --> active : "Engineer reactivates project\n(needs further work)"
+
+note right of draft
+  **Initial state** for all new projects.
+  PRN is assigned on creation.
+  Status stored in projects.status column.
+end note
+
+note right of active
+  Most work happens here:
+  load management, calculations,
+  report generation, layout design.
+end note
+
+note left of archived
+  Soft archive -- data is preserved.
+  Can be restored to active if
+  the project needs revisiting.
+end note
+
+@enduml

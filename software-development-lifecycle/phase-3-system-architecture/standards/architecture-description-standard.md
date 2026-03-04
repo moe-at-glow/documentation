@@ -40,13 +40,17 @@
 
 ### Mandatory Viewpoints
 
+All viewpoint diagrams **must** be created as PlantUML `.puml` files and committed to the `diagrams/` directory. Use the PlantUML templates in `diagrams/` as starting points.
+
 | # | Rule | Applies To | Verification | Violation Response |
 |---|------|-----------|-------------|-------------------|
-| 14 | System Context Viewpoint: show system boundary, all external systems (with protocol/format), all user types, all data flows crossing boundary | All projects | [ ] Box-and-line diagram with all required elements present | Rework required |
-| 15 | Logical/Functional Viewpoint: show every component with name, responsibility summary, exposed interfaces, consumed interfaces | All projects | [ ] Component diagram complete | Rework required |
-| 16 | Process/Runtime Viewpoint: document top 3 user workflows, async flows, scheduled/batch flows, error/retry flows | All projects | [ ] Sequence/data flow diagrams for all required scenarios | Rework required |
-| 17 | Deployment Viewpoint: show all servers/nodes, network boundaries, load balancers, databases, message brokers, external connections, environment labels | All projects | [ ] Deployment diagram covers production topology | Rework required |
+| 14 | System Context Viewpoint: show system boundary, all external systems (with protocol/format), all user types, all data flows crossing boundary. **Deliver as PlantUML `.puml` file.** | All projects | [ ] `diagrams/system-context-diagram.puml` committed and valid | Rework required |
+| 15 | Logical/Functional Viewpoint: show every component with name, responsibility summary, exposed interfaces, consumed interfaces. **Deliver as PlantUML `.puml` file.** | All projects | [ ] `diagrams/component-diagram.puml` committed and valid | Rework required |
+| 16 | Process/Runtime Viewpoint: document top 3 user workflows, async flows, scheduled/batch flows, error/retry flows. **Deliver as PlantUML `.puml` files (one per scenario).** | All projects | [ ] `diagrams/sequence-*.puml` files committed for all required scenarios | Rework required |
+| 17 | Deployment Viewpoint: show all servers/nodes, network boundaries, load balancers, databases, message brokers, external connections, environment labels. **Deliver as PlantUML `.puml` file.** | All projects | [ ] `diagrams/deployment-diagram.puml` committed and valid | Rework required |
 | 18 | Development Viewpoint: show repository structure, major directories, package/module organization, build pipeline stages, dependency relationships | All projects | [ ] Directory tree or module dependency diagram present | Rework required |
+| 18a | Entity-Relationship Diagram: show all data entities, attributes, and relationships. **Deliver as PlantUML `.puml` file.** | All projects | [ ] `diagrams/erd-diagram.puml` committed and valid | Rework required |
+| 18b | State Diagrams: show lifecycle states for key domain entities. **Deliver as PlantUML `.puml` files.** | All projects | [ ] `diagrams/state-*.puml` files committed for key entities | Rework required |
 
 ### Architecture Concerns Mapping
 
@@ -99,10 +103,13 @@ Reference mapping:
 ## COMPLIANCE CHECKLIST
 
 - [ ] ADD contains all 13 required sections
-- [ ] System Context Viewpoint diagram present with system boundary, external systems, user types, data flows
-- [ ] Logical/Functional Viewpoint diagram present with all components, responsibilities, interfaces
-- [ ] Process/Runtime Viewpoint covers top 3 workflows, async flows, batch flows, error flows
-- [ ] Deployment Viewpoint diagram covers production topology with all required elements
+- [ ] All diagrams created as PlantUML `.puml` files in `diagrams/` directory
+- [ ] `diagrams/system-context-diagram.puml` -- system boundary, external systems, user types, data flows
+- [ ] `diagrams/component-diagram.puml` -- all components, responsibilities, interfaces
+- [ ] `diagrams/sequence-*.puml` -- top 3 workflows, async flows, batch flows, error flows
+- [ ] `diagrams/deployment-diagram.puml` -- production topology with all required elements
+- [ ] `diagrams/erd-diagram.puml` -- all data entities, attributes, relationships
+- [ ] `diagrams/state-*.puml` -- lifecycle states for key domain entities
 - [ ] Development Viewpoint shows repository structure, packages, build pipeline
 - [ ] Every stakeholder concern maps to at least one viewpoint
 - [ ] Quality attribute approaches documented for performance, security, scalability, reliability, maintainability
@@ -123,3 +130,9 @@ Reference mapping:
 | Architecture Description Document | Template | [../templates/architecture-description-document.md](../templates/architecture-description-document.md) |
 | System Context Diagram | Template | [../templates/system-context-diagram.md](../templates/system-context-diagram.md) |
 | Component Diagram | Template | [../templates/component-diagram.md](../templates/component-diagram.md) |
+| System Context Diagram (PlantUML) | Diagram Template | [../diagrams/system-context-diagram.puml](../diagrams/system-context-diagram.puml) |
+| Component Diagram (PlantUML) | Diagram Template | [../diagrams/component-diagram.puml](../diagrams/component-diagram.puml) |
+| Sequence Diagram (PlantUML) | Diagram Template | [../diagrams/sequence-diagram.puml](../diagrams/sequence-diagram.puml) |
+| Deployment Diagram (PlantUML) | Diagram Template | [../diagrams/deployment-diagram.puml](../diagrams/deployment-diagram.puml) |
+| ERD (PlantUML) | Diagram Template | [../diagrams/erd-diagram.puml](../diagrams/erd-diagram.puml) |
+| State Diagram (PlantUML) | Diagram Template | [../diagrams/state-diagram.puml](../diagrams/state-diagram.puml) |

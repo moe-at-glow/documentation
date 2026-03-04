@@ -1,0 +1,140 @@
+@startuml deployment-diagram
+!theme plain
+
+title Power Atlas -- Deployment Diagram
+caption Single DigitalOcean droplet hosting all services with future expansion paths
+
+skinparam nodeBackgroundColor #E8F4FD
+skinparam artifactBackgroundColor #FFFFFF
+skinparam databaseBackgroundColor #FFF3E0
+skinparam cloudBackgroundColor #F5F5F5
+skinparam noteBorderColor #888888
+skinparam componentStyle uml2
+
+' --- Internet / Users ---
+cloud "Internet" as internet {
+    actor "Power Engineer\n(Browser)" as eng
+    actor "Admin User\n(Browser)" as admin
+    actor "Client User\n(Browser)" as client
+}
+
+' --- SSL ---
+rectangle "Let's Encrypt\n<<Certificate Authority>>" as letsencrypt #FFFDE7
+
+' --- DigitalOcean Droplet ---
+node "DigitalOcean Droplet\n<<Ubuntu 24.04 LTS>>\nRAM: 2 GB | vCPU: 1 | SSD: 50 GB\nIP: 134.209.xxx.xxx\npoweratlas.sa" as droplet {
+
+    ' --- Nginx ---
+    node "Nginx\n<<Reverse Proxy & Web Server>>\nsystemd: nginx.service" as nginx_node {
+        artifact "nginx.conf" as nginx_conf
+        portin "Port 80\n(HTTP -> 301 HTTPS)" as p80
+        portin "Port 443\n(HTTPS / TLS 1.3)" as p443
+    }
+    note right of nginx_node
+      **Routing Rules:**
+      / -> /public/ (static files)
+      /api/* -> http://127.0.0.1:8000
+      /layout-builder/* -> /public/layout-builder/
+      /reports/* -> /public/reports/
+      SSL cert: /etc/letsencrypt/live/poweratlas.sa/
+    end note
+
+    ' --- Flask Application ---
+    node "Flask Application\n<<Python 3.12 + Gunicorn>>\nsystemd: powertool.service\nhttp://127.0.0.1:8000" as flask_node {
+        artifact "app.py\n<<Entry Point>>" as app
+        artifact "routes/\n<<API Endpoints>>" as routes
+        artifact "models/\n<<Data Models>>" as models
+        artifact "services/\n<<Business Logic>>" as services
+        artifact "utils/\n<<Helpers>>" as utils
+    }
+
+    ' --- PDF Server ---
+    node "PDF Server\n<<Python 3.12 + ReportLab>>\nsystemd: pdf-server.service\nhttp://127.0.0.1:5020" as pdf_node {
+        artifact "pdf_server.py\n<<PDF Generation>>" as pdf_app
+        artifact "templates/\n<<Report Templates>>" as pdf_templates
+    }
+
+    ' --- SQLite Database ---
+    database "SQLite Database\n<<File-based RDBMS>>" as db_node {
+        artifact "/database/power_calculator.db\n<<11 tables>>\n~50 MB max" as db_file
+    }
+
+    ' --- Static Files ---
+    folder "/public/\n<<Static Assets>>" as public_dir {
+        artifact "index.html, *.css, *.js\n<<Vite + Tailwind build>>" as static_app
+        folder "/public/layout-builder/\n<<React + Konva.js build>>" as layout_dir {
+            artifact "index.html, bundle.js\n<<React SPA>>" as layout_app
+        }
+        folder "/public/reports/\n<<Generated PDFs>>" as reports_dir {
+            artifact "PRN-*.pdf\n<<Report files>>" as pdf_files
+        }
+        folder "/public/uploads/\n<<User uploads>>" as uploads_dir
+    }
+
+    ' --- Log Files ---
+    folder "/var/log/poweratlas/" as log_dir {
+        artifact "app.log" as app_log
+        artifact "access.log" as access_log
+        artifact "error.log" as error_log
+    }
+
+    ' --- Future Services ---
+    node "Mosquitto MQTT Broker\n<<Future>>\nPort 1883 / 8883 (TLS)" as mqtt_node #LightGray {
+        artifact "mosquitto.conf" as mqtt_conf
+    }
+
+    database "InfluxDB\n<<Future>>\nTime-series data\nPort 8086" as influx_node #LightGray
+
+    node "Grafana\n<<Future>>\nMonitoring dashboards\nPort 3000" as grafana_node #LightGray
+}
+
+' --- Future: IoT Sensors ---
+node "IoT Sensors\n<<Future>>\nPower meters, current\ntransformers, PLCs" as iot_sensors #LightGray
+
+' --- Connections: External ---
+eng --> p443 : "HTTPS"
+admin --> p443 : "HTTPS"
+client --> p443 : "HTTPS"
+internet --> p80 : "HTTP\n(redirects)"
+letsencrypt --> nginx_node : "TLS certificates\n(auto-renewal via certbot)"
+
+' --- Connections: Internal ---
+nginx_node --> flask_node : "Reverse proxy\nHTTP/127.0.0.1:8000\n/api/* routes"
+nginx_node --> public_dir : "Serve static files\ndirectly (no proxy)"
+
+flask_node --> db_node : "SQLite3\nfile I/O"
+flask_node --> pdf_node : "HTTP POST\n127.0.0.1:5020/generate"
+flask_node --> log_dir : "Application logs"
+pdf_node --> reports_dir : "Write generated\nPDF files"
+
+' --- Future Connections ---
+iot_sensors ..> mqtt_node : "MQTT/1883\n<<future>>"
+mqtt_node ..> flask_node : "Sensor data\ningestion\n<<future>>"
+flask_node ..> influx_node : "Store time-series\nmetrics\n<<future>>"
+influx_node ..> grafana_node : "Query metrics\n<<future>>"
+
+' --- Notes ---
+note bottom of droplet
+  **Firewall (ufw):**
+  - Allow 80/tcp (HTTP)
+  - Allow 443/tcp (HTTPS)
+  - Allow 22/tcp (SSH)
+  - Future: Allow 1883/tcp (MQTT)
+  - Future: Allow 3000/tcp (Grafana)
+
+  **Systemd Services:**
+  - powertool.service (Flask app)
+  - pdf-server.service (ReportLab)
+  - nginx.service (Web server)
+
+  **Backup:**
+  - Daily SQLite backup via cron
+  - Snapshot via DigitalOcean API
+end note
+
+note bottom of mqtt_node
+  Gray nodes indicate
+  planned future services
+end note
+
+@enduml

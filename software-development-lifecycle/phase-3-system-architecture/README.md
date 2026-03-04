@@ -48,6 +48,19 @@ All documents follow the **QRH (Quick Reference Handbook)** format. For backgrou
 - [System Context Diagram](templates/system-context-diagram.md)
 - [Component Diagram](templates/component-diagram.md)
 
+### PlantUML Diagram Templates (`diagrams/`)
+
+All architecture diagrams **must** be created as PlantUML `.puml` files. Copy these templates and fill in your project details:
+
+| Diagram | Template | Required |
+|---------|----------|----------|
+| System Context | [system-context-diagram.puml](diagrams/system-context-diagram.puml) | All projects |
+| Component Diagram | [component-diagram.puml](diagrams/component-diagram.puml) | All projects |
+| Sequence Diagram | [sequence-diagram.puml](diagrams/sequence-diagram.puml) | All projects (top 3 workflows) |
+| Deployment Diagram | [deployment-diagram.puml](diagrams/deployment-diagram.puml) | All projects |
+| Entity-Relationship Diagram | [erd-diagram.puml](diagrams/erd-diagram.puml) | All projects |
+| State Diagram | [state-diagram.puml](diagrams/state-diagram.puml) | All projects (key entities) |
+
 ---
 
 ## Entry Criteria
@@ -61,6 +74,7 @@ All documents follow the **QRH (Quick Reference Handbook)** format. For backgrou
 ## Exit Criteria
 
 - [ ] Architecture Description Document (ADD) is complete with all required viewpoints.
+- [ ] All PlantUML diagrams committed to `diagrams/` directory (system-context, component, sequence, deployment, ERD, state).
 - [ ] All architecture-significant decisions are documented as ADRs.
 - [ ] Architecture review has been conducted.
 - [ ] ADD is approved by Tech Lead, System Architect, and Product Owner.

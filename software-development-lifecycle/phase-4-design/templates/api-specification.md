@@ -123,4 +123,4 @@ Base URL: `/api/v1/[resource-name]`
 | Data Model Document | Underlying data structures | ./data-model-document.md |
 | Design Review Checklist | Review gate for API design | ./design-review-checklist.md |
 | Design API Contracts Runbook | Step-by-step procedure | ../runbooks/design-api-contracts.md |
-| Software Requirements Specification | Source requirements (SWR-XXX) | ../../phase-3-requirements/templates/software-requirements-specification.md |
+| Software Requirements Specification | Source requirements (SWR-XXX) | ../../phase-2-requirements-engineering/templates/software-requirements-specification.md |

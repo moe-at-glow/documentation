@@ -1,0 +1,38 @@
+' =============================================================================
+' API FLOW DIAGRAM TEMPLATE
+' =============================================================================
+' Purpose:  Illustrate the request/response lifecycle for an API endpoint,
+'           including validation, service logic, and error handling paths.
+'
+' Usage:
+'   1. Replace [Endpoint Name] in the title (e.g., "POST /api/users").
+'   2. Add or remove participants to match your architecture layers.
+'   3. Use "alt / else / end" blocks for branching (error vs. success).
+'   4. Use "opt" blocks for optional steps and "loop" for repeated calls.
+'   5. Include HTTP status codes in response arrows for clarity.
+' =============================================================================
+
+@startuml api-flow
+!theme plain
+title API Flow -- [Endpoint Name]
+
+actor "Client" as client
+participant "Controller" as ctrl
+participant "Service" as svc
+participant "Validator" as val
+database "Database" as db
+
+client -> ctrl : HTTP METHOD /api/resource
+ctrl -> val : validate(request)
+alt validation fails
+  val --> ctrl : ValidationError
+  ctrl --> client : 400 Bad Request
+else validation passes
+  val --> ctrl : valid
+  ctrl -> svc : processRequest(data)
+  svc -> db : query
+  db --> svc : result
+  svc --> ctrl : response
+  ctrl --> client : 200 OK
+end
+@enduml

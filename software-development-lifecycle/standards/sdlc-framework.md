@@ -73,9 +73,12 @@
 
 - [ ] Baselined requirements available as input
 - [ ] Architecture Description Document produced with ISO 42010 viewpoints
-- [ ] System Context Diagram completed
-- [ ] Component Diagram completed
-- [ ] Deployment Diagram completed
+- [ ] System Context Diagram completed (PlantUML `.puml` file committed)
+- [ ] Component Diagram completed (PlantUML `.puml` file committed)
+- [ ] Deployment Diagram completed (PlantUML `.puml` file committed)
+- [ ] Sequence Diagrams for top 3 workflows completed (PlantUML `.puml` files committed)
+- [ ] ERD completed (PlantUML `.puml` file committed)
+- [ ] State Diagrams for key entities completed (PlantUML `.puml` files committed)
 - [ ] ADRs recorded for all significant decisions
 - [ ] Architecture review board approval obtained
 
@@ -93,6 +96,9 @@
 
 - [ ] Approved architecture available as input
 - [ ] Detailed Design Document produced per component
+- [ ] Class Diagram completed (PlantUML `.puml` file committed)
+- [ ] API Flow Diagram completed (PlantUML `.puml` file committed)
+- [ ] Data Flow Diagram completed (PlantUML `.puml` file committed)
 - [ ] Data model specified (entities, attributes, relationships, constraints)
 - [ ] API specifications completed (OpenAPI or equivalent)
 - [ ] UI wireframes produced for user-facing components
@@ -181,7 +187,7 @@
 
 | Phase | Artifact | Description | Owner |
 |-------|----------|-------------|-------|
-| 1 - Business Analysis | Business Case | Justification for the project including cost-benefit analysis, risk assessment, and strategic alignment | Business Analyst |
+| 1 - Business Analysis | Business Case | Justification for the project including risk assessment and strategic alignment | Business Analyst |
 | 1 - Business Analysis | Project Charter | Formal authorization of the project with high-level scope, objectives, and constraints | Project Sponsor |
 | 1 - Business Analysis | Stakeholder Register | Identification of all stakeholders with their interests, influence, and communication needs | Business Analyst |
 | 2 - Requirements Engineering | Business Requirements Document (BRD) | Business-level requirements describing what the organization needs | Business Analyst |
@@ -189,11 +195,17 @@
 | 2 - Requirements Engineering | Requirements Traceability Matrix (RTM) | Bidirectional mapping from business needs through requirements, design, code, and tests | Business Analyst |
 | 2 - Requirements Engineering | Validation Report | Results of requirements validation activities (walkthroughs, inspections, reviews) | Business Analyst |
 | 3 - System Architecture | Architecture Description Document | System structure, viewpoints, and technology selections per ISO 42010 | Tech Lead |
-| 3 - System Architecture | System Context Diagram | Boundary of the system and its interactions with external actors | Tech Lead |
-| 3 - System Architecture | Component Diagram | Internal modules/services and their interfaces | Tech Lead |
-| 3 - System Architecture | Deployment Diagram | Infrastructure, hosting, and network topology | Tech Lead |
+| 3 - System Architecture | System Context Diagram (.puml) | PlantUML diagram showing system boundary and external actor interactions | Tech Lead |
+| 3 - System Architecture | Component Diagram (.puml) | PlantUML diagram showing internal modules/services and their interfaces | Tech Lead |
+| 3 - System Architecture | Deployment Diagram (.puml) | PlantUML diagram showing infrastructure, hosting, and network topology | Tech Lead |
+| 3 - System Architecture | Sequence Diagrams (.puml) | PlantUML sequence diagrams for top 3-5 critical workflows | Tech Lead |
+| 3 - System Architecture | ERD (.puml) | PlantUML entity-relationship diagram for data architecture | Tech Lead |
+| 3 - System Architecture | State Diagrams (.puml) | PlantUML state diagrams for key entity lifecycles | Tech Lead |
 | 3 - System Architecture | Architecture Decision Records (ADRs) | Recorded decisions with context, options, trade-offs, and rationale | Tech Lead |
 | 4 - Design | Detailed Design Document | Component-level specifications including internal structure and behavior | Developer / Tech Lead |
+| 4 - Design | Class Diagram (.puml) | PlantUML class diagram showing component internal structure | Developer / Tech Lead |
+| 4 - Design | API Flow Diagram (.puml) | PlantUML sequence diagram showing API request/response flows | Developer / Tech Lead |
+| 4 - Design | Data Flow Diagram (.puml) | PlantUML activity diagram showing data transformation flows | Developer / Tech Lead |
 | 4 - Design | Data Model | Entities, attributes, relationships, and constraints | Developer / Tech Lead |
 | 4 - Design | API Specifications | Endpoint definitions, request/response formats, error codes, authentication | Developer / Tech Lead |
 | 4 - Design | UI Wireframes | Layout, navigation, and interaction flows for user-facing components | Developer / Tech Lead |
@@ -272,6 +284,36 @@
 
 ---
 
+## Diagramming Standard
+
+**PlantUML** is the mandatory diagramming tool for all SDLC phases. All diagrams must be committed as `.puml` source files alongside documentation.
+
+### Required Diagrams by Phase
+
+| Phase | Required Diagrams | PlantUML Template |
+|-------|-------------------|-------------------|
+| 2 - Requirements Engineering | Use Case Diagram | -- |
+| 3 - System Architecture | System Context Diagram, Component Diagram, Sequence Diagrams (top 3 workflows), Deployment Diagram, ERD, State Diagrams | `phase-3-system-architecture/diagrams/*.puml` |
+| 4 - Design | Class Diagram, API Flow Diagram, Data Flow Diagram | `phase-4-design/diagrams/*.puml` |
+| 5 - Development | -- (diagrams from Phase 3-4 used as reference) | -- |
+| 6 - Testing | -- (diagrams from Phase 3-4 used for test derivation) | -- |
+
+### Diagramming Rules
+
+| # | Rule | Verification |
+|---|------|-------------|
+| 1 | All diagrams stored as `.puml` source files in `diagrams/` directory | [ ] `.puml` files present |
+| 2 | Diagram filenames use kebab-case | [ ] Naming verified |
+| 3 | Every `.puml` file includes a `@startuml` / `@enduml` block | [ ] Syntax valid |
+| 4 | Diagrams committed to version control alongside documentation | [ ] Files in repository |
+| 5 | Diagrams updated when architecture or design changes | [ ] Diagrams match current state |
+
+> **IF** small project (1-2 devs) **THEN** System Context Diagram and ERD required; others optional
+> **IF** medium project (3-5 devs) **THEN** All Phase 3 diagrams required; Phase 4 diagrams required for new components
+> **IF** large project (6+ devs) **THEN** Full compliance -- all diagrams required at every phase
+
+---
+
 ## Minimum Compliance Requirements
 
 - [ ] 1. **Traceability** -- Traceable link from business need to implementation (Jira epic chain for small; formal RTM for medium/large)
@@ -292,7 +334,7 @@
 
 | Item | Description | Responsible |
 |------|-------------|-------------|
-| Sponsor identified | A named project sponsor who has budget authority and will approve the business case | Department head |
+| Sponsor identified | A named project sponsor who will approve the business case | Department head |
 | Product owner assigned | A named product owner who will define priorities and accept deliverables | Project sponsor |
 | Business analyst assigned | A named business analyst who will lead requirements elicitation | Resource manager |
 | Initial problem statement | A written description of the business need or opportunity (may be informal) | Project sponsor |
@@ -340,7 +382,7 @@
 
 | Role | Primary Responsibilities |
 |------|-------------------------|
-| Project Sponsor | Approves business case, funds project, resolves escalations, makes go/no-go decisions at major gates |
+| Project Sponsor | Approves business case, resolves escalations, makes go/no-go decisions at major gates |
 | Product Owner | Defines business requirements, prioritizes backlog, accepts deliverables, participates in UAT |
 | Business Analyst | Elicits and documents requirements, facilitates stakeholder communication, maintains the RTM |
 | Tech Lead | Owns architecture and design decisions, reviews code, mentors developers, approves technical artifacts |
@@ -453,11 +495,11 @@
 
 | Document | Type | Link |
 |----------|------|------|
-| Requirements Engineering Standard | Standard | ../standards/requirements-engineering-standard.md |
-| Requirements Classification Standard | Standard | ../standards/requirements-classification.md |
-| Requirements Traceability Standard | Standard | ../standards/requirements-traceability.md |
-| Conduct Stakeholder Analysis | Runbook | ../runbooks/conduct-stakeholder-analysis.md |
-| Extract Business Requirements | Runbook | ../runbooks/extract-business-requirements.md |
-| Derive Software Requirements | Runbook | ../runbooks/derive-software-requirements.md |
-| Validate Requirements | Runbook | ../runbooks/validate-requirements.md |
-| Manage Requirements Changes | Runbook | ../runbooks/manage-requirements-changes.md |
+| Requirements Engineering Standard | Standard | ../phase-2-requirements-engineering/standards/requirements-engineering-standard.md |
+| Requirements Classification Standard | Standard | ../phase-2-requirements-engineering/standards/requirements-classification.md |
+| Requirements Traceability Standard | Standard | ../phase-2-requirements-engineering/standards/requirements-traceability.md |
+| Conduct Stakeholder Analysis | Runbook | ../phase-2-requirements-engineering/runbooks/conduct-stakeholder-analysis.md |
+| Extract Business Requirements | Runbook | ../phase-2-requirements-engineering/runbooks/extract-business-requirements.md |
+| Derive Software Requirements | Runbook | ../phase-2-requirements-engineering/runbooks/derive-software-requirements.md |
+| Validate Requirements | Runbook | ../phase-2-requirements-engineering/runbooks/validate-requirements.md |
+| Manage Requirements Changes | Runbook | ../phase-2-requirements-engineering/runbooks/manage-requirements-changes.md |

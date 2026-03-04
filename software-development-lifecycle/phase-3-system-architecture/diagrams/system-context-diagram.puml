@@ -1,0 +1,25 @@
+@startuml system-context
+!theme plain
+title System Context Diagram -- [Project Name]
+
+' Instructions: Replace placeholders with your system details
+
+actor "User Role 1" as user1
+actor "User Role 2" as user2
+
+rectangle "System Name" as system {
+}
+
+rectangle "External System 1" as ext1
+database "External DB" as extdb
+
+user1 --> system : HTTPS
+user2 --> system : HTTPS
+system --> ext1 : REST API
+system --> extdb : Protocol
+
+note right of system
+  Replace with your system boundary
+  and all external actors/systems
+end note
+@enduml

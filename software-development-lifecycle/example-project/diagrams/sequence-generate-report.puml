@@ -1,0 +1,116 @@
+@startuml sequence-generate-report
+!theme plain
+
+title Power Atlas -- Sequence: Engineer Generates PDF Report
+caption Engineer requests a project report, system generates PDF via ReportLab server
+
+skinparam sequenceArrowColor #444444
+skinparam sequenceLifeLineBorderColor #555555
+skinparam participantBackgroundColor #E8F4FD
+skinparam databaseBackgroundColor #FFF3E0
+skinparam noteBorderColor #888888
+
+actor "Power Engineer" as eng
+participant "Frontend\n(Vite + JS)" as fe
+participant "Nginx\n(443)" as nginx
+participant "Flask API\n(8000)" as api
+participant "Auth Module" as auth
+participant "Report Generator" as report
+participant "Project Engine" as proj
+participant "Calculation Engine" as calc
+database "SQLite DB" as db
+participant "PDF Server\n(ReportLab)\nport 5020" as pdf
+collections "Static Files\n/public/reports/" as files
+
+== Step 1: Engineer Requests Report ==
+
+eng -> fe : Open project "Al-Riyadh Office Tower"\nClick "Generate PDF Report"\nSelect options: full report, include layout
+
+fe -> nginx : POST /api/reports/generate\nAuthorization: Bearer <JWT>\n{\n  "project_id": 47,\n  "report_type": "full",\n  "include_sections": [\n    "summary",\n    "load_schedule",\n    "calculations",\n    "generator_sizing",\n    "layout",\n    "appendix"\n  ],\n  "format": "pdf"\n}
+nginx -> api : Proxy to 8000
+
+== Step 2: Authenticate and Authorize ==
+
+api -> auth : Verify JWT token
+auth -> db : SELECT * FROM sessions\nWHERE session_token = ?\nAND is_active = true\nAND expires_at > NOW()
+db --> auth : Valid session (user_id: 12)
+auth --> api : Authorized (engineer role)
+
+== Step 3: Gather Project Data ==
+
+api -> report : Generate report for project 47
+report -> proj : Fetch complete project data
+
+proj -> db : SELECT p.*, c.client_name, c.email\nFROM projects p\nLEFT JOIN clients c ON p.client_id = c.client_id\nWHERE p.project_id = 47
+db --> proj : Project with client info
+
+proj -> db : SELECT * FROM loads\nWHERE project_id = 47\nORDER BY load_type, load_name
+db --> proj : 3 load records
+
+proj -> db : SELECT * FROM generators
+db --> proj : Generator catalog
+
+proj -> db : SELECT * FROM project_activity\nWHERE project_id = 47\nORDER BY created_at DESC
+db --> proj : Activity log
+
+proj --> report : Complete project dataset
+
+== Step 4: Run Final Calculations ==
+
+report -> calc : Calculate report figures
+
+calc -> calc : **Connected Load Summary:**\nHVAC Chillers: 4 x 150 = 600 kW\nLighting LP-01: 1 x 45 = 45 kW\nUPS Systems: 2 x 80 = 160 kW\n---\nTotal Connected: 805 kW / 947.06 kVA\n\n**Demand Analysis:**\nDemand Load: 805 x 0.80 = 644 kW\nDiversified: 644 x 0.70 = 450.8 kW\n\n**Generator Sizing:**\nRequired: 450.8 kW + 20% margin\nRecommended: 550 kW generator\nMatch: CAT C15 (500 kW) -- undersized\nMatch: CAT C18 (600 kW) -- suitable\n\n**Critical Load Analysis:**\nCritical loads: 760 kW\n(HVAC + UPS marked critical)
+
+calc --> report : All calculations and\nrecommendations
+
+== Step 5: Generate PDF via ReportLab Server ==
+
+report -> report : Assemble report payload\nwith all data sections
+
+report -> pdf : POST http://localhost:5020/generate\nContent-Type: application/json\n{\n  "template": "full_project_report",\n  "filename": "PRN-2026-00047_report.pdf",\n  "data": {\n    "project": {name, prn, client, ...},\n    "loads": [{...}, {...}, {...}],\n    "totals": {connected, demand, diversified},\n    "generators": {recommended: "CAT C18"},\n    "layout_data": {svg_snapshot: "..."},\n    "activity_log": [{...}]\n  },\n  "options": {\n    "page_size": "A4",\n    "include_cover": true,\n    "include_toc": true,\n    "company_logo": true\n  }\n}
+
+note over pdf
+  **ReportLab PDF Server Processing:**
+  1. Parse JSON payload
+  2. Load A4 page template
+  3. Render cover page with logo & project info
+  4. Render table of contents
+  5. Render executive summary section
+  6. Render load schedule table
+  7. Render calculation details with formulas
+  8. Render generator sizing recommendation
+  9. Render layout diagram (from Konva export)
+  10. Render appendix with activity log
+  11. Add page numbers, headers, footers
+  12. Write PDF to output path
+end note
+
+pdf -> pdf : ReportLab generates PDF\n(~2-5 seconds for full report)
+
+pdf -> files : Write file:\n/public/reports/PRN-2026-00047_report.pdf\n(~850 KB)
+files --> pdf : File written
+
+pdf --> report : 200 OK\n{\n  "status": "success",\n  "filename": "PRN-2026-00047_report.pdf",\n  "file_size": 872448,\n  "pages": 12\n}
+
+== Step 6: Log Activity and Respond ==
+
+report -> db : INSERT INTO project_activity\n(project_id: 47, user_id: 12,\naction_type: 'report_generated',\ndescription: 'Full PDF report generated\n(12 pages, 852 KB)')
+db --> report : Activity logged
+
+report --> api : Report ready
+api --> nginx : 200 OK\n{\n  "status": "success",\n  "report": {\n    "filename": "PRN-2026-00047_report.pdf",\n    "download_url": "/reports/PRN-2026-00047_report.pdf",\n    "pages": 12,\n    "file_size_kb": 852,\n    "generated_at": "2026-03-05T14:23:17Z"\n  }\n}
+nginx --> fe : Response
+
+fe -> fe : Show success notification\nwith download button
+fe --> eng : "Report generated (12 pages)\n[Download PDF]"
+
+== Step 7: Engineer Downloads Report ==
+
+eng -> fe : Click "Download PDF"
+fe -> nginx : GET /reports/PRN-2026-00047_report.pdf
+nginx -> files : Serve static file
+files --> nginx : PDF binary (852 KB)
+nginx --> fe : Content-Type: application/pdf\n(852 KB file)
+fe --> eng : Browser downloads\nPRN-2026-00047_report.pdf
+
+@enduml

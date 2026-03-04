@@ -1,0 +1,227 @@
+@startuml erd-diagram
+!theme plain
+
+title Power Atlas -- Entity Relationship Diagram
+caption Complete data model with all 11 tables, columns, types, and relationships
+
+skinparam linetype ortho
+skinparam classBorderColor #555555
+skinparam classBackgroundColor #E8F4FD
+skinparam classHeaderBackgroundColor #B3D9F2
+skinparam noteBorderColor #888888
+
+hide methods
+
+' ===== ENTITIES =====
+
+entity "users" as users {
+    * **user_id** : INTEGER <<PK, AUTO>>
+    --
+    * username : VARCHAR(50) <<UNIQUE>>
+    * email : VARCHAR(100) <<UNIQUE>>
+    * password_hash : VARCHAR(255)
+    * role : VARCHAR(20) <<CHECK: engineer|admin|client>>
+    * is_active : BOOLEAN <<DEFAULT true>>
+    first_name : VARCHAR(50)
+    last_name : VARCHAR(50)
+    failed_login_attempts : INTEGER <<DEFAULT 0>>
+    locked_until : DATETIME
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+    updated_at : DATETIME
+}
+
+entity "sessions" as sessions {
+    * **session_id** : INTEGER <<PK, AUTO>>
+    --
+    * user_id : INTEGER <<FK -> users>>
+    * session_token : VARCHAR(255) <<UNIQUE>>
+    * expires_at : DATETIME
+    * is_active : BOOLEAN <<DEFAULT true>>
+    ip_address : VARCHAR(45)
+    user_agent : TEXT
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+}
+
+entity "projects" as projects {
+    * **project_id** : INTEGER <<PK, AUTO>>
+    --
+    * user_id : INTEGER <<FK -> users>>
+    * project_name : VARCHAR(200)
+    * prn : VARCHAR(20) <<UNIQUE>>
+    client_id : INTEGER <<FK -> clients>>
+    voltage_level : VARCHAR(10)
+    frequency : VARCHAR(10)
+    power_factor : DECIMAL(4,2) <<DEFAULT 0.85>>
+    demand_factor : DECIMAL(4,2) <<DEFAULT 1.00>>
+    diversity_factor : DECIMAL(4,2) <<DEFAULT 1.00>>
+    status : VARCHAR(20) <<DEFAULT 'draft'>>
+    project_data : TEXT <<JSON>>
+    layout_data : TEXT <<JSON>>
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+    updated_at : DATETIME
+}
+
+entity "loads" as loads {
+    * **load_id** : INTEGER <<PK, AUTO>>
+    --
+    * project_id : INTEGER <<FK -> projects>>
+    * load_name : VARCHAR(200)
+    load_type : VARCHAR(50)
+    quantity : INTEGER <<DEFAULT 1>>
+    power_kw : DECIMAL(10,2)
+    power_kva : DECIMAL(10,2)
+    current_a : DECIMAL(10,2)
+    voltage_v : DECIMAL(10,2)
+    power_factor : DECIMAL(4,2)
+    is_critical : BOOLEAN <<DEFAULT false>>
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+}
+
+entity "clients" as clients {
+    * **client_id** : INTEGER <<PK, AUTO>>
+    --
+    * client_name : VARCHAR(200)
+    contact_name : VARCHAR(100)
+    email : VARCHAR(100)
+    phone : VARCHAR(20)
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+}
+
+entity "generators" as generators {
+    * **generator_id** : INTEGER <<PK, AUTO>>
+    --
+    * name : VARCHAR(200)
+    model : VARCHAR(100)
+    manufacturer : VARCHAR(100)
+    power_kw : DECIMAL(10,2)
+    power_kva : DECIMAL(10,2)
+    voltage : VARCHAR(10)
+    fuel_type : VARCHAR(20)
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+}
+
+entity "folders" as folders {
+    * **folder_id** : INTEGER <<PK, AUTO>>
+    --
+    * folder_name : VARCHAR(200)
+    parent_folder_id : INTEGER <<FK -> folders (self)>>
+    * user_id : INTEGER <<FK -> users>>
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+}
+
+entity "client_requirements" as client_requirements {
+    * **requirement_id** : INTEGER <<PK, AUTO>>
+    --
+    * client_name : VARCHAR(200)
+    * client_email : VARCHAR(100)
+    * project_name : VARCHAR(200)
+    status : VARCHAR(20) <<DEFAULT 'pending'>>
+    stage : VARCHAR(30) <<DEFAULT 'new_submission'>>
+    requirement_code : VARCHAR(20) <<UNIQUE>>
+    reviewed_by : INTEGER <<FK -> users>>
+    phone : VARCHAR(20)
+    project_type : VARCHAR(50)
+    estimated_load_kw : DECIMAL(10,2)
+    voltage_level : VARCHAR(10)
+    location : VARCHAR(200)
+    description : TEXT
+    timeline : VARCHAR(50)
+    admin_notes : TEXT
+    priority : VARCHAR(10)
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+    updated_at : DATETIME
+}
+
+entity "notifications" as notifications {
+    * **notification_id** : INTEGER <<PK, AUTO>>
+    --
+    * user_id : INTEGER <<FK -> users>>
+    * type : VARCHAR(50)
+    * title : VARCHAR(200)
+    message : TEXT
+    requirement_id : INTEGER <<FK -> client_requirements>>
+    * is_read : BOOLEAN <<DEFAULT false>>
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+}
+
+entity "requirement_changes" as requirement_changes {
+    * **change_id** : INTEGER <<PK, AUTO>>
+    --
+    * requirement_id : INTEGER <<FK -> client_requirements>>
+    old_values : TEXT <<JSON>>
+    new_values : TEXT <<JSON>>
+    status : VARCHAR(20)
+    changed_by : INTEGER <<FK -> users>>
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+}
+
+entity "project_activity" as project_activity {
+    * **activity_id** : INTEGER <<PK, AUTO>>
+    --
+    * project_id : INTEGER <<FK -> projects>>
+    * user_id : INTEGER <<FK -> users>>
+    * action_type : VARCHAR(50)
+    description : TEXT
+    created_at : DATETIME <<DEFAULT CURRENT_TIMESTAMP>>
+}
+
+' ===== RELATIONSHIPS =====
+
+' -- users relationships --
+users ||--o{ sessions : "has many\n(user_id)"
+users ||--o{ projects : "owns many\n(user_id)"
+users ||--o{ folders : "owns many\n(user_id)"
+users ||--o{ notifications : "receives many\n(user_id)"
+users ||--o{ project_activity : "performs many\n(user_id)"
+users ||--o{ client_requirements : "reviews many\n(reviewed_by)"
+users ||--o{ requirement_changes : "makes many\n(changed_by)"
+
+' -- projects relationships --
+projects ||--o{ loads : "contains many\n(project_id)"
+projects ||--o{ project_activity : "has many\n(project_id)"
+projects }o--o| clients : "optionally\nassigned to\n(client_id)"
+
+' -- folders self-reference --
+folders ||--o{ folders : "contains\nsubfolders\n(parent_folder_id)"
+
+' -- client_requirements relationships --
+client_requirements ||--o{ notifications : "triggers many\n(requirement_id)"
+client_requirements ||--o{ requirement_changes : "has many\n(requirement_id)"
+
+' ===== NOTES =====
+
+note bottom of projects
+  **Status values:**
+  draft, active, archived
+
+  **project_data / layout_data:**
+  JSON blobs for flexible storage
+  of project config and Konva.js
+  canvas state
+end note
+
+note bottom of client_requirements
+  **Stage values:**
+  new_submission, admin_review,
+  approved, rejected,
+  client_edit, implemented
+
+  **Status values:**
+  pending, approved, rejected
+end note
+
+note right of generators
+  **Generators** is a reference table
+  (catalog of available generators).
+  Not directly FK-linked to projects;
+  generator selection is stored in
+  projects.project_data JSON.
+end note
+
+note right of folders
+  **Self-referential FK** allows
+  nested folder hierarchy for
+  organizing projects.
+end note
+
+@enduml

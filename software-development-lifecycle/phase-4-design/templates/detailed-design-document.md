@@ -183,4 +183,4 @@ CREATE TABLE [table_name] (
 | Data Model Document | Full data model details | ./data-model-document.md |
 | Design Review Checklist | Review gate for this document | ./design-review-checklist.md |
 | Create Detailed Design Runbook | Step-by-step procedure | ../runbooks/create-detailed-design.md |
-| Software Requirements Specification | Source requirements (SWR-XXX) | ../../phase-3-requirements/templates/software-requirements-specification.md |
+| Software Requirements Specification | Source requirements (SWR-XXX) | ../../phase-2-requirements-engineering/templates/software-requirements-specification.md |

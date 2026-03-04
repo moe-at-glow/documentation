@@ -1,0 +1,18 @@
+@startuml deployment
+!theme plain
+title Deployment Diagram -- [Project Name]
+
+node "Server" {
+  [Web Server] as web
+  [Application] as app
+  database "Database" as db
+}
+
+cloud "Internet" as inet
+actor "Users" as users
+
+users --> inet
+inet --> web : HTTPS/443
+web --> app : proxy
+app --> db : connection
+@enduml

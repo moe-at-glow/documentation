@@ -135,4 +135,4 @@ ALTER TABLE [table]
 | API Specification | API contracts that read/write this data | ./api-specification.md |
 | Design Review Checklist | Review gate for data model design | ./design-review-checklist.md |
 | Design Data Models Runbook | Step-by-step procedure | ../runbooks/design-data-models.md |
-| Software Requirements Specification | Source requirements (SWR-XXX) | ../../phase-3-requirements/templates/software-requirements-specification.md |
+| Software Requirements Specification | Source requirements (SWR-XXX) | ../../phase-2-requirements-engineering/templates/software-requirements-specification.md |

@@ -1,0 +1,55 @@
+@startuml system-context
+!theme plain
+
+title Power Atlas -- System Context Diagram
+caption A web application for power calculations, project management, and client requirements
+
+skinparam actorStyle awesome
+skinparam rectangleBorderColor #444444
+skinparam rectangleBackgroundColor #E8F4FD
+skinparam noteBorderColor #888888
+
+' --- Actors ---
+actor "Power Engineer" as eng <<User>>
+actor "Admin User" as admin <<User>>
+actor "Client User" as client <<User>>
+
+' --- Central System ---
+rectangle "Power Atlas\n<<Web Application>>\n\nPower calculations, project management,\nclient requirement pipeline,\nlayout design, PDF reporting" as PA #LightBlue
+
+' --- External Systems ---
+rectangle "Email SMTP Service\n<<External Service>>\n\nSends notification emails\nfor requirements and alerts" as SMTP #LightGreen
+
+rectangle "Moyasar Payment Gateway\n<<Future External Service>>\n\nOnline payment processing\nfor Saudi market" as PAY #LightGray
+
+rectangle "ZATCA E-Invoicing\n<<Future External Service>>\n\nSaudi tax authority\ncompliance and e-invoicing" as ZATCA #LightGray
+
+rectangle "IoT Sensors\n<<Future External Service>>\n\nReal-time power monitoring\nvia MQTT protocol" as IOT #LightGray
+
+' --- Relationships: Actors to System ---
+eng --> PA : "Creates projects,\nadds loads,\ngenerates reports\n[HTTPS/443]"
+admin --> PA : "Manages users,\nreviews requirements,\nadministers system\n[HTTPS/443]"
+client --> PA : "Submits power\nrequirements via\npublic form\n[HTTPS/443]"
+
+' --- Relationships: System to External ---
+PA --> SMTP : "Sends notification\nemails on requirement\nstatus changes\n[SMTP/587 TLS]"
+PA ..> PAY : "Process payments\n[HTTPS REST API]\n<<future>>"
+PA ..> ZATCA : "Submit e-invoices\n[HTTPS REST API]\n<<future>>"
+IOT ..> PA : "Stream sensor\nreadings\n[MQTT/1883]\n<<future>>"
+
+' --- Notes ---
+note right of PA
+  **Hosting:** Single DigitalOcean Droplet
+  **OS:** Ubuntu 24.04 LTS
+  **SSL:** Let's Encrypt
+  **Backend:** Python Flask (port 8000)
+  **Frontend:** Vite + Tailwind + vanilla JS
+  **Database:** SQLite
+end note
+
+note bottom of PAY
+  Dashed connections indicate
+  planned future integrations
+end note
+
+@enduml

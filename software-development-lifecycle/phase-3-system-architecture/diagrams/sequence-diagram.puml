@@ -1,0 +1,21 @@
+@startuml sequence-template
+!theme plain
+title Sequence Diagram -- [Flow Name]
+
+actor "Actor" as actor
+participant "Frontend" as fe
+participant "API" as api
+database "Database" as db
+
+actor -> fe : Action
+fe -> api : POST /api/resource
+api -> db : INSERT
+db --> api : result
+api --> fe : 201 Created
+fe --> actor : Success
+
+note over api
+  Add error handling paths
+  with alt/else blocks
+end note
+@enduml

@@ -1,0 +1,137 @@
+@startuml component-diagram
+!theme plain
+
+title Power Atlas -- Component Diagram
+caption Internal architecture showing all major components and their interactions
+
+skinparam componentStyle uml2
+skinparam packageBorderColor #555555
+skinparam componentBackgroundColor #E8F4FD
+skinparam databaseBackgroundColor #FFF3E0
+skinparam noteBorderColor #888888
+
+' --- External Actors ---
+actor "Power Engineer" as eng
+actor "Admin User" as admin
+actor "Client User" as client
+
+cloud "Internet" as internet
+
+' --- System Boundary ---
+package "Power Atlas System" as system {
+
+    ' --- Web Server ---
+    component "Nginx\n<<Reverse Proxy>>" as nginx {
+        portin "80/443" as nginx_in
+    }
+    note right of nginx
+      SSL termination (Let's Encrypt)
+      Routes /api/* to Flask (8000)
+      Serves static files from /public/
+      Routes /layout-builder/ to React app
+    end note
+
+    ' --- Frontend ---
+    package "Frontend" as fe_pkg {
+        component "Multi-Page App\n<<Vite + Tailwind + vanilla JS>>" as frontend
+        component "Layout Builder\n<<React + Konva.js>>" as layout_builder
+    }
+
+    ' --- Backend Application ---
+    package "Flask Application (port 8000)" as flask_pkg {
+
+        component "Auth Module\n<<Security>>" as auth {
+        }
+        note bottom of auth
+          - Login / Register / Logout
+          - bcrypt password hashing
+          - JWT token issuance
+          - Session management
+          - Role-based access (engineer/admin/client)
+          - 5-attempt lockout policy
+        end note
+
+        component "Project Engine\n<<Core Business>>" as project_engine {
+        }
+        note bottom of project_engine
+          - CRUD for projects, loads, clients
+          - Generator library management
+          - Folder organization
+          - Project activity logging
+          - PRN (Project Reference Number)
+        end note
+
+        component "Calculation Engine\n<<Domain Logic>>" as calc_engine {
+        }
+        note bottom of calc_engine
+          - kW to kVA conversion
+          - Current (A) calculation
+          - Demand factor application
+          - Diversity factor application
+          - Total connected load
+          - Total demand load
+          - Generator sizing
+        end note
+
+        component "Requirements Pipeline\n<<Workflow>>" as req_pipeline {
+        }
+        note bottom of req_pipeline
+          - Client requirement submission
+          - Admin review workflow
+          - Approval / rejection / edit cycle
+          - Notification dispatch
+          - Requirement code generation
+          - Status stage tracking
+        end note
+
+        component "Report Generator\n<<Reporting>>" as report_gen {
+        }
+    }
+
+    ' --- PDF Server ---
+    component "PDF Server\n<<Python ReportLab>>\nport 5020" as pdf_server
+
+    ' --- Database ---
+    database "SQLite Database\n<<Persistence>>\n/database/power_calculator.db" as db
+
+    ' --- Static Files ---
+    folder "Static Files\n<</public/>>" as static_files
+}
+
+' --- External Services ---
+rectangle "Email SMTP Service" as smtp #LightGreen
+
+' --- Actor Connections ---
+eng --> internet
+admin --> internet
+client --> internet
+internet --> nginx_in : "HTTPS"
+
+' --- Nginx Routing ---
+nginx --> frontend : "HTML/CSS/JS\nstatic pages"
+nginx --> layout_builder : "/layout-builder/*"
+nginx --> auth : "/api/auth/*\nreverse proxy to 8000"
+nginx --> project_engine : "/api/projects/*\n/api/loads/*\n/api/clients/*"
+nginx --> req_pipeline : "/api/requirements/*"
+nginx --> report_gen : "/api/reports/*"
+nginx --> static_files : "Static assets"
+
+' --- Inter-Component Connections ---
+auth --> db : "Read/write users,\nsessions"
+project_engine --> db : "Read/write projects,\nloads, clients,\ngenerators, folders,\nproject_activity"
+project_engine --> calc_engine : "Invoke power\ncalculations"
+calc_engine --> db : "Read load data\nfor computation"
+req_pipeline --> db : "Read/write\nrequirements,\nnotifications,\nchanges"
+req_pipeline --> smtp : "Send email\nnotifications\n[SMTP/587]"
+report_gen --> pdf_server : "Generate PDF\n[HTTP/5020]"
+report_gen --> db : "Read project data\nfor report content"
+pdf_server --> static_files : "Write generated\nPDF files"
+
+' --- Frontend to Backend ---
+frontend --> auth : "Login, register,\nlogout API calls"
+frontend --> project_engine : "Project CRUD\nAPI calls"
+frontend --> req_pipeline : "Requirement\nsubmission/review"
+frontend --> report_gen : "Report generation\nrequests"
+layout_builder --> project_engine : "Save/load\nlayout data"
+
+@enduml

@@ -67,3 +67,13 @@ All documents follow the **QRH (Quick Reference Handbook)** format. For backgrou
 | [API Specification](templates/api-specification.md) | API spec template |
 | [Data Model Document](templates/data-model-document.md) | Data model documentation template |
 | [Design Review Checklist](templates/design-review-checklist.md) | Review checklist template |
+
+### PlantUML Diagram Templates (`diagrams/`)
+
+All design diagrams **must** be created as PlantUML `.puml` files. Copy these templates and fill in your project details:
+
+| Diagram | Template | Required |
+|---------|----------|----------|
+| Class Diagram | [class-diagram.puml](diagrams/class-diagram.puml) | All components |
+| API Flow Diagram | [api-flow-diagram.puml](diagrams/api-flow-diagram.puml) | All API components |
+| Data Flow Diagram | [data-flow-diagram.puml](diagrams/data-flow-diagram.puml) | All data-processing components |

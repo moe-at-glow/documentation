@@ -13,13 +13,16 @@ All port assignments across servers. Update this file whenever a port is assigne
 
 ---
 
-## Template
+## Port Assignments
 
 | Port | Application | Protocol | Server | Notes |
 |------|------------|----------|--------|-------|
 | 22 | sshd | TCP | all | SSH access |
 | 80 | nginx | HTTP | all | Redirects to 443 |
 | 443 | nginx | HTTPS | all | Reverse proxy / TLS termination |
+| 18789 | openclaw-gateway | TCP | oule | WebSocket gateway, localhost only, proxied via Cloudflare Tunnel |
+| 18792 | openclaw-gateway | TCP | oule | Secondary gateway port, localhost only |
+| 20241 | cloudflared | TCP | oule | Tunnel metrics endpoint, localhost only |
 | — | — | — | — | — |
 
 > **Add new entries above the divider line. Keep sorted by port number.**

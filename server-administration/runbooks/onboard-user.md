@@ -8,6 +8,9 @@ Step-by-step procedure to add a new team member to a server.
 
 - You have sudo access on the target server.
 - The new user has generated an SSH key pair and given you their **public** key.
+  - Key must be in **OpenSSH format** (single line starting with `ssh-ed25519` or `ssh-rsa`).
+  - PuTTY/SSH2 format (`---- BEGIN SSH2 PUBLIC KEY ----`) will **not work** — convert with `ssh-keygen -i -f key.pub`.
+  - Preferred key type: **Ed25519** (`ssh-keygen -t ed25519 -C "<username>"`).
 - You know which team group and application groups they need.
 
 ---
@@ -45,6 +48,8 @@ sudo usermod -aG docker <username>
 # Sudo access (only if absolutely needed)
 sudo usermod -aG sudo <username>
 ```
+
+> **Note:** Members of `developers` automatically get limited sudo (service management, package installation, app directory management) via `/etc/sudoers.d/developers`. No additional setup needed. See [Users and Groups Standard](../standards/users-and-groups.md#limited-sudo-for-developers).
 
 ### 3. Install SSH public key
 

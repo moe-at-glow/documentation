@@ -55,6 +55,47 @@ How to structure user accounts, service accounts, and group-based permissions on
 
 ---
 
+## Limited Sudo for Developers
+
+Developers do **not** get full sudo. Instead, a sudoers drop-in file grants passwordless access to specific commands only.
+
+**File:** `/etc/sudoers.d/developers`
+
+```bash
+# Allow developers group limited sudo
+%developers ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart *, \
+                                /usr/bin/systemctl start *, \
+                                /usr/bin/systemctl stop *, \
+                                /usr/bin/systemctl status *, \
+                                /usr/bin/systemctl enable *, \
+                                /usr/bin/systemctl disable *, \
+                                /usr/bin/systemctl daemon-reload, \
+                                /usr/bin/journalctl *, \
+                                /usr/bin/apt install *, \
+                                /usr/bin/apt update, \
+                                /usr/bin/apt-get install *, \
+                                /usr/bin/apt-get update, \
+                                /usr/bin/mkdir -p /opt/*, \
+                                /usr/bin/chown * /opt/*, \
+                                /usr/bin/chmod * /opt/*, \
+                                /usr/sbin/useradd --system *, \
+                                /usr/sbin/groupadd *, \
+                                /usr/sbin/nginx -t, \
+                                /usr/bin/systemctl reload nginx, \
+                                /usr/bin/certbot *
+```
+
+After creating or editing:
+
+```bash
+sudo chmod 440 /etc/sudoers.d/developers
+sudo visudo -c   # Always validate
+```
+
+This allows developers to follow the [deploy-application runbook](../runbooks/deploy-application.md) end-to-end without full sudo.
+
+---
+
 ## Creating Groups
 
 ```bash

@@ -8,10 +8,26 @@ Quick reference for what each group can do. See [Users and Groups Standard](../s
 
 | Group | Sudo | Deploy Apps | Restart Services | View Logs | Edit Config | Access Secrets |
 |-------|------|------------|-----------------|-----------|-------------|----------------|
-| `sudo` | Yes | Yes | Yes | Yes | Yes | Yes |
+| `sudo` | Full | Yes | Yes | Yes | Yes | Yes |
 | `server-admin` | No | Yes | Yes | Yes | Yes | Yes |
-| `developers` | No | Yes | Yes | Yes | No | No |
+| `developers` | Limited | Yes | Yes | Yes | No | No |
 | `readonly` | No | No | No | Yes | No | No |
+
+## Developers — Limited Sudo
+
+Members of the `developers` group receive passwordless sudo for the following commands only (via `/etc/sudoers.d/developers`):
+
+| Category | Commands |
+|----------|----------|
+| **Service management** | `systemctl start/stop/restart/enable/disable/status *`, `systemctl daemon-reload` |
+| **Logs** | `journalctl *` |
+| **Package installation** | `apt install *`, `apt update`, `apt-get install *`, `apt-get update` |
+| **App directories** | `mkdir -p /opt/*`, `chown * /opt/*`, `chmod * /opt/*` |
+| **Service accounts** | `useradd --system *`, `groupadd *` |
+| **Nginx** | `nginx -t`, `systemctl reload nginx` |
+| **TLS certificates** | `certbot *` |
+
+Developers **cannot**: manage system users, edit SSH config, modify firewall rules, or access `/etc/sudoers`.
 
 ## Application Groups
 

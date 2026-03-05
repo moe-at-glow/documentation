@@ -20,7 +20,7 @@
 | Priority | Dropdown | Critical, High, Medium, Low |
 | Phase | Dropdown | Define, Design, Build & Verify, Ship & Run |
 | Deliverable # | Number | Matches deliverable numbers in phase cheat sheets |
-| Status | Status | To Do, In Progress, In Review, Done |
+| Status | Status | Open, In Progress, Review, Closed |
 | Assignee | People | Team members |
 
 5. Create **Views**:
@@ -62,19 +62,19 @@ Add a custom text field or comment linking to the relevant:
 ## 3. Status Workflow
 
 ```
-To Do → In Progress → In Review → Done
+Open → In Progress → Review → Closed
 ```
 
 | Status | When to Enter | Who Moves |
 |--------|--------------|-----------|
-| To Do | Task created, requirements clear | BA or Tech Lead |
+| Open | Task created, requirements clear | BA or Tech Lead |
 | In Progress | Work has started | Assignee |
-| In Review | Draft complete, ready for review | Assignee |
-| Done | Approved by reviewer/stakeholder | Reviewer |
+| Review | Draft complete, ready for review | Assignee |
+| Closed | Approved by reviewer/stakeholder | Reviewer |
 
 ### Mapping to Phase Gates
 
-- All tasks in a phase must reach **Done** before the phase gate review
+- All tasks in a phase must reach **Closed** before the phase gate review
 - Create a dedicated task: `[PHASE] Gate Review` using [runbooks/conduct-reviews.md](runbooks/conduct-reviews.md)
 
 ---
@@ -103,7 +103,7 @@ Run this check every 2 weeks (during backlog grooming):
 
 - [ ] No task older than 2 sprints without an update
 - [ ] All tasks have an assignee
-- [ ] Completed tasks moved to Done (not left in Review)
+- [ ] Completed tasks moved to Closed (not left in Review)
 - [ ] Backlog groomed — irrelevant tasks removed or deprioritized
 - [ ] Blocked tasks have a comment explaining the blocker
 - [ ] Archive completed sprints/lists monthly
@@ -138,4 +138,4 @@ See [standards/coding-and-git.md](standards/coding-and-git.md) for full conventi
 1. Install the ClickUp GitHub integration
 2. Connect your repository
 3. Automatic linking: commits and PRs with `CU-xxxx` will appear in the ClickUp task
-4. Optional: auto-move tasks to "In Review" when PR is opened
+4. Optional: auto-move tasks to "Review" when PR is opened

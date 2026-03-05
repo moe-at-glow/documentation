@@ -2,7 +2,7 @@
 
 > **This is a complete worked example** showing what every SDLC artifact looks like when filled in for a real project. Use these as models when creating your own project artifacts.
 
-**Project:** Power Atlas -- Web-based power calculation and project management tool for GlowPowerRental electrical engineers and clients.
+**Project:** Power Atlas -- Web-based power calculation and project management tool for electrical engineers and clients.
 
 **Project Scale:** Medium (4 developers, 6 months)
 
@@ -10,59 +10,60 @@
 
 ## Artifacts by Phase
 
-### Phase 1: Business Analysis
+### Phase 1: Define
 
-| Artifact | File | Template Used |
-|----------|------|---------------|
-| Business Case | [business-case.md](phase-1-business-analysis/business-case.md) | TPL-P1-001 |
-| Project Charter | [project-charter.md](phase-1-business-analysis/project-charter.md) | TPL-P1-002 |
-| Stakeholder Register | [stakeholder-register.md](phase-1-business-analysis/stakeholder-register.md) | TPL-P1-003 |
+| Artifact | File |
+|----------|------|
+| Business Case | [business-case.md](1-define/business-case.md) |
+| Project Charter | [project-charter.md](1-define/project-charter.md) |
+| Stakeholder Register | [stakeholder-register.md](1-define/stakeholder-register.md) |
+| Business Requirements Document | [business-requirements-document.md](1-define/business-requirements-document.md) |
+| Software Requirements Specification | [software-requirements-specification.md](1-define/software-requirements-specification.md) |
+| Requirements Traceability Matrix | [requirements-traceability-matrix.md](1-define/requirements-traceability-matrix.md) |
+| Use Cases | [use-cases.md](1-define/use-cases.md) |
 
-### Phase 2: Requirements Engineering
+### Phase 2: Design
 
-| Artifact | File | Template Used |
-|----------|------|---------------|
-| Business Requirements Document | [business-requirements-document.md](phase-2-requirements-engineering/business-requirements-document.md) | TPL-P2-BRD |
-| Software Requirements Specification | [software-requirements-specification.md](phase-2-requirements-engineering/software-requirements-specification.md) | TPL-P2-SRS |
-| Requirements Traceability Matrix | [requirements-traceability-matrix.md](phase-2-requirements-engineering/requirements-traceability-matrix.md) | TPL-P2-RTM |
-| Use Cases | [use-cases.md](phase-2-requirements-engineering/use-cases.md) | TPL-P2-UCT |
+| Artifact | File |
+|----------|------|
+| Architecture Description Document | [architecture-description.md](2-design/architecture-description.md) |
+| Architecture Decision Records | [architecture-decision-records.md](2-design/architecture-decision-records.md) |
+| System Context Diagram | [system-context-diagram.md](2-design/system-context-diagram.md) |
+| Component Diagram | [component-diagram.md](2-design/component-diagram.md) |
+| Detailed Design Document | [detailed-design.md](2-design/detailed-design.md) |
+| API Specification | [api-specification.md](2-design/api-specification.md) |
+| Data Model | [data-model.md](2-design/data-model.md) |
+| Design Review Checklist | [design-review-checklist.md](2-design/design-review-checklist.md) |
 
-### Phase 3: System Architecture
+### Phase 3: Build & Verify
 
-| Artifact | File | Template Used |
-|----------|------|---------------|
-| Architecture Description Document | [architecture-description.md](phase-3-system-architecture/architecture-description.md) | TPL-P3-002 |
-| Architecture Decision Records | [architecture-decision-records.md](phase-3-system-architecture/architecture-decision-records.md) | TPL-P3-001 |
-| System Context Diagram | [system-context-diagram.md](phase-3-system-architecture/system-context-diagram.md) | TPL-P3-004 |
-| Component Diagram | [component-diagram.md](phase-3-system-architecture/component-diagram.md) | TPL-P3-003 |
+| Artifact | File |
+|----------|------|
+| Pull Request Example | [pull-request-example.md](3-build-and-verify/pull-request-example.md) |
+| Code Review Record | [code-review-record.md](3-build-and-verify/code-review-record.md) |
+| Technical Debt Register | [technical-debt-entry.md](3-build-and-verify/technical-debt-entry.md) |
+| Git Workflow Example | [git-workflow-example.md](3-build-and-verify/git-workflow-example.md) |
+| Test Plan | [test-plan.md](3-build-and-verify/test-plan.md) |
+| Test Cases | [test-cases.md](3-build-and-verify/test-cases.md) |
+| Defect Reports | [defect-reports.md](3-build-and-verify/defect-reports.md) |
+| Test Summary Report | [test-summary-report.md](3-build-and-verify/test-summary-report.md) |
+| UAT Sign-Off | [uat-sign-off.md](3-build-and-verify/uat-sign-off.md) |
 
-### Phase 4: Design
+### Diagrams
 
-| Artifact | File | Template Used |
-|----------|------|---------------|
-| Detailed Design Document | [detailed-design.md](phase-4-design/detailed-design.md) | TPL-P4-001 |
-| API Specification | [api-specification.md](phase-4-design/api-specification.md) | TPL-P4-002 |
-| Data Model | [data-model.md](phase-4-design/data-model.md) | TPL-P4-003 |
-| Design Review Checklist | [design-review-checklist.md](phase-4-design/design-review-checklist.md) | TPL-P4-004 |
+All PlantUML diagrams are in [diagrams/](diagrams/).
 
-### Phase 5: Development
-
-| Artifact | File | Template Used |
-|----------|------|---------------|
-| Pull Request Example | [pull-request-example.md](phase-5-development/pull-request-example.md) | TPL-P5-001 |
-| Code Review Record | [code-review-record.md](phase-5-development/code-review-record.md) | TPL-P5-002 |
-| Technical Debt Register | [technical-debt-entry.md](phase-5-development/technical-debt-entry.md) | TPL-P5-003 |
-| Git Workflow Example | [git-workflow-example.md](phase-5-development/git-workflow-example.md) | -- |
-
-### Phase 6: Testing
-
-| Artifact | File | Template Used |
-|----------|------|---------------|
-| Test Plan | [test-plan.md](phase-6-testing/test-plan.md) | TPL-P6-001 |
-| Test Cases | [test-cases.md](phase-6-testing/test-cases.md) | TPL-P6-002 |
-| Defect Reports | [defect-reports.md](phase-6-testing/defect-reports.md) | TPL-P6-003 |
-| Test Summary Report | [test-summary-report.md](phase-6-testing/test-summary-report.md) | TPL-P6-004 |
-| UAT Sign-Off | [uat-sign-off.md](phase-6-testing/uat-sign-off.md) | TPL-P6-005 |
+| Diagram | File |
+|---------|------|
+| System Context | [system-context.puml](diagrams/system-context.puml) |
+| Component | [component-diagram.puml](diagrams/component-diagram.puml) |
+| Deployment | [deployment-diagram.puml](diagrams/deployment-diagram.puml) |
+| ERD | [erd-diagram.puml](diagrams/erd-diagram.puml) |
+| Sequence: Create Project | [sequence-create-project.puml](diagrams/sequence-create-project.puml) |
+| Sequence: Submit Requirement | [sequence-submit-requirement.puml](diagrams/sequence-submit-requirement.puml) |
+| Sequence: Generate Report | [sequence-generate-report.puml](diagrams/sequence-generate-report.puml) |
+| State: Project | [state-project.puml](diagrams/state-project.puml) |
+| State: Requirement | [state-requirement.puml](diagrams/state-requirement.puml) |
 
 ---
 

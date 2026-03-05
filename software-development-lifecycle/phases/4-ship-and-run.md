@@ -1,6 +1,6 @@
 # Phase 4: Ship & Run (Deployment + Operations)
 
-> **Purpose:** Get the verified build into production safely and keep it running reliably. This phase covers deployment procedures, release management, monitoring, and ongoing operational support for internal tools hosted on DigitalOcean.
+> **Purpose:** Get the verified build into production safely and keep it running reliably. This phase covers deployment procedures, release management, monitoring, and ongoing operational support.
 
 ---
 
@@ -20,7 +20,7 @@
 |---|----------|----------|----------|---------|
 | 1 | Deployment Checklist | See [Deployment Checklist](#deployment-checklist) below | All projects | [runbooks/deploy-and-operate.md](../runbooks/deploy-and-operate.md) |
 | 2 | Release Notes | See [Release Notes Template](#release-notes-template) below | All projects | [runbooks/deploy-and-operate.md](../runbooks/deploy-and-operate.md) |
-| 3 | Monitoring Setup | See [Monitoring Setup](#monitoring-setup-digitalocean) below | All projects | [runbooks/deploy-and-operate.md](../runbooks/deploy-and-operate.md) |
+| 3 | Monitoring Setup | See [Monitoring Setup](#monitoring-setup) below | All projects | [runbooks/deploy-and-operate.md](../runbooks/deploy-and-operate.md) |
 | 4 | Rollback Procedure | See [Rollback Procedure](#rollback-procedure) below | All projects | [runbooks/deploy-and-operate.md](../runbooks/deploy-and-operate.md) |
 
 > **Note:** Phase 4 deliverables use inline templates (below) rather than separate template files because deployment artifacts are environment-specific and maintained directly in the deploy runbook.
@@ -64,14 +64,14 @@
 
 ---
 
-## Monitoring Setup (DigitalOcean)
+## Monitoring Setup
 
 | What | Tool | Alert Threshold |
 |------|------|----------------|
-| Server uptime | DigitalOcean Monitoring / UptimeRobot | Down > 1 min |
-| CPU usage | DigitalOcean Monitoring | > 80% for 5 min |
-| Memory usage | DigitalOcean Monitoring | > 85% for 5 min |
-| Disk usage | DigitalOcean Monitoring | > 80% |
+| Server uptime | Infrastructure monitoring / UptimeRobot | Down > 1 min |
+| CPU usage | Infrastructure monitoring | > 80% for 5 min |
+| Memory usage | Infrastructure monitoring | > 85% for 5 min |
+| Disk usage | Infrastructure monitoring | > 80% |
 | Application errors | Application logs (journalctl / PM2) | Any 5xx errors |
 | SSL expiry | UptimeRobot / certbot --dry-run | < 14 days |
 | Database connections | Application health endpoint | Pool exhaustion |
@@ -121,7 +121,7 @@
 | # | Pitfall | Warning Sign | Fix |
 |---|---------|-------------|-----|
 | 1 | **No rollback plan** | "We'll figure it out if something breaks" | Always have a tested rollback procedure before deploying |
-| 2 | **Skipping staging** | Direct deploy to production | Test on a copy first (separate Docker container on same droplet) |
+| 2 | **Skipping staging** | Direct deploy to production | Test on a staging copy first (separate Docker container or staging server) |
 | 3 | **Missing environment variables** | App crashes on startup with undefined config | Use .env.example and verify all vars are set before deploy |
 | 4 | **No post-deploy monitoring** | Issues discovered by users, not team | Watch logs for at least 30 minutes after deployment |
 | 5 | **Database migrations without backup** | Data loss when migration fails | Always backup the database before running migrations |
@@ -144,7 +144,7 @@
 | Project Size | Skip/Simplify |
 |-------------|---------------|
 | Small (< 2 weeks) | Manual deploy OK. Monitoring = basic uptime check. |
-| Medium (2-8 weeks) | Scripted deploy. DigitalOcean monitoring + application health check. |
+| Medium (2-8 weeks) | Scripted deploy. Infrastructure monitoring + application health check. |
 | Large (8+ weeks) | CI/CD pipeline. Full monitoring stack. Automated rollback. |
 
 ---

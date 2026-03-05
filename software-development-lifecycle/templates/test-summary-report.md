@@ -29,7 +29,7 @@
 | Field | Value |
 |-------|-------|
 | Report ID | TSR-NNN |
-| Project | GlowPowerRental |
+| Project | <!-- Project Name --> |
 | Sprint / Release | <!-- Sprint N / Release X.Y.Z --> |
 | Test Cycle | <!-- Sprint test / Release regression / UAT --> |
 | Author | <!-- QA Engineer name --> |

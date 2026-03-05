@@ -45,7 +45,7 @@
 ### Step 1: Clone Repository (SLA: 10 min)
 
 ```bash
-git clone git@github.com:glowpowerrental/[project-name].git
+git clone git@github.com:<org>/[project-name].git
 cd [project-name]
 ```
 

@@ -28,7 +28,7 @@
 | Field | Value |
 |-------|-------|
 | Test Plan ID | TP-NNN |
-| Project | GlowPowerRental |
+| Project | <!-- Project Name --> |
 | Sprint / Release | <!-- Sprint N / Release X.Y.Z --> |
 | Author | <!-- Name --> |
 | Date Created | <!-- YYYY-MM-DD --> |

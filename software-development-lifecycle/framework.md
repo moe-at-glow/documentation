@@ -1,4 +1,4 @@
-# GlowPowerRental SDLC Framework
+# SDLC Framework
 
 | Field | Value |
 |-------|-------|
@@ -12,7 +12,7 @@
 
 ## 1. Purpose
 
-This framework defines the software development lifecycle for GlowPowerRental engineering projects. It provides a four-phase model with clear gate criteria, role assignments, and scaling rules so that teams deliver working software with appropriate governance. The framework is operational -- follow it as written, scale it per the sizing table, and skip nothing without documented approval.
+This framework defines the software development lifecycle for engineering projects. It provides a four-phase model with clear gate criteria, role assignments, and scaling rules so that teams deliver working software with appropriate governance. The framework is operational -- follow it as written, scale it per the sizing table, and skip nothing without documented approval.
 
 ---
 
@@ -31,7 +31,7 @@ Phase details: [phases/1-define.md](phases/1-define.md) | [phases/2-design.md](p
 
 ## 3. Roles and Responsibilities
 
-GlowPowerRental engineering teams operate with a core roster of 4 developers, 1 QA engineer, 1 business analyst, and 1 part-time product owner.
+Engineering teams operate with a core roster of 4 developers, 1 QA engineer, 1 business analyst, and 1 part-time product owner.
 
 | Role | Primary Responsibilities |
 |------|-------------------------|

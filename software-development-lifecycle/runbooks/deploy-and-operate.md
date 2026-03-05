@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-This runbook provides step-by-step procedures for deploying releases to production and maintaining ongoing operations for internal tools hosted on a single DigitalOcean droplet. It is the companion runbook for [Phase 4: Ship & Run](../phases/4-ship-and-run.md) and should be followed by any team member performing a deployment or responding to a production incident.
+This runbook provides step-by-step procedures for deploying releases to production and maintaining ongoing operations. It is the companion runbook for [Phase 4: Ship & Run](../phases/4-ship-and-run.md) and should be followed by any team member performing a deployment or responding to a production incident.
 
 ---
 
@@ -13,9 +13,9 @@ Before starting a deployment, confirm all of the following:
 - [ ] UAT signed off by Product Owner
 - [ ] All critical and high-severity defects resolved (see [Defect Severity](../references/defect-severity.md))
 - [ ] Medium/low defects deferred only with Product Owner acceptance
-- [ ] Deployment diagram (D3) matches the target DigitalOcean environment
+- [ ] Deployment diagram (D3) matches the target production environment
 - [ ] Release branch or tag is ready in version control (see [Coding & Git Standard](../standards/coding-and-git.md))
-- [ ] Team member performing deployment has SSH access to the droplet
+- [ ] Team member performing deployment has access to the production server
 
 ---
 
@@ -28,7 +28,7 @@ Complete every item before executing the deployment procedure.
 - [ ] **Take database backup** -- Run `pg_dump` (or equivalent) and verify the backup file is valid and stored off-server
 - [ ] **Verify SSL certificates** -- Run `certbot certificates` or check UptimeRobot; confirm expiry is > 14 days away
 - [ ] **Confirm rollback procedure** -- Identify the previous release tag and confirm the rollback steps in Section 5 are current
-- [ ] **Check disk space** -- Confirm the droplet has sufficient disk space for the deployment (`df -h`)
+- [ ] **Check disk space** -- Confirm the server has sufficient disk space for the deployment (`df -h`)
 - [ ] **Notify team** -- Post in the team channel that a deployment is being prepared
 
 ---
@@ -60,10 +60,10 @@ Use conventional commit messages in the tag annotation.
 
 ### Step 3: Pull Latest on Server
 
-SSH into the droplet and deploy:
+SSH into the server and deploy:
 
 ```bash
-ssh deploy@your-droplet
+ssh deploy@your-server
 cd /var/www/your-app
 git fetch --all --tags
 git checkout v[version]
@@ -102,7 +102,7 @@ Execute the smoke test suite against production:
 
 ### Step 7: Verify Monitoring
 
-- [ ] DigitalOcean Monitoring shows the droplet is healthy (CPU, memory, disk)
+- [ ] Infrastructure monitoring shows the server is healthy (CPU, memory, disk)
 - [ ] UptimeRobot confirms the application is UP
 - [ ] Application logs show no errors (`journalctl -u your-app --since "2 minutes ago"` or `pm2 logs`)
 
@@ -159,7 +159,7 @@ The deployer remains online and actively monitors:
 - [ ] Watch application logs for errors (`pm2 logs --lines 100` or `journalctl -f`)
 - [ ] Check error rates -- zero 5xx responses expected
 - [ ] Verify response times are within normal range
-- [ ] Confirm no anomalies in DigitalOcean CPU/memory graphs
+- [ ] Confirm no anomalies in CPU/memory graphs
 
 ### First 24 Hours
 
@@ -212,7 +212,7 @@ Use this template for every production release. Post in the team channel and att
 
 ### Daily
 
-- [ ] Check monitoring dashboard (DigitalOcean + UptimeRobot)
+- [ ] Check monitoring dashboard
 - [ ] Review application error logs
 - [ ] Respond to any alerts within SLA (see Section 9)
 
@@ -225,7 +225,7 @@ Use this template for every production release. Post in the team channel and att
 ### Monthly
 
 - [ ] Apply OS and runtime security patches (`apt update && apt upgrade`)
-- [ ] Review resource utilization -- assess whether the droplet needs resizing
+- [ ] Review resource utilization -- assess whether the server needs resizing
 - [ ] Rotate application logs if not automated
 - [ ] Renew or verify SSL certificates
 

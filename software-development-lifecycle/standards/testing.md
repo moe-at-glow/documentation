@@ -158,7 +158,7 @@ Integration tests verify that components work together through real infrastructu
 ### Database Setup and Teardown
 
 1. Use real PostgreSQL, same version as production.
-2. Dedicated test database (`glowpower_test`). Never use the dev database.
+2. Dedicated test database (`<project>_test`). Never use the dev database.
 3. Run all migrations automatically before the suite starts.
 4. Truncate all tables in `beforeEach` for fresh state.
 5. Reset sequences in `beforeEach`.

@@ -1,6 +1,174 @@
-# Getting Started
+# Getting Started with the SDLC Framework
 
-> Read this first. It tells you what to do, in what order, for any new project.
+This guide helps you navigate and use the SDLC documentation. Read this first before diving into any phase.
+
+---
+
+## What Is This Framework?
+
+The **SDLC (Software Development Lifecycle) Framework** is the official process for building software. It defines how every project moves from an initial idea to a running system in production. Instead of each team inventing their own process, everyone follows the same phases, produces the same artifacts, and passes through the same approval gates.
+
+The framework is operational -- every document tells you exactly what to do, what to produce, and who must approve it.
+
+### Why Does It Exist?
+
+Without a shared process:
+- Requirements get lost between what the business asked for and what developers build
+- Architecture decisions are made in hallway conversations and never recorded
+- Testing is inconsistent -- some projects have thorough testing, others ship untested
+- New team members take months to figure out "how we do things here"
+
+This framework solves those problems by making the process explicit, repeatable, and auditable.
+
+---
+
+## Key Terms
+
+Before you read any document, understand these terms. They appear everywhere in the framework.
+
+### Document Types
+
+| Term | What It Means |
+|------|---------------|
+| **Runbook** | A step-by-step procedure you follow to complete a task. Like a recipe -- do step 1, then step 2, then step 3. Each runbook has entry criteria (what must be true before you start), procedure steps, and exit criteria (what must be true when you are done). |
+| **Standard** | A set of rules that must be followed. Standards are compliance checklists -- each rule has a checkbox and a consequence if violated. You do not "follow" a standard step-by-step; you check your work against it. |
+| **Template** | A blank form you copy and fill in. Templates give you the structure of an artifact so you do not have to figure out what sections to include. |
+| **Reference** | A lookup table or decision tree. When you need to make a choice (which architecture pattern? what defect severity?), the reference gives you a structured way to decide. |
+
+### Framework Keywords
+
+| Term | What It Means |
+|------|---------------|
+| **Phase** | One stage of the software lifecycle. There are 4 phases (Define, Design, Build & Verify, Ship & Run). Each phase has its own cheat sheet in `phases/`. |
+| **Phase Gate** | An approval checkpoint at the end of each phase. A group of reviewers evaluates whether all required artifacts are complete and meet quality standards before the project can move to the next phase. |
+| **Artifact** | Any document or deliverable produced during a phase. Examples: Business Case, SRS, Architecture Description Document, Test Plan. |
+| **Entry Criteria** | Conditions that must be true before you can start a phase or runbook. If entry criteria are not met, do not begin. |
+| **Exit Criteria** | Conditions that must be true before a phase or runbook is considered complete. Every exit criterion has a checkbox. |
+| **Scaling Gate** | A rule in every document that tells you how much applies based on your project size (small, medium, or large). |
+| **RACI Matrix** | A table showing who is Responsible (does the work), Accountable (owns the outcome), Consulted (provides input), and Informed (kept up to date) for each activity. |
+
+### Acronyms
+
+| Acronym | Full Name | What It Is |
+|---------|-----------|------------|
+| **RTM** | Requirements Traceability Matrix | Tracks each requirement from business need through design, code, and test case. Ensures nothing is lost. |
+| **ADR** | Architecture Decision Record | Records a significant technical decision with context, alternatives considered, and rationale. |
+| **BRD** | Business Requirements Document | Describes what the business needs in business language. |
+| **SRS** | Software Requirements Specification | Describes what the software must do in technical language, derived from the BRD. |
+| **ADD** | Architecture Description Document | Describes the system structure, components, interfaces, and deployment topology. |
+| **DDD** | Detailed Design Document | Describes how a specific component works internally -- classes, data model, API contracts, error handling. |
+| **MoSCoW** | Must / Should / Could / Won't | A prioritization method: **M**ust Have (non-negotiable), **S**hould Have (important but not critical), **C**ould Have (nice to have), **W**on't Have (out of scope for this release). |
+| **PlantUML** | — | The mandatory diagramming tool. You write text markup in `.puml` files and it generates diagrams. |
+| **UAT** | User Acceptance Testing | Final testing by business users to confirm the system meets their requirements. |
+
+### Requirement ID Prefixes
+
+All requirements and artifacts use standardized ID prefixes:
+
+| Prefix | Meaning | Example |
+|--------|---------|---------|
+| `BR-` | Business Requirement | BR-001 |
+| `STK-` | Stakeholder Requirement | STK-001 |
+| `SWR-` | Software Requirement | SWR-001 |
+| `SWR-NFR-` | Non-Functional Requirement | SWR-NFR-P001 |
+| `ADR-` | Architecture Decision Record | ADR-001 |
+| `UC-` | Use Case | UC-001 |
+| `TC-` | Test Case | TC-001 |
+| `DEF-` | Defect Report | DEF-001 |
+
+Numbers are assigned sequentially and never reused.
+
+---
+
+## How This Framework Is Organized
+
+| Directory | What It Contains | When You Use It |
+|-----------|------------------|-----------------|
+| `phases/` | Phase cheat sheets with deliverables, activities, and gate criteria | Starting and managing each phase |
+| `standards/` | Compliance rules with pass/fail checkboxes | Before starting work -- know what is required |
+| `runbooks/` | Step-by-step procedures with entry/exit criteria | While doing the work -- follow the steps |
+| `templates/` | Copy-paste starting points for artifacts | When producing a deliverable -- fill in the blanks |
+| `references/` | Lookup tables and decision trees | When making a decision -- find the answer |
+| `diagrams/` | PlantUML `.puml` templates | When creating architecture and design diagrams |
+
+**Workflow for any task:**
+1. Open the **phase cheat sheet** to see what you need to produce
+2. Read the **standard** to know what compliance is required
+3. Follow the **runbook** step-by-step to do the work
+4. Use the **template** to produce each artifact
+5. Check the **reference** when you need a decision aid
+
+---
+
+## What to Read Based on Your Role
+
+Not everyone needs to read everything. Start with the phases relevant to your role:
+
+| Role | Primary Phases | Start Here |
+|------|---------------|------------|
+| **Business Analyst** | Phase 1 (Define) | [phases/1-define.md](phases/1-define.md) + [runbooks/gather-requirements.md](runbooks/gather-requirements.md) |
+| **Tech Lead / Architect** | Phase 2 (Design) | [phases/2-design.md](phases/2-design.md) + [runbooks/architect-and-design.md](runbooks/architect-and-design.md) |
+| **Developer** | Phase 2 + 3 | [phases/3-build-and-verify.md](phases/3-build-and-verify.md) + [runbooks/implement-feature.md](runbooks/implement-feature.md) |
+| **QA Lead / Tester** | Phase 1 (requirements) + 3 | [phases/3-build-and-verify.md](phases/3-build-and-verify.md) + [runbooks/run-test-cycle.md](runbooks/run-test-cycle.md) |
+| **Product Owner** | Phase 1 + 3 (UAT) | [phases/1-define.md](phases/1-define.md) + [runbooks/start-a-project.md](runbooks/start-a-project.md) |
+| **Project Sponsor** | Phase 1 (approval gates) | [framework.md](framework.md) -- Gate Review Procedure section |
+
+**Everyone** should read:
+- This guide (you are here)
+- [framework.md](framework.md) -- the authoritative reference for all phases, roles, and gates
+
+---
+
+## Understanding Project Scale
+
+Every document has a **Scaling Gate**. This tells you how much of the document applies to your project:
+
+| Scale | Duration | Team | What It Means |
+|-------|----------|------|---------------|
+| **Small** | < 2 weeks | 1-2 developers | Reduced artifacts. User stories can replace formal BRD. Design can live in tickets. Manual testing is acceptable. |
+| **Medium** | 2-8 weeks | 3-5 developers | All artifacts required. Some formats can be streamlined. Validation can be a single review session. |
+| **Large** | 8+ weeks | 6+ developers | Full compliance. No reductions without written sponsor and tech lead approval. |
+
+**How to apply:** When you open any document, check the Scaling Gate first. If your project is small, you may skip sections marked as medium/large only.
+
+---
+
+## Understanding the Document Format
+
+All operational documents follow a consistent format:
+
+| Section | What It Tells You |
+|---------|-------------------|
+| **Metadata table** (top) | Who owns it, how to verify compliance, when it was last reviewed |
+| **Scaling Gate** | Which sections apply to your project size |
+| **Entry Criteria** | What must be true before you start (do not skip these) |
+| **Procedure steps** | Numbered actions with decision gates |
+| **Exit Criteria** | Checkboxes that must all be checked before you are done |
+| **Deliverables** | What you should have produced, with links to templates |
+| **Cross-References** | Related documents (standards, runbooks, templates) |
+
+**Key conventions:**
+- `- [ ]` = checkbox -- tick it when the item is verified
+- `> **IF** ... **THEN** ...` = conditional gate -- follow the path that matches your situation
+- `SLA: X days` = the maximum time allowed for a step
+
+---
+
+## Tools
+
+### PlantUML (Mandatory for Diagrams)
+
+All architecture and design diagrams must be created as PlantUML `.puml` files.
+
+**Templates are provided** in [diagrams/](diagrams/) -- you do not need to start from scratch. Copy the relevant `.puml` template to your project's `diagrams/` directory, edit with your project-specific components, and commit the `.puml` source file (the source file is the deliverable, not the image).
+
+### Git Conventions
+
+- **Branching:** See [standards/coding-and-git.md](standards/coding-and-git.md)
+- **Commit messages:** Use conventional commit format: `type(scope): description [CU-xxxx]`
+  - Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+  - Example: `feat(billing): add late fee calculation [CU-1234]`
+- **Pull requests:** Use [templates/pull-request.md](templates/pull-request.md)
 
 ---
 
@@ -75,16 +243,6 @@ Open [phases/4-ship-and-run.md](phases/4-ship-and-run.md).
 1. Deploy → [runbooks/deploy-and-operate.md](runbooks/deploy-and-operate.md)
 2. Monitor
 3. Operate
-
----
-
-## Project Size Guide
-
-| Size | Duration | What to Skip |
-|------|----------|-------------|
-| **Small** | < 2 weeks | SRS, Use Cases, RTM, DDD, formal test plan. Simplified BRD, 1-page ADD. |
-| **Medium** | 2-8 weeks | Full BRD + SRS. Simplified DDD. All diagrams. Formal test plan. |
-| **Large** | 8+ weeks | Everything required. No shortcuts. |
 
 ---
 

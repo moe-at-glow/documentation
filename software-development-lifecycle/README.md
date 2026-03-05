@@ -1,6 +1,6 @@
-# GlowPowerRental SDLC Framework
+# SDLC Framework
 
-A lean software development lifecycle for a team of 4 developers, 1 QA, 1 BA, and 1 part-time PO building internal tools on DigitalOcean.
+A lean software development lifecycle for a small team (4 developers, 1 QA, 1 BA, 1 part-time PO) working on a project.
 
 ## Quick Start
 

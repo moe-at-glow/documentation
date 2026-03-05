@@ -27,7 +27,7 @@
 
 | Field | Value |
 |-------|-------|
-| Project | GlowPowerRental |
+| Project | <!-- Project Name --> |
 | Release | <!-- Release X.Y.Z --> |
 | UAT Period | <!-- YYYY-MM-DD to YYYY-MM-DD --> |
 | Environment | <!-- Staging URL --> |
